@@ -1,0 +1,18 @@
+@use './base/typography' as *;
+@use './variables' as *;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    color: $white;
+    background-color: $grey-background ;
+}
