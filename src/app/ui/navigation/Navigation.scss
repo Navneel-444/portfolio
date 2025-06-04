@@ -1,0 +1,43 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.25rem 0;
+
+    &__heading {
+        color: $orange;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    &__list {
+        display: flex;
+    }
+
+    &__list-item {
+        list-style-type: none;
+    }
+
+    &__link {
+        text-decoration: none;
+        margin: 0 0.25rem;
+        color: $white;
+
+        &:visited {
+            color: $white;
+        }
+
+        @include nav-item-style
+    }
+
+    &__theme {
+        display: flex;
+        background-color: transparent;
+        border: none;
+        @include nav-item-style
+    }
+}
