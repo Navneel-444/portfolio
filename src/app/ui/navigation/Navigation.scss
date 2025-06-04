@@ -6,7 +6,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1rem 0;
+    margin: 1.25rem 0;
 
     &__heading {
         color: $orange;
@@ -25,6 +25,7 @@
     &__link {
         text-decoration: none;
         margin: 0 0.25rem;
+        color: $white;
 
         &:visited {
             color: $white;
