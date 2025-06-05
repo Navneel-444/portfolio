@@ -11,16 +11,18 @@ export default function HeroStatement() {
             <p className='hero-statement__description'>
                 Building tools that make work easier. I create software that automates tasks, so you can focus on what truly matters.
             </p>
-            <buton className="hero-statement__resume-btn">
-                <Image
-                    className='hero-statement__btn-icon'
-                    src='images/download-icon.svg'
-                    width={10}
-                    height={15}
-                    alt='button to download resume'
-                />
-                <p className="hero-statement__btn-text">Resume</p>
-            </buton>
+            <a href="/resume.pdf" className='hero-statement__anchor' download>
+                <buton className="hero-statement__resume-btn">
+                    <Image
+                        className='hero-statement__btn-icon'
+                        src='images/download-icon.svg'
+                        width={10}
+                        height={15}
+                        alt='button to download resume'
+                    />
+                    <p className="hero-statement__btn-text">Resume</p>
+                </buton>
+            </a>
         </article>
     )
 }  
