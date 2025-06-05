@@ -3,8 +3,13 @@
 
 
 .hero-statement {
+    width: 40vw;
+    max-width: 28rem;
+    padding-right: 1rem;
+
     &__title {
         margin-bottom: 1.5rem;
+        white-space: nowrap;
     }
 
     &__heading {
@@ -30,14 +35,15 @@
         border-radius: 0.25rem;
         width: 7.5rem;
         height: 1.875rem;
+        background-color: $grey-background;
+        color: $white;
 
         &:hover {
             box-shadow: 0 0 0.5rem $grey-blue;
         }
     }
 
-    &__anchor {
-        color: $white;
+    &__download {
         text-decoration: none;
     }
 }

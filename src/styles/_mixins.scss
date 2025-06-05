@@ -21,7 +21,7 @@
 @mixin font-face($name, $file-name, $weight: normal, $style: normal) {
     @font-face {
         font-family: $name;
-        src: url('/assets/fonts/#{$file-name}.woff2')format('woff2');
+        src: url('/fonts/#{$file-name}.woff2')format('woff2');
         font-weight: $weight;
         font-style: $style;
         font-display: swap;
