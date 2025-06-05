@@ -1,0 +1,31 @@
+@use '../../../styles/variables' as *;
+
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid $grey-blue;
+    border-radius: 0.5rem;
+    height: 80vh;
+    position: relative;
+
+    &__location {
+        background-color: $grey-blue;
+        padding: 0.125rem 1rem;
+        border-radius: 0.5rem 0;
+        font-weight: 300;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+    &__left {
+        align-self: start;
+        height: 100%;
+    }
+
+    &__spacer {
+        height: 10%
+    }
+
+}
