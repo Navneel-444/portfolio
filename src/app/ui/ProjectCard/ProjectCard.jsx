@@ -5,6 +5,18 @@ export default function ProjectCard() {
     return (
         <section className="project-card">
             <div className="project-card__mask">
+                <button className="project-card__expand">
+                    <p className="project-card__expand-text">
+                        View Project
+                    </p>
+                    <Image
+                        className='project-card__expand-icon'
+                        src='/images/expand-icon.svg'
+                        width={14}
+                        height={14}
+                        alt='icon to expand the hovered project card'
+                    />
+                </button>
                 <Image
                     className='project-card__image'
                     src='/images/project-screenshot.png'

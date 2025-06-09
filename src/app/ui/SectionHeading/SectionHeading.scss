@@ -1,0 +1,26 @@
+@use '../../../styles/variables' as *;
+
+.section-heading {
+    position: relative;
+    margin: 1.25rem 0;
+
+    &__title {
+        position: absolute;
+        margin-left: 28px;
+        z-index: 10;
+        font-weight: 400;
+        font-size: 1.5rem;
+    }
+
+    &__decorator {
+        margin-top: 5px;
+    }
+
+    &__decorator-dot {
+        fill: $orange;
+    }
+
+    &__decorator-line {
+        stroke: $orange;
+    }
+}

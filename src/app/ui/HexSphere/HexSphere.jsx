@@ -11,7 +11,7 @@ export default function HexSphere() {
             >
                 <Image
                     className='hex-sphere__image'
-                    src='images/info-icon.svg'
+                    src='/images/info-icon.svg'
                     width={24}
                     height={24}
                     alt='information on the features of the hexagon sphere'
