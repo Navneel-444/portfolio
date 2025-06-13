@@ -1,18 +1,21 @@
 import './TimePeriodCard.scss';
 
-export default function TimePeriodCard() {
+export default function TimePeriodCard({ info, position }) {
+    const { title, company, date, description } = info;
     return (
-        <article className="time-period">
-            <aside className="time-period__year">
-                <p className="time-period__year-text">2021-2023</p>
-            </aside>
-            <section className="time-period__info">
-                <section className="time-period__heading">
-                    <h3 className="time-period__job-title">Operations Supervisor</h3>
-                    <p className="time-period__company">Legacy Supply Chain Service</p>
+        <article className={`time-period time-period--${position}`}>
+            <div className={`time-period__container time-period__container--${position}`}>
+                <aside className={position == 'left' ? " time-period__year time-period__year--left" : 'time-period__year'}>
+                    <p className="time-period__year-text">{date}</p>
+                </aside>
+                <section className='time-period__info'>
+                    <section className={position == 'left' ? " time-period__heading time-period__heading--left" : 'time-period__heading'}>
+                        <h3 className="time-period__job-title">{title}</h3>
+                        <p className="time-period__company">{company}</p>
+                    </section>
+                    <p className="time-period__job-description">{description}</p>
                 </section>
-                <p className="time-period__job-description">As a supervisor, I led teams, managed daily operations, and ensured efficiency in workflows. I developed problem-solving skills, coordinated tasks, and maintained a productive work environment while balancing team needs and business goals.</p>
-            </section>
-        </article>
+            </div>
+        </article >
     )
 }
