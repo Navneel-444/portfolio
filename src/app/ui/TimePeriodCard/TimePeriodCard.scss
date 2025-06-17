@@ -1,0 +1,79 @@
+@use '../../../styles/variables' as *;
+
+.time-period {
+    width: 50%;
+
+    &--left {
+        align-self: flex-start;
+    }
+
+    &--right {
+        align-self: flex-end;
+    }
+
+    &__container {
+        display: flex;
+
+        &--left {
+            justify-content: flex-end;
+        }
+
+        &--right {
+            justify-content: flex-start;
+        }
+    }
+
+    &__info {
+        background-color: rgba($grey-accent, 10%);
+        border-radius: 0.75rem;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__heading {
+        display: inline-block;
+        border-bottom: 1px $orange solid;
+        margin-bottom: 0.25rem;
+        padding: 0.75rem;
+        height: 4.5rem;
+        width: fit-content;
+
+        &--left {
+            text-align: right;
+            align-self: flex-end;
+        }
+    }
+
+    &__job-title {
+        font-weight: 400;
+        font-size: 1.25rem;
+        margin-bottom: 0.25em;
+    }
+
+    &__company {
+        font-weight: 200;
+        font-size: 0.75rem;
+    }
+
+    &__job-description {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    &__year {
+        height: 4.5rem;
+        border-bottom: 1px solid $orange;
+        display: flex;
+        align-items: end;
+        padding: 0.5rem;
+
+        &--left {
+            order: 2;
+        }
+
+        &-text {
+            font-size: 0.75rem;
+        }
+    }
+}
