@@ -11,7 +11,7 @@ function SubmitButton() {
 
 export default function ContactForm() {
     return (
-        <Form className='form' action={sendEmail}>
+        <Form className='form' action={sendEmail} autoComplete="off">
             <div className="form__field">
                 <label htmlFor="first-name" className="form__label">First Name</label>
                 <input
@@ -21,6 +21,10 @@ export default function ContactForm() {
                     name="firstName"
                     required
                     placeholder="Alex"
+                    minLength={2}
+                    maxLength={50}
+                    pattern="[a-zA-Z\s.'-]+"
+                    autoComplete="given-name"
                 />
             </div>
 
@@ -33,6 +37,10 @@ export default function ContactForm() {
                     name="lastName"
                     required
                     placeholder="Rivera"
+                    minLength={2}
+                    maxLength={50}
+                    pattern="[a-zA-Z\s.'-]+"
+                    autoComplete="family-name"
                 />
             </div>
 
@@ -45,6 +53,9 @@ export default function ContactForm() {
                     name="email"
                     required
                     placeholder="you@example.com"
+                    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+                    maxLength={254}
+                    autoComplete="email"
                 />
             </div>
 
@@ -56,11 +67,22 @@ export default function ContactForm() {
                     required
                     className="form__input form__input--textbox"
                     placeholder="Your message..."
+                    minLength={10}
+                    maxLength={1000}
                 />
             </div>
 
+            <input
+                type="text"
+                name="bot-field"
+                style={{ display: 'none' }}
+                tabIndex={-1}
+                autoComplete="off"
+            />
+
             <SubmitButton />
         </Form>
+
 
     );
 }
