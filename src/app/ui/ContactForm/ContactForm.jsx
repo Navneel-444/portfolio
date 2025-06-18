@@ -12,7 +12,7 @@ function SubmitButton() {
 export default function ContactForm() {
     return (
         <Form className='form' action={sendEmail} autoComplete="off">
-            <div className="form__field">
+            <div className="form__field form__field--name">
                 <label htmlFor="first-name" className="form__label">First Name</label>
                 <input
                     className="form__input"
@@ -28,7 +28,7 @@ export default function ContactForm() {
                 />
             </div>
 
-            <div className="form__field">
+            <div className="form__field form__field--name">
                 <label htmlFor="last-name" className="form__label">Last Name</label>
                 <input
                     className="form__input"
@@ -82,7 +82,6 @@ export default function ContactForm() {
 
             <SubmitButton />
         </Form>
-
 
     );
 }

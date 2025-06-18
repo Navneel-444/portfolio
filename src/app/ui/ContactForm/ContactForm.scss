@@ -8,13 +8,21 @@
     font-size: 0.875rem;
     border-radius: 0.75rem;
     width: 24rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 0.75rem;
 
     &__label {
         margin-bottom: 0.5rem;
     }
 
     &__field {
-        margin-bottom: 0.5rem;
+        grid-column: span 2;
+
+        &--name {
+            grid-column: span 1;
+
+        }
     }
 
     &__input {
@@ -58,6 +66,7 @@
         font: inherit;
         font-size: 1rem;
         font-weight: 400;
+        grid-column: span 2;
 
         &:active {
             border-bottom-width: 2px;

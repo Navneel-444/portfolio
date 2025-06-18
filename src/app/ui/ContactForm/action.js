@@ -5,14 +5,16 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendEmail(formData) {
-    const name = formData.get('name');
+    const firstName = formData.get('firstName');
+    const lastName = formData.get('lastName');
+    const name = `${firstName} ${lastName}`;
     const email = formData.get('email');
     const message = formData.get('message');
 
     try {
         await resend.emails.send({
-            from: 'you@yourdomain.com',
-            to: 'your.email@example.com',
+            from: 'contact@mydomain.com',
+            to: 'navneel.nandran@gmail.com',
             subject: `New Contact Form Message from ${name}`,
             html: `<p><strong>${name}</strong> wrote:</p><p>${message}</p><p>Email: ${email}</p>`,
         });
