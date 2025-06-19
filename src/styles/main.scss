@@ -9,13 +9,28 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "JetBrains Mono", Consolas, monospace;
     font-size: 16px;
     line-height: 1.5;
     color: $white;
+
     background-color: $grey-background ;
-    width: 80%;
-    max-width: 75rem;
+
+}
+
+.main {
+    width: 90%;
+    max-width: 80rem;
     margin: 0 auto;
+}
+
+section[id],
+h2[id],
+div[id] {
+    scroll-margin-top: 50px;
 }

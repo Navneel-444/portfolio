@@ -4,7 +4,7 @@ import ContactForm from '@/app/ui/ContactForm/ContactForm'
 
 export default function ContactSection() {
     return (
-        <div className="contact-section">
+        <div id='contact' className="contact-section">
             <ContactInfo />
             <ContactForm />
         </div>

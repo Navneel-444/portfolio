@@ -4,7 +4,7 @@ import Timeline from '@/app/ui/Timeline/Timeline';
 
 export default function ExperienceSection() {
     return (<>
-        <SectionHeading heading={"Experiences"} />
+        <SectionHeading heading={"Experience"} id='experience' />
         <Timeline />
     </>
     )

@@ -1,5 +1,4 @@
 import './HexSphere.scss';
-import Image from 'next/image';
 
 export default function HexSphere() {
     return (
@@ -9,9 +8,9 @@ export default function HexSphere() {
                 aria-describedby="hex-sphere-tooltip"
                 aria-label="Information about hexagon"
             >
-                <Image
+                <img
                     className='hex-sphere__image'
-                    src='/images/info-icon.svg'
+                    src='/icons/info.svg'
                     width={24}
                     height={24}
                     alt='information on the features of the hexagon sphere'
@@ -22,9 +21,9 @@ export default function HexSphere() {
                     feature 2 <br />
                 </small>
             </button>
-            <Image
+            <img
                 className='hex-sphere__image'
-                src='images/hex-sphere.svg'
+                src='/hex-sphere.svg'
                 width={336}
                 height={341}
                 alt='interactive hexagon sphere'

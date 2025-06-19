@@ -1,13 +1,10 @@
 import './ContactInfo.scss';
-import MailIcon from '../../../assets/icons/mail-icon.svg';
-import LinkedInIcon from '../../../assets/icons/linkedln-icon.svg';
-import GithubIcon from '../../../assets/icons/github-icon.svg';
 
 export default function ContactInfo() {
     const socials = [
-        { label: "navneel.nandran@gmail.com", icon: MailIcon, url: "mailto:navneel.nandran@gmail.com" },
-        { label: "navneel-444", icon: GithubIcon, url: "https://github.com/navneel-444" },
-        { label: "navneel-nandran", icon: LinkedInIcon, url: "https://linkedin.com/in/navneel-nandran" }
+        { label: "navneel.nandran@gmail.com", icon: "mail.svg", url: "mailto:navneel.nandran@gmail.com" },
+        { label: "navneel-444", icon: "github.svg", url: "https://github.com/navneel-444" },
+        { label: "navneel-nandran", icon: "linkedin.svg", url: "https://linkedin.com/in/navneel-nandran" }
     ]
     return (
         <section className="contact-info">
@@ -20,7 +17,11 @@ export default function ContactInfo() {
             <div className="contact-info__social">
                 {socials.map((link, idx) => (
                     <a href={link.url} target="_blank" rel="noopener noreferrer" key={idx} className="contact-info__social-link">
-                        <link.icon className="contact-info__social-icon" />
+                        <img src={`/icons/${link.icon}`}
+                            width={28}
+                            height={28}
+                            alt='information on the features of the hexagon sphere'
+                            className="contact-info__social-icon" />
                         <p className="contact-info__social-name">{link.label}</p>
                     </a>
                 ))}

@@ -1,7 +1,6 @@
 "use client"
 import './Navigation.scss';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export default function Navigation() {
@@ -15,27 +14,50 @@ export default function Navigation() {
   ];
 
   useEffect(() => {
-    const sections = document.querySelectorAll('section[id]');
-    if (!sections.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-50% 0px -50% 0px' }
+    const sections = Array.from(document.querySelectorAll('[id]')).filter(el =>
+      ['SECTION', 'DIV', 'H2', 'HEADER'].includes(el.tagName)
     );
 
-    sections.forEach((section) => observer.observe(section));
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      let currentSectionId = '';
 
-    return () => observer.disconnect();
+      for (const section of sections) {
+        if (section.offsetTop <= scrollPosition) {
+          currentSectionId = section.id;
+        }
+      }
+
+      if (currentSectionId !== activeId) {
+        setActiveId(currentSectionId);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.getElementById('nav');
+      if (window.scrollY > 5) {
+        navbar?.classList.add('navigation--scroll');
+      } else {
+        navbar?.classList.remove('navigation--scroll');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
-    <nav className="navigation">
+    <nav id='nav' className="navigation">
       <h2 className="navigation__heading">Navneel</h2>
       <ul className="navigation__list">
         {navInfo.map((link) => (
@@ -51,8 +73,8 @@ export default function Navigation() {
         ))}
       </ul>
       <button className="navigation__theme">
-        <Image
-          src="/images/light_icon.png"
+        <img
+          src="/icons/light.svg"
           width={20}
           height={20}
           alt="button to change website from light mode/dark mode"

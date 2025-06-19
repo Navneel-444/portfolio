@@ -4,7 +4,7 @@ import HexSphere from "@/app/ui/HexSphere/HexSphere";
 
 export default function HeroSection() {
     return (
-        <section className="hero-section">
+        <section id='home' className="hero-section">
             <div className='hero-section__left'>
                 <div className="hero-section__spacer"></div>
                 <HeroStatement />

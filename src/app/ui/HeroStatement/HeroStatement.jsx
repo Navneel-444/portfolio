@@ -1,5 +1,4 @@
 import './HeroStatement.scss';
-import Image from 'next/image'
 
 export default function HeroStatement() {
     return (
@@ -13,9 +12,9 @@ export default function HeroStatement() {
             </p>
             <a href="/resume.pdf" className='hero-statement__download' download>
                 <button className="hero-statement__resume-btn">
-                    <Image
+                    <img
                         className='hero-statement__btn-icon'
-                        src='images/download-icon.svg'
+                        src='/icons/download.svg'
                         width={10}
                         height={15}
                         alt='button to download resume'
