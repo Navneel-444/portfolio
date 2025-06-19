@@ -1,13 +1,19 @@
 @use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .hero-section {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+    height: 50vw;
+    max-height: 40rem;
+    position: relative;
     border: 2px solid $grey-blue;
     border-radius: 0.5rem;
-    height: 80vh;
+    margin-bottom: 2rem;
+    padding: 2rem;
     position: relative;
+
 
     &__location {
         background-color: $grey-blue;
@@ -20,12 +26,16 @@
     }
 
     &__left {
-        align-self: start;
         height: 100%;
+        margin-top: 4rem;
     }
 
-    &__spacer {
-        height: 10%
-    }
+    &__right {
+        align-self: end;
 
+        @include desktop {
+            transform: translateX(-20%);
+            margin-bottom: 3rem;
+        }
+    }
 }

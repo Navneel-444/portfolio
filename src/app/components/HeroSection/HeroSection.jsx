@@ -6,7 +6,6 @@ export default function HeroSection() {
     return (
         <section id='home' className="hero-section">
             <div className='hero-section__left'>
-                <div className="hero-section__spacer"></div>
                 <HeroStatement />
             </div>
             <div className='hero-section__right'>
