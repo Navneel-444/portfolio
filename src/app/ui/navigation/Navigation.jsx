@@ -19,7 +19,7 @@ export default function Navigation() {
     );
 
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
+      const scrollPosition = window.scrollY + 120;
       let currentSectionId = '';
 
       for (const section of sections) {
