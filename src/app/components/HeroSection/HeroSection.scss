@@ -10,19 +10,21 @@
     position: relative;
     border: 2px solid $grey-blue;
     border-radius: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 5rem;
     padding: 2rem;
     position: relative;
 
 
     &__location {
         background-color: $grey-blue;
-        padding: 0.125rem 1rem;
+        padding: 0.25rem 1rem;
         border-radius: 0.5rem 0;
-        font-weight: 300;
+        font-weight: 200;
         position: absolute;
         bottom: 0;
         right: 0;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
     }
 
     &__left {

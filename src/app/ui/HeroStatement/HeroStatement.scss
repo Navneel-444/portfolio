@@ -5,7 +5,6 @@
 .hero-statement {
     width: auto;
     max-width: 28rem;
-    // margin-top: 1rem;
 
     &__title {
         margin-bottom: 1.75rem;
@@ -20,7 +19,7 @@
 
     &__subheading {
         font-size: 0.875rem;
-        font-weight: 300;
+        font-weight: 100;
     }
 
     &__description {
@@ -44,7 +43,8 @@
     }
 
     &__btn-text {
-        letter-spacing: 1px;
+        font-family: "JetBrains Mono", sans-serif;
+        font-weight: 300;
     }
 
     &__download {
