@@ -10,9 +10,14 @@
         right: 110%;
         background: #22222277;
         color: $white;
-        padding: 0.5em 1em;
+        padding: 0.5rem 1rem;
         border-radius: 0.5rem;
         white-space: nowrap;
+
+        @include mobile {
+            right: auto;
+            left: 110%;
+        }
     }
 
     &__info-icon:hover .hex-sphere__tooltip,
@@ -27,7 +32,6 @@
         position: relative;
         padding: 0;
         margin: 1rem 0;
-
     }
 
     &__info-icon {
