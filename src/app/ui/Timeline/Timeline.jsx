@@ -24,7 +24,7 @@ export default function Timeline() {
     ];
     return (
         <section className="timeline">
-            <svg className="timeline__center" width="15" height="600" xmlns="http://www.w3.org/2000/svg">
+            <svg className="timeline__center" width="20" height="600" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <marker
                         id="arrowhead"
