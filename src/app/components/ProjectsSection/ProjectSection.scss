@@ -1,3 +1,5 @@
+@use '../../../styles/mixins' as *;
+
 .project {
     margin-bottom: 5rem;
 
@@ -6,5 +8,9 @@
         display: grid;
         gap: 1.5rem;
         grid-template-columns: repeat(2, 1fr);
+
+        @include mobile {
+            display: block;
+        }
     }
 }
