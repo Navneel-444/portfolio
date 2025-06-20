@@ -1,7 +1,12 @@
-import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
+'use client';
+
 import './Timeline.scss';
+import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
+import { useEffect, useState } from 'react';
 
 export default function Timeline() {
+    const [totalHeight, setTotalHeight] = useState(0);
+
     const periods = [
         {
             title: "Frontend Developer",
@@ -22,9 +27,28 @@ export default function Timeline() {
             description: "Assisted in developing MVPs, wrote unit tests, and participated in code reviews for early-stage products."
         }
     ];
+
+    useEffect(() => {
+        const calculateTotalHeight = () => {
+            const elements = document.getElementsByClassName('time-period');
+            const total = Array.from(elements).reduce((sum, el) => {
+                return sum + el.offsetHeight;
+            }, 0);
+            setTotalHeight(total * 1.05);
+        };
+
+        calculateTotalHeight();
+
+        window.addEventListener('resize', calculateTotalHeight);
+
+        return () => {
+            window.removeEventListener('resize', calculateTotalHeight);
+        };
+    }, []);
+
     return (
         <section className="timeline">
-            <svg className="timeline__center" width="15" height="600" xmlns="http://www.w3.org/2000/svg">
+            <svg className="timeline__center" width="20" height={`${totalHeight}`} xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <marker
                         id="arrowhead"
@@ -50,7 +74,7 @@ export default function Timeline() {
                     x1="10"
                     y1="10"
                     x2="10"
-                    y2="600"
+                    y2={`${totalHeight}`}
                     className="timeline__center-line"
                     markerEnd="url(#arrowhead)"
                 />

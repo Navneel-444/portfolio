@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import './ProjectCard.scss';
 
 export default function ProjectCard() {
@@ -9,17 +8,17 @@ export default function ProjectCard() {
                     <p className="project-card__expand-text">
                         View Project
                     </p>
-                    <Image
+                    <img
                         className='project-card__expand-icon'
-                        src='/images/expand-icon.svg'
+                        src='/icons/expand.svg'
                         width={14}
                         height={14}
                         alt='icon to expand the hovered project card'
                     />
                 </button>
-                <Image
+                <img
                     className='project-card__image'
-                    src='/images/project-screenshot.png'
+                    src='/project-screenshot.png'
                     width={660}
                     height={292}
                     alt='information on the features of the hexagon sphere'

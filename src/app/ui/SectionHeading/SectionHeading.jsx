@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './SectionHeading.scss';
 
-export default function SectionHeading({ heading }) {
+export default function SectionHeading({ heading, id }) {
     const titleRef = useRef(null);
     const [svgWidth, setSvgWidth] = useState(0);
 
@@ -16,7 +16,7 @@ export default function SectionHeading({ heading }) {
     }, [heading]);
 
     return (
-        <div className="section-heading">
+        <div className="section-heading" id={id}>
             <h3 ref={titleRef} className="section-heading__title">{heading}</h3>
             <svg className="section-heading__decorator" width={svgWidth} height="26" xmlns="http://www.w3.org/2000/svg">
                 <circle className="section-heading__decorator-dot" cx="3" cy="3" r="3" />

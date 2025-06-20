@@ -6,8 +6,8 @@ import ShowMoreButton from '@/app/ui/ShowMoreButton/ShowMoreButton';
 export default function ProjectSection() {
     return (
         <>
-            <SectionHeading heading="Projects" />
-            <section id='projects' className="project__container">
+            <SectionHeading heading="Projects" id='projects' />
+            <section className="project__container">
                 <ProjectCard />
                 <ProjectCard />
                 <ProjectCard />

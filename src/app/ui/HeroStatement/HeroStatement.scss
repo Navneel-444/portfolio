@@ -3,12 +3,11 @@
 
 
 .hero-statement {
-    width: 40vw;
+    width: auto;
     max-width: 28rem;
-    padding-right: 1rem;
 
     &__title {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.75rem;
         white-space: nowrap;
     }
 
@@ -19,8 +18,8 @@
     }
 
     &__subheading {
-        font-size: 1rem;
-        font-weight: 400;
+        font-size: 0.875rem;
+        font-weight: 100;
     }
 
     &__description {
@@ -32,15 +31,20 @@
         align-items: center;
         justify-content: space-evenly;
         border: 1px solid $grey-blue;
-        border-radius: 0.25rem;
-        width: 7.5rem;
-        height: 1.875rem;
+        border-radius: 0.45rem;
+        width: 8.5rem;
+        height: 2rem;
         background-color: $grey-background;
         color: $white;
 
         &:hover {
-            box-shadow: 0 0 0.5rem $grey-blue;
+            box-shadow: 0 0 0.35rem $grey-blue;
         }
+    }
+
+    &__btn-text {
+        font-family: "JetBrains Mono", sans-serif;
+        font-weight: 300;
     }
 
     &__download {
