@@ -1,4 +1,5 @@
 @use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .hex-sphere {
 
@@ -20,6 +21,15 @@
         pointer-events: auto;
     }
 
+    &__container {
+        width: 336px;
+        height: 341px;
+        position: relative;
+        padding: 0;
+        margin: 1rem 0;
+
+    }
+
     &__info-icon {
         background: none;
         border: none;
@@ -28,6 +38,13 @@
         font: inherit;
         cursor: pointer;
         outline: none;
-        position: relative;
+        position: absolute;
+        bottom: 0;
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        display: block;
     }
 }

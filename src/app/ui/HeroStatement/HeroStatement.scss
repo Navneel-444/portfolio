@@ -9,21 +9,37 @@
     &__title {
         margin-bottom: 1.75rem;
         white-space: nowrap;
+
+        @include mobile {
+            margin-bottom: 1.5rem;
+        }
     }
 
     &__heading {
         color: $orange;
         font-size: 3rem;
         font-weight: 400;
+
+        @include mobile {
+            font-size: 2.25rem;
+        }
     }
 
     &__subheading {
         font-size: 0.875rem;
         font-weight: 100;
+
+        @include mobile {
+            font-size: 0.75rem;
+        }
     }
 
     &__description {
         margin-bottom: 1.5rem;
+
+        @include mobile {
+            font-size: 0.875rem;
+        }
     }
 
     &__resume-btn {
@@ -32,7 +48,7 @@
         justify-content: space-evenly;
         border: 1px solid $grey-blue;
         border-radius: 0.45rem;
-        width: 8.5rem;
+        width: 8rem;
         height: 2rem;
         background-color: $grey-background;
         color: $white;
