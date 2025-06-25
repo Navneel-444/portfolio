@@ -7,10 +7,10 @@ export default function Navigation() {
   const [activeId, setActiveId] = useState('');
 
   const navInfo = [
-    { id: 1, name: 'home', href: '#home' },
-    { id: 2, name: 'projects', href: '#projects' },
-    { id: 3, name: 'experience', href: '#experience' },
-    { id: 4, name: 'contact', href: '#contact' },
+    { id: 1, name: './home', href: '#home' },
+    { id: 2, name: '/projects', href: '#projects' },
+    { id: 3, name: '/experience', href: '#experience' },
+    { id: 4, name: '/contact', href: '#contact' },
   ];
 
   useEffect(() => {

@@ -6,6 +6,12 @@
     max-width: 20rem;
     margin-right: 8rem;
 
+    @include mobile {
+        width: 100%;
+        max-width: none;
+        margin: 0 0 1.5rem 0
+    }
+
     &__heading {
         border-bottom: 1px solid $grey-blue;
         padding-bottom: 0.5rem;
@@ -49,6 +55,7 @@
 
         &-name {
             font-size: 0.75rem;
+            color: $grey-accent
         }
     }
 }

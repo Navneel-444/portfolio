@@ -31,10 +31,17 @@ export default function Timeline() {
     useEffect(() => {
         const calculateTotalHeight = () => {
             const elements = document.getElementsByClassName('time-period');
-            const total = Array.from(elements).reduce((sum, el) => {
+            const baseTotal = Array.from(elements).reduce((sum, el) => {
                 return sum + el.offsetHeight;
             }, 0);
-            setTotalHeight(total * 1.05);
+
+            // Add 40px per element on mobile (<= 767px)
+            const isMobile = window.innerWidth <= 767;
+            const mobileExtra = isMobile ? elements.length * 40 : 0;
+
+            const finalTotal = (baseTotal + mobileExtra) * 1.05;
+
+            setTotalHeight(finalTotal);
         };
 
         calculateTotalHeight();

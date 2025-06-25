@@ -1,7 +1,18 @@
 @use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .contact-section {
     display: flex;
     margin: 12rem 0 4rem 0;
     justify-content: space-evenly;
+
+    @include mobile {
+        flex-direction: column;
+        margin: 8rem 0 2rem 0;
+        position: absolute;
+        left: 0;
+        padding: 5% 5%;
+        background-color: rgba(black, 5%);
+    }
+
 }

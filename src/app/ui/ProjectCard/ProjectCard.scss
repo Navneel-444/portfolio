@@ -1,4 +1,5 @@
 @use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .project-card {
     margin-bottom: 1rem;
@@ -14,6 +15,10 @@
     &__title {
         font-size: 1.25rem;
         margin-top: 0.25rem;
+
+        @include mobile {
+            font-size: 1rem;
+        }
     }
 
     &__info {
@@ -26,6 +31,9 @@
         font-weight: 200;
         margin: 0.25rem 0;
 
+        @include mobile {
+            font-size: 0.75rem;
+        }
     }
 
     &__mask {

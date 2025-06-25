@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import './HexSphere.scss';
 
 export default function HexSphere() {
@@ -8,7 +9,7 @@ export default function HexSphere() {
                 aria-describedby="hex-sphere-tooltip"
                 aria-label="Information about hexagon"
             >
-                <img
+                <Image
                     className='hex-sphere__image'
                     src='/icons/info.svg'
                     width={24}
