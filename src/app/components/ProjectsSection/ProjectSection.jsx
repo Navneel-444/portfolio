@@ -7,9 +7,11 @@ import ShowMoreButton from '@/app/ui/ShowMoreButton/ShowMoreButton';
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../firebase/firebase'
+import useSectionViewTracker from '@/hooks/useSectionViewTracker';
 
 export default function ProjectSection() {
     const [projects, setProjects] = useState([]);
+    useSectionViewTracker('projects');
 
     useEffect(() => {
         async function getProjects() {

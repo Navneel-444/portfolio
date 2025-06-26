@@ -1,17 +1,62 @@
 'use client';
 import './ContactForm.scss';
-import Form from 'next/form';
-import { useFormStatus } from 'react-dom';
+import { useEffect, useRef } from 'react';
+import { analytics } from '@/app/firebase/firebase';
+import { logEvent } from 'firebase/analytics';
 import { sendEmail } from '../ContactForm/action';
+import { useFormStatus } from 'react-dom';
+import Form from 'next/form';
 
 function SubmitButton() {
     const { pending } = useFormStatus();
-    return <button type="submit" disabled={pending} className="form__button">{pending ? 'Sending...' : 'Submit'} </button>;
+    return (
+        <button type="submit" disabled={pending} className="form__button">
+            {pending ? 'Sending...' : 'Submit'}
+        </button>
+    );
 }
 
 export default function ContactForm() {
+    const filledFields = useRef(new Set());
+    const submitted = useRef(false);
+
+    const handleInput = (e) => {
+        filledFields.current.add(e.target.name);
+    };
+
+    const handleClientSubmit = () => {
+        submitted.current = true;
+
+        if (analytics) {
+            logEvent(analytics, 'submit_contact_form', {
+                method: 'email_form',
+                fields_filled: filledFields.current.size,
+            });
+        }
+    };
+
+    useEffect(() => {
+        const handleUnload = () => {
+            if (!submitted.current && filledFields.current.size > 0 && analytics) {
+                logEvent(analytics, 'abandon_contact_form', {
+                    fields_typed: filledFields.current.size,
+                });
+            }
+        };
+
+        window.addEventListener('beforeunload', handleUnload);
+        return () => window.removeEventListener('beforeunload', handleUnload);
+    }, []);
+
     return (
-        <Form className='form' action={sendEmail} autoComplete="off">
+        <Form
+            className="form"
+            action={(formData) => {
+                handleClientSubmit();
+                sendEmail(formData);
+            }}
+            autoComplete="off"
+        >
             <div className="form__field form__field--name">
                 <label htmlFor="first-name" className="form__label">First Name</label>
                 <input
@@ -20,6 +65,7 @@ export default function ContactForm() {
                     id="first-name"
                     name="firstName"
                     required
+                    onChange={handleInput}
                     placeholder="Alex"
                     minLength={2}
                     maxLength={50}
@@ -36,6 +82,7 @@ export default function ContactForm() {
                     id="last-name"
                     name="lastName"
                     required
+                    onChange={handleInput}
                     placeholder="Rivera"
                     minLength={2}
                     maxLength={50}
@@ -52,6 +99,7 @@ export default function ContactForm() {
                     id="email"
                     name="email"
                     required
+                    onChange={handleInput}
                     placeholder="you@example.com"
                     pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
                     maxLength={254}
@@ -65,6 +113,7 @@ export default function ContactForm() {
                     id="message"
                     name="message"
                     required
+                    onChange={handleInput}
                     className="form__input form__input--textbox"
                     placeholder="Your message..."
                     minLength={10}
@@ -82,6 +131,5 @@ export default function ContactForm() {
 
             <SubmitButton />
         </Form>
-
     );
 }

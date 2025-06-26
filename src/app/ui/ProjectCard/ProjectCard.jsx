@@ -1,10 +1,34 @@
+'use client'
 import './ProjectCard.scss';
+import { analytics } from '@/app/firebase/firebase';
+import { logEvent } from 'firebase/analytics';
+import { useState } from 'react';
 
 export default function ProjectCard({ project }) {
     const { name, desc } = project;
+    const [hasHovered, setHasHovered] = useState(false);
 
+    const handleProjectClick = () => {
+        if (analytics) {
+            logEvent(analytics, 'select_project',
+                {
+                    project_name: name
+                }
+            )
+        }
+    }
+    const handleHover = () => {
+        if (!hasHovered && analytics) {
+            setTimeout(() => {
+                logEvent(analytics, "hover_project_card", {
+                    project_name: name
+                });
+                setHasHovered(true);
+            }, 1000);
+        }
+    };
     return (
-        <section className="project-card">
+        <section onMouseEnter={handleHover} onClick={handleProjectClick} className="project-card">
             <div className="project-card__mask">
                 <button className="project-card__expand">
                     <p className="project-card__expand-text">
