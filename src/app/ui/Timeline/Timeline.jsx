@@ -3,30 +3,27 @@
 import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
 import { useEffect, useState } from 'react';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../firebase/firebase'
+
 
 export default function Timeline() {
     const [totalHeight, setTotalHeight] = useState(0);
+    const [experience, setExperience] = useState([]);
 
-    const periods = [
-        {
-            title: "Frontend Developer",
-            company: "Tech Solutions Inc.",
-            date: "2022-2021",
-            description: "Led a team of 30+ to boost productivity by 33%. Built an Excel tool that predicted vendor cases with 95% accuracy, cutting errors and speeding up workflows by 30%. Streamlined inventory processes, cutting processing time by 30% in a huge warehouse."
-        },
-        {
-            title: "Web Developer",
-            company: "Creative Web Studio",
-            date: "2020-2021",
-            description: "Guided 15 warehouse staff to improve dock throughput by 25%, handling 50,000 more cases. Created a new system that cut paperwork errors by 25% and improved inventory accuracy. Improved scheduling to raise process accuracy from 85% to 98%."
-        },
-        {
-            title: "Junior Developer",
-            company: "Startup Hub",
-            date: "2019-2020",
-            description: "Assisted in developing MVPs, wrote unit tests, and participated in code reviews for early-stage products."
+    useEffect(() => {
+        async function getExperiences() {
+            const snapshot = await getDocs(collection(db, "experience"))
+            const data = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setExperience(data);
         }
-    ];
+        getExperiences();
+
+    }, []);
+
 
     useEffect(() => {
         const calculateTotalHeight = () => {
@@ -34,20 +31,14 @@ export default function Timeline() {
             const baseTotal = Array.from(elements).reduce((sum, el) => {
                 return sum + el.offsetHeight;
             }, 0);
-
-            // Add 40px per element on mobile (<= 767px)
             const isMobile = window.innerWidth <= 767;
             const mobileExtra = isMobile ? elements.length * 40 : 0;
-
             const finalTotal = (baseTotal + mobileExtra) * 1.05;
-
             setTotalHeight(finalTotal);
         };
 
         calculateTotalHeight();
-
         window.addEventListener('resize', calculateTotalHeight);
-
         return () => {
             window.removeEventListener('resize', calculateTotalHeight);
         };
@@ -86,7 +77,7 @@ export default function Timeline() {
                     markerEnd="url(#arrowhead)"
                 />
             </svg>
-            {periods.map((period, idx) => (
+            {experience.map((period, idx) => (
                 <TimePeriodCard
                     key={idx}
                     info={period}
