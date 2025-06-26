@@ -37,10 +37,8 @@ export default function Timeline() {
             setTotalHeight(finalTotal);
         };
 
-        // Run initially
         calculateTotalHeight();
 
-        // Run on resize
         window.addEventListener('resize', calculateTotalHeight);
         return () => {
             window.removeEventListener('resize', calculateTotalHeight);

@@ -1,6 +1,8 @@
 import './ProjectCard.scss';
 
-export default function ProjectCard() {
+export default function ProjectCard({ project }) {
+    const { name, desc } = project;
+
     return (
         <section className="project-card">
             <div className="project-card__mask">
@@ -25,8 +27,8 @@ export default function ProjectCard() {
                 />
             </div>
             <section className="project-card__info">
-                <h3 className="project-card__title">Portfolio</h3>
-                <p className="project-card__description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident doloribus molestias repudiandae facilis sed magnam officia error ducimus veritatis placeat cupiditate magni commodi consectetur deserunt dolore laudantium, quasi culpa? Libero!</p>
+                <h3 className="project-card__title">{name}</h3>
+                <p className="project-card__description">{desc}</p>
             </section>
         </section>
     )
