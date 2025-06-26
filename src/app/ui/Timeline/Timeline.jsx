@@ -12,13 +12,13 @@ export default function Timeline() {
             title: "Frontend Developer",
             company: "Tech Solutions Inc.",
             date: "2022-2021",
-            description: "Developed and maintained web applications using React, improved UI/UX, and collaborated with cross-functional teams."
+            description: "Led a team of 30+ to boost productivity by 33%. Built an Excel tool that predicted vendor cases with 95% accuracy, cutting errors and speeding up workflows by 30%. Streamlined inventory processes, cutting processing time by 30% in a huge warehouse."
         },
         {
             title: "Web Developer",
             company: "Creative Web Studio",
             date: "2020-2021",
-            description: "Built responsive websites, optimized performance, and integrated REST APIs for various client projects."
+            description: "Guided 15 warehouse staff to improve dock throughput by 25%, handling 50,000 more cases. Created a new system that cut paperwork errors by 25% and improved inventory accuracy. Improved scheduling to raise process accuracy from 85% to 98%."
         },
         {
             title: "Junior Developer",
