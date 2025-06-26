@@ -20,12 +20,12 @@ export default function Timeline() {
             }));
             setExperience(data);
         }
-
         getExperiences();
     }, []);
-    console.log(experience);
 
     useEffect(() => {
+        if (experience.length === 0) return;
+
         const calculateTotalHeight = () => {
             const elements = document.getElementsByClassName('time-period');
             const baseTotal = Array.from(elements).reduce((sum, el) => {
@@ -37,12 +37,15 @@ export default function Timeline() {
             setTotalHeight(finalTotal);
         };
 
+        // Run initially
         calculateTotalHeight();
+
+        // Run on resize
         window.addEventListener('resize', calculateTotalHeight);
         return () => {
             window.removeEventListener('resize', calculateTotalHeight);
         };
-    }, []);
+    }, [experience]);
 
     return (
         <section className="timeline">

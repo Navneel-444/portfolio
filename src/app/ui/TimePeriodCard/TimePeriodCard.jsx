@@ -1,7 +1,7 @@
 import './TimePeriodCard.scss';
 
 export default function TimePeriodCard({ info, position }) {
-    const { company, desc, end, id, role, start } = info;
+    const { company, desc, end, role, start } = info;
     const date = `${start}-${end}`
     console.log(info);
 
