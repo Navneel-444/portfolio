@@ -20,10 +20,10 @@ export default function Timeline() {
             }));
             setExperience(data);
         }
+
         getExperiences();
-
     }, []);
-
+    console.log(experience);
 
     useEffect(() => {
         const calculateTotalHeight = () => {
@@ -78,8 +78,8 @@ export default function Timeline() {
                 />
             </svg>
             {experience.map((period, idx) => (
-                <TimePeriodCard
-                    key={idx}
+                < TimePeriodCard
+                    key={period.id}
                     info={period}
                     position={idx % 2 === 0 ? 'left' : 'right'}
                 />
