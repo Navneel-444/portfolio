@@ -3,55 +3,47 @@
 import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
 import { useEffect, useState } from 'react';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../firebase/firebase'
+
 
 export default function Timeline() {
     const [totalHeight, setTotalHeight] = useState(0);
-
-    const periods = [
-        {
-            title: "Frontend Developer",
-            company: "Tech Solutions Inc.",
-            date: "2022-2021",
-            description: "Developed and maintained web applications using React, improved UI/UX, and collaborated with cross-functional teams."
-        },
-        {
-            title: "Web Developer",
-            company: "Creative Web Studio",
-            date: "2020-2021",
-            description: "Built responsive websites, optimized performance, and integrated REST APIs for various client projects."
-        },
-        {
-            title: "Junior Developer",
-            company: "Startup Hub",
-            date: "2019-2020",
-            description: "Assisted in developing MVPs, wrote unit tests, and participated in code reviews for early-stage products."
-        }
-    ];
+    const [experience, setExperience] = useState([]);
 
     useEffect(() => {
+        async function getExperiences() {
+            const snapshot = await getDocs(collection(db, "experience"))
+            const data = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setExperience(data);
+        }
+        getExperiences();
+    }, []);
+
+    useEffect(() => {
+        if (experience.length === 0) return;
+
         const calculateTotalHeight = () => {
             const elements = document.getElementsByClassName('time-period');
             const baseTotal = Array.from(elements).reduce((sum, el) => {
                 return sum + el.offsetHeight;
             }, 0);
-
-            // Add 40px per element on mobile (<= 767px)
             const isMobile = window.innerWidth <= 767;
             const mobileExtra = isMobile ? elements.length * 40 : 0;
-
             const finalTotal = (baseTotal + mobileExtra) * 1.05;
-
             setTotalHeight(finalTotal);
         };
 
         calculateTotalHeight();
 
         window.addEventListener('resize', calculateTotalHeight);
-
         return () => {
             window.removeEventListener('resize', calculateTotalHeight);
         };
-    }, []);
+    }, [experience]);
 
     return (
         <section className="timeline">
@@ -86,9 +78,9 @@ export default function Timeline() {
                     markerEnd="url(#arrowhead)"
                 />
             </svg>
-            {periods.map((period, idx) => (
-                <TimePeriodCard
-                    key={idx}
+            {experience.map((period, idx) => (
+                < TimePeriodCard
+                    key={period.id}
                     info={period}
                     position={idx % 2 === 0 ? 'left' : 'right'}
                 />

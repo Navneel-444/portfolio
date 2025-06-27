@@ -1,6 +1,14 @@
+'use client'
 import './HeroStatement.scss';
+import { analytics } from '@/app/firebase/firebase';
+import { logEvent } from 'firebase/analytics';
 
 export default function HeroStatement() {
+    const handleResumeDownload = () => {
+        if (analytics) {
+            logEvent(analytics, "resume_downloads")
+        }
+    }
     return (
         <article className='hero-statement'>
             <div className="hero-statement__title">
@@ -10,7 +18,10 @@ export default function HeroStatement() {
             <p className='hero-statement__description'>
                 Building tools that make work easier. I create software that automates tasks, so you can focus on what truly matters.
             </p>
-            <a href="/resume.pdf" className='hero-statement__download' download>
+            <a href="/resume.pdf"
+                className='hero-statement__download'
+                download
+                onClick={handleResumeDownload}>
                 <button className="hero-statement__resume-btn">
                     <img
                         className='hero-statement__btn-icon'
