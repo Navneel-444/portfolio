@@ -3,6 +3,7 @@
 
 .hex-sphere {
 
+
     &__tooltip {
         display: none;
         position: absolute;
@@ -27,11 +28,18 @@
     }
 
     &__container {
-        width: 336px;
-        height: 341px;
         position: relative;
         padding: 0;
-        margin: 1rem 0;
+        position: absolute;
+        left: 52%;
+        bottom: 9vh;
+
+        @include mobile {
+            width: 100%;
+            position: relative;
+            left: unset;
+            top: unset;
+        }
     }
 
     &__info-icon {

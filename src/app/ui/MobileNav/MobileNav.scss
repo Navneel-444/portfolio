@@ -2,14 +2,20 @@
 @use '../../../styles/mixins' as *;
 
 .mobile-nav {
+    display: none;
+
+    @include mobile {
+        display: block;
+    }
+
     &__btn {
-        background-color: rgba($grey-accent, 35%);
+        background-color: rgba($grey-blue, 65%);
         border-radius: 0 0 0 1rem;
         border: none;
         position: fixed;
         top: 0;
         right: 0;
-        padding: 1rem 2.25rem;
+        padding: 0.75rem 2rem;
         z-index: 1100;
         display: flex;
         cursor: pointer;

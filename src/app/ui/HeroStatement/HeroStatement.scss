@@ -5,6 +5,18 @@
 .hero-statement {
     width: auto;
     max-width: 28rem;
+    height: 100%;
+    margin: 6vh 0 0 0;
+    position: absolute;
+    right: 48%;
+
+    @include mobile {
+        position: relative;
+        width: 100%;
+        height: max-content;
+        margin: 0;
+        right: unset;
+    }
 
     &__title {
         margin-bottom: 1.75rem;
@@ -17,11 +29,11 @@
 
     &__heading {
         color: $orange;
-        font-size: 3rem;
+        font-size: 5vw;
         font-weight: 400;
 
         @include mobile {
-            font-size: 2.25rem;
+            font-size: 8.5vw;
         }
     }
 
@@ -30,12 +42,13 @@
         font-weight: 100;
 
         @include mobile {
-            font-size: 0.75rem;
+            font-size: 3vw;
         }
     }
 
     &__description {
         margin-bottom: 1.5rem;
+        font-size: 0.875rem;
 
         @include mobile {
             font-size: 0.875rem;

@@ -10,7 +10,6 @@ export default function SectionHeading({ heading, id }) {
     useEffect(() => {
         if (titleRef.current) {
             const width = titleRef.current.offsetWidth;
-            console.log(width)
             setSvgWidth((width * 1.15) + 26);
         }
     }, [heading]);
