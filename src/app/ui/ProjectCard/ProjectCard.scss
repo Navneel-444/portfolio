@@ -30,10 +30,6 @@
         letter-spacing: 1px;
         font-weight: 200;
         margin: 0.25rem 0;
-
-        @include mobile {
-            font-size: 0.75rem;
-        }
     }
 
     &__mask {

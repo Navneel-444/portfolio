@@ -2,9 +2,9 @@ import './ContactInfo.scss';
 
 export default function ContactInfo() {
     const socials = [
-        { label: "navneel.nandran@gmail.com", icon: "mail.svg", url: "mailto:navneel.nandran@gmail.com" },
         { label: "navneel-444", icon: "github.svg", url: "https://github.com/navneel-444" },
-        { label: "navneel-nandran", icon: "linkedin.svg", url: "https://linkedin.com/in/navneel-nandran" }
+        { label: "navneel-nandran", icon: "linkedin.svg", url: "https://linkedin.com/in/navneel-nandran" },
+        { label: "navneel.nandran@gmail.com", icon: "mail.svg", url: "mailto:navneel.nandran@gmail.com" }
     ]
     return (
         <section className="contact-info">
