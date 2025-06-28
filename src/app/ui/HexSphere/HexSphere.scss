@@ -28,7 +28,6 @@
     }
 
     &__container {
-        position: relative;
         padding: 0;
         position: absolute;
         left: 52%;
@@ -37,8 +36,8 @@
         @include mobile {
             width: 100%;
             position: relative;
-            left: unset;
-            top: unset;
+            left: auto;
+            bottom: auto;
         }
     }
 
