@@ -30,10 +30,9 @@
     &__container {
         position: relative;
         padding: 0;
-        margin: 1rem 0;
         position: absolute;
         left: 52%;
-        top: 45%;
+        bottom: 9vh;
 
         @include mobile {
             width: 100%;
