@@ -11,24 +11,12 @@ const jetbrains = JetBrains_Mono({
 })
 
 export default function RootLayout({ children }) {
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const windowResize = () => {
-      setIsMobile(window.innerWidth <= 767);
-    };
-
-    windowResize();
-    window.addEventListener('resize', windowResize);
-
-    return () => {
-      window.removeEventListener('resize', windowResize);
-    };
-  }, []);
   return (
     <html lang="en" className={jetbrains.className}>
       <body>
-        {isMobile ? <MobileNav /> : <Navigation />}
+        <Navigation />
+        <MobileNav />
         {children}
       </body>
     </html>

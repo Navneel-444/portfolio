@@ -9,12 +9,8 @@ export default function HeroSection() {
     useSectionViewTracker('home');
     return (
         <section id='home' className="hero-section">
-            <div className='hero-section__left'>
-                <HeroStatement />
-            </div>
-            <div className='hero-section__right'>
-                <HexSphere />
-            </div>
+            <HeroStatement />
+            <HexSphere />
             <div className="hero-section__location">
                 <p className="hero-section__location-text">Brampton, ON</p>
             </div>
