@@ -1,10 +1,11 @@
-import { initializeApp, cert, getApps, getApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
-
 let serviceAccount;
 
 if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
-    serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+    try {
+        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+    } catch (error) {
+        throw new Error('Failed to parse Firebase service account JSON.');
+    }
 } else {
     throw new Error('No Firebase service account credentials found.');
 }

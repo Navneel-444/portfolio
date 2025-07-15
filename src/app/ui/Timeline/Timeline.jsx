@@ -4,7 +4,6 @@ import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
 import { useEffect, useState } from 'react';
 
-
 export default function Timeline({ experiences }) {
     const [totalHeight, setTotalHeight] = useState(0);
 
