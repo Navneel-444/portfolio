@@ -3,28 +3,13 @@
 import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
 import { useEffect, useState } from 'react';
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../../firebase/firebase'
 
 
-export default function Timeline() {
+export default function Timeline({ experiences }) {
     const [totalHeight, setTotalHeight] = useState(0);
-    const [experience, setExperience] = useState([]);
 
     useEffect(() => {
-        async function getExperiences() {
-            const snapshot = await getDocs(collection(db, "experience"))
-            const data = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setExperience(data);
-        }
-        getExperiences();
-    }, []);
-
-    useEffect(() => {
-        if (experience.length === 0) return;
+        if (experiences.length === 0) return;
 
         const calculateTotalHeight = () => {
             const elements = document.getElementsByClassName('time-period');
@@ -43,7 +28,7 @@ export default function Timeline() {
         return () => {
             window.removeEventListener('resize', calculateTotalHeight);
         };
-    }, [experience]);
+    }, []);
 
     return (
         <section className="timeline">
@@ -78,7 +63,7 @@ export default function Timeline() {
                     markerEnd="url(#arrowhead)"
                 />
             </svg>
-            {experience.map((period, idx) => (
+            {experiences.map((period, idx) => (
                 < TimePeriodCard
                     key={period.id}
                     info={period}

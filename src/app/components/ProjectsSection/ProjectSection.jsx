@@ -1,29 +1,12 @@
-'use client';
-
 import './ProjectSection.scss';
 import SectionHeading from '@/app/ui/SectionHeading/SectionHeading';
+import { db } from '@/lib/firebaseAdmin.js';
 import ProjectCard from '@/app/ui/ProjectCard/ProjectCard';
 import ShowMoreButton from '@/app/ui/ShowMoreButton/ShowMoreButton';
-import { useEffect, useState } from 'react';
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../../firebase/firebase'
-import useSectionViewTracker from '@/hooks/useSectionViewTracker';
 
-export default function ProjectSection() {
-    const [projects, setProjects] = useState([]);
-    useSectionViewTracker('projects');
-
-    useEffect(() => {
-        async function getProjects() {
-            const snapshot = await getDocs(collection(db, "project"))
-            const data = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setProjects(data);
-        }
-        getProjects();
-    }, []);
+export default async function ProjectSection() {
+    const snapshot = await db.collection("project").get();
+    const projects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
     return (
         <>
@@ -39,5 +22,5 @@ export default function ProjectSection() {
                 <ShowMoreButton />
             </section>
         </>
-    )
+    );
 }
