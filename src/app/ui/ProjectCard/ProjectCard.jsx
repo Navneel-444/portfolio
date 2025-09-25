@@ -2,12 +2,12 @@
 import './ProjectCard.scss';
 import { analytics } from '@/app/firebase/firebase';
 import { logEvent } from 'firebase/analytics';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function ProjectCard({ project }) {
-    const { name, desc } = project;
+    const { name, desc, id } = project;
     const [hasHovered, setHasHovered] = useState(false);
-
     const handleProjectClick = () => {
         if (analytics) {
             logEvent(analytics, 'select_project',
@@ -30,18 +30,22 @@ export default function ProjectCard({ project }) {
     return (
         <section onMouseEnter={handleHover} onClick={handleProjectClick} className="project-card">
             <div className="project-card__mask">
-                <button className="project-card__expand">
-                    <p className="project-card__expand-text">
-                        View Project
-                    </p>
-                    <img
-                        className='project-card__expand-icon'
-                        src='/icons/expand.svg'
-                        width={14}
-                        height={14}
-                        alt='icon to expand the hovered project card'
-                    />
-                </button>
+                <Link
+                    key={id}
+                    href={`/projects/${name}`}>
+                    <button className="project-card__expand">
+                        <p className="project-card__expand-text">
+                            View Project
+                        </p>
+                        <img
+                            className='project-card__expand-icon'
+                            src='/icons/expand.svg'
+                            width={14}
+                            height={14}
+                            alt='icon to expand the hovered project card'
+                        />
+                    </button>
+                </Link>
                 <img
                     className='project-card__image'
                     src='/project-screenshot.png'
