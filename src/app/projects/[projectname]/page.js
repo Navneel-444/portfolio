@@ -6,9 +6,14 @@ export default async function ProjectPage({ params }) {
 
     if (!projectname) return <div>No project specified</div>;
 
+    function decodeSpace(encoded) {
+        let decoded = decodeURIComponent(encoded);
+        decoded = decoded.replace(/\+/g, ' ');
+        return decoded;
+    }
     const snapshot = await db
         .collection('project')
-        .where('name', '==', projectname)
+        .where('name', '==', decodeSpace(projectname))
         .get();
 
     if (snapshot.empty) return <div>Project not found</div>;
