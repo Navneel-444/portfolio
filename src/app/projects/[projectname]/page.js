@@ -1,8 +1,7 @@
 import { db } from '@/lib/firebaseAdmin';
-import ProjectDetails from '@/app/components/ProjectDetails/ProjectDetails'; // server component
-
+import ProjectDetails from '@/app/components/ProjectDetails/ProjectDetails';
 export default async function ProjectPage({ params }) {
-    const { projectname } = params ?? {};
+    const { projectname } = await params ?? {};
 
     if (!projectname) return <div>No project specified</div>;
 

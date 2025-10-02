@@ -1,0 +1,19 @@
+@use '../../../styles/variables' as *;
+
+.square {
+
+    &-title {
+        font-size: 0.75rem;
+        color: $orange;
+        font-weight: 300;
+        margin-bottom: 0.25rem;
+    }
+
+    &-info {
+        background-color: rgba($grey-accent, 10%);
+        padding: 0.75rem;
+        border: 1px solid rgba($orange, 40%);
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+    }
+}
