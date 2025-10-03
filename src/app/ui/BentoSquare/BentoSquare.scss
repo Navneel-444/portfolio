@@ -2,14 +2,14 @@
 
 .square {
 
-    &-title {
+    &__title {
         font-size: 0.75rem;
         color: $orange;
         font-weight: 300;
         margin: 0.25rem 0;
     }
 
-    &-info {
+    &__info {
         background-color: rgba($grey-accent, 5%);
         padding: 0.75rem;
         border: 1px solid rgba($orange, 40%);
