@@ -17,6 +17,8 @@ export default function ProjectDetails({ project }) {
     return (
         <main>
             <BentoSquare heading='Overview' info={overview} />
+            <BentoSquare heading='Problem Statement' info={problemStatement} />
+            <BentoSquare heading='Key Features' info={keyFeatures} />
         </main>
     );
 }

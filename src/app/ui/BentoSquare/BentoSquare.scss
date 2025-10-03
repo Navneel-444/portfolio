@@ -6,14 +6,16 @@
         font-size: 0.75rem;
         color: $orange;
         font-weight: 300;
-        margin-bottom: 0.25rem;
+        margin: 0.25rem 0;
     }
 
     &-info {
-        background-color: rgba($grey-accent, 10%);
+        background-color: rgba($grey-accent, 5%);
         padding: 0.75rem;
         border: 1px solid rgba($orange, 40%);
         border-radius: 0.5rem;
         font-size: 0.75rem;
+        list-style-position: inside;
     }
+
 }
