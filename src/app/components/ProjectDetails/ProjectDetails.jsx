@@ -68,6 +68,19 @@ export default function ProjectDetails({ project, allProjects }) {
                         </ul>
                     </div>
                 </section>
+                <Link
+                    href={"https://github.com"}
+                >
+                    <button className="link__btn">
+                        <p className="link__title">Github Repo</p>
+                        <img
+                            src="/icons/expand.svg"
+                            alt="button to redirect to the git repo of the project"
+                            width={16}
+                            height={14}
+                        />
+                    </button>
+                </Link>
             </header>
 
             <BentoSquare heading='Overview' info={overview} />

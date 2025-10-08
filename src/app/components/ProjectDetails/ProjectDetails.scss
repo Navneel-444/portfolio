@@ -4,10 +4,14 @@
     border-top: 1px solid $grey-blue;
     padding: 1.25rem 0;
     margin: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     &__project-menu {
         display: flex;
         align-items: center;
+        justify-content: center;
         position: relative;
     }
 
@@ -20,7 +24,6 @@
 
 .dropdown {
     position: relative;
-    display: inline-block;
 
     &__btn {
         background-color: rgba($grey-blue, 0.6);
@@ -29,6 +32,9 @@
         width: 1.5rem;
         height: 1.5rem;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &--show {
             border-radius: 0.25rem 0.25rem 0 0;
@@ -54,9 +60,35 @@
                 background-color: $grey-blue;
             }
         }
+
+        &--show {
+            display: block;
+        }
     }
 
-    .dropdown__content--show {
-        display: block;
+}
+
+.link {
+
+    &__btn {
+        background-color: $grey-background;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.3rem;
+        border-radius: 0.5rem;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba($grey-blue, 0.6);
+        }
+    }
+
+    &__title {
+        color: $white;
+        font-size: 1rem;
+        font-weight: 200;
+        margin-right: 0.5rem;
     }
 }
