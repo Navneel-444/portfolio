@@ -9,10 +9,10 @@
     align-items: center;
 
     &__project-menu {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         position: relative;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+
     }
 
     &__project-title {
@@ -23,12 +23,14 @@
 }
 
 .dropdown {
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &__btn {
         background-color: rgba($grey-blue, 0.6);
         border: none;
-        border-radius: 0.25rem;
+        border-radius: 2rem;
         width: 1.5rem;
         height: 1.5rem;
         cursor: pointer;
@@ -37,17 +39,14 @@
         justify-content: center;
 
         &--show {
-            border-radius: 0.25rem 0.25rem 0 0;
+            background-color: unset;
+
         }
     }
 
     &__content {
         display: none;
-        position: absolute;
-        background-color: rgba($grey-blue, 0.6);
         min-width: 180px;
-        box-shadow: 2px 8px 10px rgba(0, 0, 0, 0.4);
-        z-index: 1;
         list-style: none;
         border-radius: 0 0.5rem 0.5rem 0.5rem;
 
@@ -99,16 +98,18 @@
     column-gap: 1.5rem;
     row-gap: 0.75rem;
     grid-auto-rows: 15.5rem;
-}
 
-.tile--wide {
-    grid-column: span 2;
-}
+    &__item {
+        &--wide {
+            grid-column: span 2;
+        }
 
-.tile--double-wide {
-    grid-column: span 3;
-}
+        &--double-wide {
+            grid-column: span 3;
+        }
 
-.tile--tall {
-    grid-row: span 2;
+        &--tall {
+            grid-row: span 2;
+        }
+    }
 }

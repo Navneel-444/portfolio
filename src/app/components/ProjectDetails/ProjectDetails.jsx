@@ -1,9 +1,9 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
 import '../../../styles/main.scss';
-import BentoTile from '@/app/ui/BentoTile/BentoTile';
 import './ProjectDetails.scss'
 import Link from 'next/link';
+import BentoItem from '@/app/ui/BentoItem/BentoItem';
 
 export default function ProjectDetails({ project, allProjects }) {
     const {
@@ -39,8 +39,8 @@ export default function ProjectDetails({ project, allProjects }) {
         <main>
             <header className="header">
                 <section className="header__project-menu" ref={dropdownRef}>
-                    <h1 className="header__project-title">{name}</h1>
                     <div className="dropdown">
+                        <h1 className="header__project-title">{name}</h1>
                         <button
                             className={`dropdown__btn ${isDropdownOpen ? 'dropdown__btn--show' : ''}`}
                             onClick={toggleDropdown}
@@ -52,21 +52,21 @@ export default function ProjectDetails({ project, allProjects }) {
                                 height={7.5}
                             />
                         </button>
-                        <ul className={`dropdown__content ${isDropdownOpen ? 'dropdown__content--show' : ''}`}>
-                            {allProjects
-                                .map((p, index) => ({ ...p, index: index }))
-                                .filter(project => project.name !== name)
-                                .map((project) => (
-                                    <Link
-                                        key={project.index}
-                                        href={`/projects/${project.name}`}>
-                                        <li key={project.name} className="dropdown__item">
-                                            {project.name}
-                                        </li>
-                                    </Link>
-                                ))}
-                        </ul>
                     </div>
+                    <ul className={`dropdown__content ${isDropdownOpen ? 'dropdown__content--show' : ''}`}>
+                        {allProjects
+                            .map((p, index) => ({ ...p, index: index }))
+                            .filter(project => project.name !== name)
+                            .map((project) => (
+                                <Link
+                                    key={project.index}
+                                    href={`/projects/${project.name}`}>
+                                    <li key={project.name} className="dropdown__item">
+                                        {project.name}
+                                    </li>
+                                </Link>
+                            ))}
+                    </ul>
                 </section>
                 <Link
                     href={"https://github.com"}
@@ -83,14 +83,14 @@ export default function ProjectDetails({ project, allProjects }) {
                 </Link>
             </header>
             <section className="bento-box">
-                <BentoTile heading='Overview' info={overview} variant={'regular'} />
-                <BentoTile heading='Problem Statement' info={problemStatement} variant={'regular'} />
-                <BentoTile heading='Key Features' info={keyFeatures} variant={'regular'} />
-                <BentoTile heading='TechStack' info={techStack} variant={'tall'} />
-                <BentoTile heading='What I learned' info={whatILearned} variant={'regular'} />
-                <BentoTile heading='What I learned' info={whatILearned} variant={'wide'} />
-                <BentoTile heading='FutureImprovements' info={futureImprovements} variant={'regular'} />
-                <BentoTile heading='Architecture' info={architecture} variant={'double_wide'} />
+                <BentoItem heading='Overview' info={overview} variant={'regular'} />
+                <BentoItem heading='Problem Statement' info={problemStatement} variant={'regular'} />
+                <BentoItem heading='Key Features' info={keyFeatures} variant={'regular'} />
+                <BentoItem heading='TechStack' info={techStack} variant={'tall'} />
+                <BentoItem heading='What I learned' info={whatILearned} variant={'regular'} />
+                <BentoItem heading='What I learned' info={whatILearned} variant={'wide'} />
+                <BentoItem heading='FutureImprovements' info={futureImprovements} variant={'regular'} />
+                <BentoItem heading='Architecture' info={architecture} variant={'double_wide'} />
             </section>
         </main>
     );
