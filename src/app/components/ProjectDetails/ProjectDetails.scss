@@ -92,3 +92,23 @@
         margin-right: 0.5rem;
     }
 }
+
+.bento-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1.5rem;
+    row-gap: 0.75rem;
+    grid-auto-rows: 15.5rem;
+}
+
+.tile--wide {
+    grid-column: span 2;
+}
+
+.tile--double-wide {
+    grid-column: span 3;
+}
+
+.tile--tall {
+    grid-row: span 2;
+}

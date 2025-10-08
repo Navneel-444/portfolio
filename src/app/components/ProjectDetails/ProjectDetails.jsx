@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
 import '../../../styles/main.scss';
-import BentoSquare from '@/app/ui/BentoSquare/BentoSquare';
+import BentoTile from '@/app/ui/BentoTile/BentoTile';
 import './ProjectDetails.scss'
 import Link from 'next/link';
 
@@ -82,10 +82,16 @@ export default function ProjectDetails({ project, allProjects }) {
                     </button>
                 </Link>
             </header>
-
-            <BentoSquare heading='Overview' info={overview} />
-            <BentoSquare heading='Problem Statement' info={problemStatement} />
-            <BentoSquare heading='Key Features' info={keyFeatures} />
+            <section className="bento-box">
+                <BentoTile heading='Overview' info={overview} variant={'regular'} />
+                <BentoTile heading='Problem Statement' info={problemStatement} variant={'regular'} />
+                <BentoTile heading='Key Features' info={keyFeatures} variant={'regular'} />
+                <BentoTile heading='TechStack' info={techStack} variant={'tall'} />
+                <BentoTile heading='What I learned' info={whatILearned} variant={'regular'} />
+                <BentoTile heading='What I learned' info={whatILearned} variant={'wide'} />
+                <BentoTile heading='FutureImprovements' info={futureImprovements} variant={'regular'} />
+                <BentoTile heading='Architecture' info={architecture} variant={'double_wide'} />
+            </section>
         </main>
     );
 }
