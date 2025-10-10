@@ -1,6 +1,6 @@
 @use '../../../styles/variables' as *;
 
-.header {
+.project-header {
     border-top: 1px solid $grey-blue;
     padding: 1.25rem 0;
     margin: 1rem 0;
@@ -8,50 +8,49 @@
     justify-content: space-between;
     align-items: center;
 
-    &__project-menu {
+    &__dropdown {
         position: relative;
-        border-radius: 0.5rem;
-        padding: 0.5rem;
-
-    }
-
-    &__project-title {
-        font-size: 2.25rem;
-        margin-right: 0.75rem;
-        font-weight: 400;
-    }
-}
-
-.dropdown {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &__btn {
-        background-color: rgba($grey-blue, 0.6);
-        border: none;
-        border-radius: 2rem;
-        width: 1.5rem;
-        height: 1.5rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        border-radius: 0.5rem 0.5rem 0 0;
+        padding: 0.25rem;
 
         &--show {
-            background-color: unset;
-
+            background-color: rgba($grey-blue, 0.75);
         }
-    }
 
-    &__content {
-        display: none;
-        min-width: 180px;
-        list-style: none;
-        border-radius: 0 0.5rem 0.5rem 0.5rem;
+        &-btn {
+            background-color: rgba($grey-blue, 0.6);
+            border: none;
+            border-radius: 2rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        .dropdown__item {
-            padding: 0.5rem 1rem;
+            &--show {
+                background-color: unset;
+            }
+        }
+
+        &-content {
+            display: none;
+            list-style: none;
+            width: 100%;
+            border-radius: 0 0 0.5rem 0.5rem;
+            position: absolute;
+            top: calc(100%);
+            right: 0;
+            z-index: 1000;
+            background: rgba($grey-blue, 0.75);
+
+            &--show {
+                display: block;
+            }
+        }
+
+        &-item {
+            padding: 0.25rem 0.75rem;
             cursor: pointer;
 
             &:hover {
@@ -59,36 +58,41 @@
                 background-color: $grey-blue;
             }
         }
-
-        &--show {
-            display: block;
-        }
     }
 
-}
-
-.link {
-
-    &__btn {
-        background-color: $grey-background;
-        border: none;
+    &__current {
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 0.3rem;
-        border-radius: 0.5rem;
 
-        &:hover {
-            cursor: pointer;
-            background-color: rgba($grey-blue, 0.6);
+        &-title {
+            font-size: 2.25rem;
+            margin-right: 0.75rem;
+            font-weight: 400;
         }
     }
 
-    &__title {
-        color: $white;
-        font-size: 1rem;
-        font-weight: 200;
-        margin-right: 0.5rem;
+    &__link {
+        &-btn {
+            background-color: $grey-background;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.3rem;
+            border-radius: 0.5rem;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba($grey-blue, 0.6);
+            }
+        }
+
+        &-title {
+            color: $white;
+            font-size: 1rem;
+            font-weight: 200;
+            margin-right: 0.5rem;
+        }
     }
 }
 

@@ -37,12 +37,12 @@ export default function ProjectDetails({ project, allProjects }) {
 
     return (
         <main>
-            <header className="header">
-                <section className="header__project-menu" ref={dropdownRef}>
-                    <div className="dropdown">
-                        <h1 className="header__project-title">{name}</h1>
+            <header className="project-header">
+                <section className={`project-header__dropdown ${isDropdownOpen ? 'project-header__dropdown--show' : ''}`} ref={dropdownRef}>
+                    <div className="project-header__current">
+                        <h1 className="project-header__current-title">{name}</h1>
                         <button
-                            className={`dropdown__btn ${isDropdownOpen ? 'dropdown__btn--show' : ''}`}
+                            className={`project-header__dropdown-btn ${isDropdownOpen ? 'project-header__dropdown-btn--show' : ''}`}
                             onClick={toggleDropdown}
                         >
                             <img
@@ -53,7 +53,7 @@ export default function ProjectDetails({ project, allProjects }) {
                             />
                         </button>
                     </div>
-                    <ul className={`dropdown__content ${isDropdownOpen ? 'dropdown__content--show' : ''}`}>
+                    <ul className={`project-header__dropdown-content ${isDropdownOpen ? 'project-header__dropdown-content--show' : ''}`}>
                         {allProjects
                             .map((p, index) => ({ ...p, index: index }))
                             .filter(project => project.name !== name)
@@ -61,7 +61,7 @@ export default function ProjectDetails({ project, allProjects }) {
                                 <Link
                                     key={project.index}
                                     href={`/projects/${project.name}`}>
-                                    <li key={project.name} className="dropdown__item">
+                                    <li key={project.name} className="project-header__dropdown-item">
                                         {project.name}
                                     </li>
                                 </Link>
@@ -71,8 +71,8 @@ export default function ProjectDetails({ project, allProjects }) {
                 <Link
                     href={"https://github.com"}
                 >
-                    <button className="link__btn">
-                        <p className="link__title">Github Repo</p>
+                    <button className="project-header__link-btn">
+                        <p className="project-header__link-title">Github Repo</p>
                         <img
                             src="/icons/expand.svg"
                             alt="button to redirect to the git repo of the project"
@@ -89,7 +89,7 @@ export default function ProjectDetails({ project, allProjects }) {
                 <BentoItem heading='TechStack' info={techStack} variant={'tall'} />
                 <BentoItem heading='What I learned' info={whatILearned} variant={'regular'} />
                 <BentoItem heading='What I learned' info={whatILearned} variant={'wide'} />
-                <BentoItem heading='FutureImprovements' info={futureImprovements} variant={'regular'} />
+                <BentoItem heading='Future Improvements' info={futureImprovements} variant={'regular'} />
                 <BentoItem heading='Architecture' info={architecture} variant={'double_wide'} />
             </section>
         </main>
