@@ -1,8 +1,6 @@
 'use client'
-import { useState, useEffect, useRef } from 'react';
 import '../../../styles/main.scss';
 import './ProjectDetails.scss'
-import Link from 'next/link';
 import BentoItem from '@/app/ui/BentoItem/BentoItem';
 import ProjectHeader from '@/app/ui/ProjectHeader/ProjectHeader';
 
@@ -15,7 +13,7 @@ export default function ProjectDetails({ project, allProjects }) {
         { key: 'key features', heading: 'Key Features', variant: 'regular' },
         { key: 'tech stack', heading: 'TechStack', variant: 'tall' },
         { key: 'what i learned ', heading: 'What I learned', variant: 'regular' },
-        { key: 'what i learned ', heading: 'What I learned', variant: 'wide' },
+        { key: 'screenshot ', heading: 'Screenshot', variant: 'picture' },
         { key: 'future improvements', heading: 'Future Improvements', variant: 'regular' },
         { key: 'architecture / system design', heading: 'Architecture', variant: 'double_wide' }
     ];

@@ -19,5 +19,9 @@
         &--tall {
             grid-row: span 2;
         }
+
+        &--picture {
+            grid-column: span 2;
+        }
     }
 }
