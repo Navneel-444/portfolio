@@ -54,19 +54,34 @@ export default function ProjectHeader({ project, allProjects }) {
                         ))}
                 </ul>
             </section>
-            <Link
-                href={"https://github.com"}
-            >
-                <button className="project-header__link-btn">
-                    <p className="project-header__link-title">Github Repo</p>
-                    <img
-                        src="/icons/expand.svg"
-                        alt="button to redirect to the git repo of the project"
-                        width={16}
-                        height={14}
-                    />
-                </button>
-            </Link>
+            <section className='project-header__link'>
+                <Link
+                    href={"https://github.com"}
+                >
+                    <button className="project-header__link-btn">
+                        <p className="project-header__link-title">Live</p>
+                        <img
+                            src="/icons/expand.svg"
+                            alt="button to redirect to the git repo of the project"
+                            width={16}
+                            height={14}
+                        />
+                    </button>
+                </Link>
+                <Link
+                    href={"https://github.com"}
+                >
+                    <button className="project-header__link-btn">
+                        <p className="project-header__link-title">Github Repo</p>
+                        <img
+                            src="/icons/expand.svg"
+                            alt="button to redirect to the git repo of the project"
+                            width={16}
+                            height={14}
+                        />
+                    </button>
+                </Link>
+            </section>
         </header>
     );
 }
