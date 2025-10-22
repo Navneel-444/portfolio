@@ -1,6 +1,26 @@
 import './BentoItem.scss';
+import Image from 'next/image';
 
-export default function BentoItem({ heading, info, variant }) {
+async function ImageFromStorage({ path }) {
+    try {
+        // Using our server API route instead of direct Firebase Storage URL
+        return (
+            <Image
+                src={`/api/image?path=${encodeURIComponent(path)}`}
+                alt="project screenshot"
+                className="bento-box__image"
+                width={400}
+                height={300}
+                priority
+            />
+        );
+    } catch (error) {
+        console.error('Error loading image:', error);
+        return null;
+    }
+}
+
+export default async function BentoItem({ heading, info, variant, imagePath }) {
     const variantClasses = {
         regular: '',
         tall: 'bento-box__item--tall',
@@ -19,10 +39,7 @@ export default function BentoItem({ heading, info, variant }) {
                 </ul>
             ) : variant === 'picture' ? (
                 <div className="bento-box__info bento-box__info--picture">
-                    <img
-                        src="/project-screenshot.png"
-                        alt="project screenshot"
-                    />
+                    <ImageFromStorage path={imagePath || 'portfolio/screenshot.webp'} />
                 </div>
             ) : (
                 <p className="bento-box__info">{info}</p>

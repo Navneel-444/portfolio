@@ -1,5 +1,6 @@
 import { initializeApp, cert, getApps, getApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+const { getStorage } = require('firebase-admin/storage');
 
 let serviceAccount;
 
@@ -15,7 +16,6 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64) {
         throw new Error('Failed to parse decoded Firebase service account JSON.');
     }
 } else {
-    // Local development
     try {
         serviceAccount = await import('../../serviceAccountKey.json', {
             assert: { type: 'json' }
@@ -27,12 +27,21 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64) {
     }
 }
 
+const firebaseStorageBucket = process.env.FIREBASE_STORAGE_BUCKET;
+
+if (!firebaseStorageBucket) {
+    console.error('FIREBASE_STORAGE_BUCKET environment variable is not set!');
+    process.exit(1);
+}
+
 const app = getApps().length
     ? getApp()
     : initializeApp({
         credential: cert(serviceAccount),
+        storageBucket: firebaseStorageBucket
     });
 
 const db = getFirestore(app);
-
-export { db };
+const storage = getStorage(app);
+const bucket = storage.bucket();
+export { app, db, storage, bucket }
