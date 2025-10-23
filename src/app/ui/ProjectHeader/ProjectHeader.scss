@@ -99,12 +99,31 @@
             padding: 0.3rem;
             border-radius: 0.5rem;
             margin-left: 2rem;
+            transition: all 0.2s ease-in-out;
+
+            &--disabled {
+
+                opacity: 0.5;
+                cursor: not-allowed !important;
+
+                img {
+                    opacity: 0.5;
+                }
+
+                &:hover {
+                    cursor: not-allowed !important;
+                }
+
+                .project-header__link-title {
+                    color: rgba($white, 0.5);
+                }
+            }
 
             @include mobile {
                 margin: 0 1rem 0 0;
             }
 
-            &:hover {
+            &:hover:not(.project-header__link-btn--disabled) {
                 cursor: pointer;
                 background-color: rgba($grey-blue, 0.6);
             }
