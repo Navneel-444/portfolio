@@ -3,11 +3,12 @@
 
 
 .navigation {
-    display: none;
+    // display: none;
 
     @include desktop {
         display: flex;
         align-items: center;
+
         justify-content: space-between;
         padding: 1rem 5%;
     }
