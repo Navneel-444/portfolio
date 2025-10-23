@@ -1,8 +1,8 @@
 import { db } from '@/lib/firebaseAdmin';
-import ProjectDetails from '@/app/components/ProjectDetails/ProjectDetails'; // server component
+import ProjectDetails from '@/app/components/ProjectDetails/ProjectDetails';
 
 export default async function ProjectPage({ params }) {
-    const { projectname } = params ?? {};
+    const { projectname } = await params ?? {};
 
     if (!projectname) return <div>No project specified</div>;
 
@@ -15,10 +15,17 @@ export default async function ProjectPage({ params }) {
         .collection('project')
         .where('name', '==', decodeSpace(projectname))
         .get();
+    const allProject = await db
+        .collection('project')
+        .select('name')
+        .get()
 
     if (snapshot.empty) return <div>Project not found</div>;
 
     const project = snapshot.docs[0].data();
-
-    return <ProjectDetails project={project} />;
+    const allProjects = allProject.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+    return <ProjectDetails project={project} allProjects={allProjects} />;
 }

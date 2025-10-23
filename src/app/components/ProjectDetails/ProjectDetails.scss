@@ -1,0 +1,37 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+
+.bento-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1.5rem;
+    row-gap: 0.75rem;
+    grid-auto-rows: 15.5rem;
+
+    @include mobile {
+        display: block;
+    }
+
+    &__item {
+        &--wide {
+            grid-column: span 2;
+
+            @include mobile {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        &--double-wide {
+            grid-column: span 3;
+        }
+
+        &--tall {
+            grid-row: span 2;
+        }
+
+        &--picture {
+            grid-column: span 2;
+        }
+    }
+}
