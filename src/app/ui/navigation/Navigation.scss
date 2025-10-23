@@ -3,14 +3,13 @@
 
 
 .navigation {
-    // display: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 5%;
 
-    @include desktop {
-        display: flex;
-        align-items: center;
-
-        justify-content: space-between;
-        padding: 1rem 5%;
+    @include mobile {
+        display: none;
     }
 
     &--scroll {
