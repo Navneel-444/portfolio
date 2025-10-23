@@ -40,7 +40,10 @@ export default function ProjectDetails({ project, allProjects }) {
 
     return (
         <main>
-            <ProjectHeader project={project} allProjects={allProjects} />
+            <ProjectHeader
+                project={project}
+                allProjects={allProjects}
+                repo={project.repo} />
             <section className="bento-box">
                 {bentoItems.map((item, idx) => (
                     <BentoItem

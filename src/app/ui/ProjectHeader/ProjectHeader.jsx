@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import './ProjectHeader.scss';
 
-export default function ProjectHeader({ project, allProjects }) {
+export default function ProjectHeader({ project, allProjects, repo }) {
     const { name } = project;
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -69,7 +69,7 @@ export default function ProjectHeader({ project, allProjects }) {
                     </button>
                 </Link>
                 <Link
-                    href={"https://github.com"}
+                    href={repo}
                 >
                     <button className="project-header__link-btn">
                         <p className="project-header__link-title">Github Repo</p>

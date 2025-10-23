@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 async function ImageFromStorage({ path }) {
     try {
-        // Using our server API route instead of direct Firebase Storage URL
         return (
             <Image
                 src={`/api/image?path=${encodeURIComponent(path)}`}
@@ -39,7 +38,11 @@ export default async function BentoItem({ heading, info, variant, imagePath }) {
                 </ul>
             ) : variant === 'picture' ? (
                 <div className="bento-box__info bento-box__info--picture">
-                    <ImageFromStorage path={imagePath || 'portfolio/screenshot.webp'} />
+                    {imagePath ? (
+                        <ImageFromStorage path={imagePath} />
+                    ) : (
+                        <p className="bento-box__info--no-image">No screenshot available yet</p>
+                    )}
                 </div>
             ) : (
                 <p className="bento-box__info">{info}</p>
