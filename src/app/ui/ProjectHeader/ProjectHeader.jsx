@@ -55,8 +55,10 @@ export default function ProjectHeader({ project, allProjects, repo }) {
                 </ul>
             </section>
             <section className='project-header__link'>
-                <Link
+                <a
                     href={"https://github.com"}
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
                     <button className="project-header__link-btn">
                         <p className="project-header__link-title">Live</p>
@@ -67,9 +69,11 @@ export default function ProjectHeader({ project, allProjects, repo }) {
                             height={14}
                         />
                     </button>
-                </Link>
-                <Link
+                </a>
+                <a
                     href={repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
                     <button className="project-header__link-btn">
                         <p className="project-header__link-title">Github Repo</p>
@@ -80,7 +84,7 @@ export default function ProjectHeader({ project, allProjects, repo }) {
                             height={14}
                         />
                     </button>
-                </Link>
+                </a>
             </section>
         </header>
     );

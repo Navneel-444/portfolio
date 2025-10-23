@@ -5,7 +5,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        box-sizing: border-box; // ensure padding/border don't grow outside grid
+        box-sizing: border-box;
         max-width: 100%;
     }
 
@@ -13,7 +13,7 @@
         font-size: 0.75rem;
         color: $orange;
         font-weight: 300;
-        margin: 0.25rem 0;
+        padding: 0.25rem 0;
         height: min-content;
     }
 
@@ -24,7 +24,23 @@
         border: 1px solid rgba($orange, 30%);
         border-radius: 0.5rem;
         font-size: 0.75rem;
-        list-style-position: inside;
+        list-style: none;
+
+        li {
+            padding-left: 0.75rem;
+            text-indent: -1rem;
+            margin-bottom: 0.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &::before {
+                content: "•";
+                color: $orange;
+                padding-right: 0.5rem;
+            }
+        }
 
         &--picture {
             border: 1px solid $orange;
@@ -56,4 +72,5 @@
             margin: 0;
         }
     }
+
 }
