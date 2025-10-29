@@ -14,10 +14,10 @@ export default function MobileNav() {
         setIsOpen(false);
     };
     const navItems = [
-        { name: './home', href: '#home' },
-        { name: '/projects', href: '#projects' },
-        { name: '/exprience', href: '#experience' },
-        { name: '/contact', href: '#contact' },
+        { id: 1, name: './home', href: '/#home' },
+        { id: 2, name: '/projects', href: '/#projects' },
+        { id: 3, name: '/experience', href: '/#experience' },
+        { id: 4, name: '/contact', href: '/#contact' },
     ];
     return (
         <nav className={`mobile-nav ${isOpen ? 'mobile-nav--open' : ''}`}>
