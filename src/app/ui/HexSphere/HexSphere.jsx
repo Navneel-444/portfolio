@@ -5,7 +5,7 @@ export default function HexSphere() {
     return (
         <figure className="hex-sphere__container" aria-labelledby="hex-tooltip">
             <button
-                className="hex-sphere__info-icon"
+                className="hex-sphere__info-icon--disabled "
                 aria-describedby="hex-sphere-tooltip"
                 aria-label="Information about hexagon"
             >
