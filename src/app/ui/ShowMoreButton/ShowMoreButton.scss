@@ -25,6 +25,10 @@
         visibility: visible;
     }
 
+    &--disabled {
+        display: none;
+    }
+
 }
 
 .project__container:hover .show-more {
