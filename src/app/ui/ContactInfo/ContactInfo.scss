@@ -3,7 +3,7 @@
 
 .contact-info {
     width: 50%;
-    max-width: 20rem;
+    max-width: 28rem;
     margin-right: 8rem;
 
     @include mobile {
@@ -29,7 +29,7 @@
     &__social {
         display: grid;
         width: 100%;
-        grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(204px, 1fr));
         gap: 0.25rem;
         justify-items: center;
         padding-top: 0.25rem;
