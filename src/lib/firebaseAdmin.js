@@ -23,8 +23,6 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64) {
         throw new Error('No service account found. In local development, ensure serviceAccountKey.json exists. In production, set FIREBASE_SERVICE_ACCOUNT_KEY_BASE64.');
     }
 }
-
-// Try to get storage bucket from environment variable or fallback to service account
 const firebaseStorageBucket = process.env.FIREBASE_STORAGE_BUCKET || serviceAccount.project_id + '.appspot.com';
 
 const app = getApps().length

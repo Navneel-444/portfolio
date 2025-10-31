@@ -48,7 +48,12 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
         display: block;
+        border: 1px solid rgba($grey-blue, 50%);
+        border-radius: 0.5rem 0.5rem 0 0;
+
+        &--placholder {}
     }
 
     &__expand {
@@ -79,4 +84,23 @@
         }
     }
 
+}
+
+.skeleton {
+    background-color: rgba($grey-background, 100%);
+    background-image:
+        linear-gradient(90deg,
+            rgba($grey-accent, 0),
+            rgba($grey-accent, 0.5),
+            rgba($grey-accent, 0));
+    background-size: 10px 100%;
+    background-repeat: no-repeat;
+    background-position: left -40px top 0;
+    animation: shine 1.5s ease infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: right -40px top 0;
+    }
 }

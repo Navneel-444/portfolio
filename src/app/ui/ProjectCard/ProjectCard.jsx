@@ -4,9 +4,10 @@ import { analytics } from '@/app/firebase/firebase';
 import { logEvent } from 'firebase/analytics';
 import Link from 'next/link';
 import { useState } from 'react';
+import CardImage from './ProjectCardImage';
 
 export default function ProjectCard({ project }) {
-    const { name, desc, id } = project;
+    const { name, desc, id, imagePath } = project;
     const [hasHovered, setHasHovered] = useState(false);
     const handleProjectClick = () => {
         if (analytics) {
@@ -46,13 +47,7 @@ export default function ProjectCard({ project }) {
                         />
                     </button>
                 </Link>
-                <img
-                    className='project-card__image'
-                    src='/project-screenshot.png'
-                    width={660}
-                    height={292}
-                    alt='information on the features of the hexagon sphere'
-                />
+                <CardImage imagePath={imagePath} name={name} />
             </div>
             <section className="project-card__info">
                 <h3 className="project-card__title">{name}</h3>
