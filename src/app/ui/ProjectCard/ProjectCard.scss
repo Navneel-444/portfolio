@@ -43,6 +43,8 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        border: 1px solid rgba($grey-blue, 50%);
+        border-radius: 0.5rem 0.5rem 0 0;
     }
 
     &__image {
@@ -51,10 +53,11 @@
         object-fit: cover;
         object-position: top;
         display: block;
-        border: 1px solid rgba($grey-blue, 50%);
-        border-radius: 0.5rem 0.5rem 0 0;
 
-        &--placholder {}
+        &--placholder {
+            height: 1.5rem;
+            width: 2rem;
+        }
     }
 
     &__expand {

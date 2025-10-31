@@ -30,7 +30,7 @@ export default function CardImage({ imagePath, name }) {
                 console.warn(`No image found for ${name}:`, err);
                 if (isMounted) {
                     setImageExists(false);
-                    setUrl('/image-placeholder.jpg');
+                    setUrl('icons/image-placeholder.svg');
                 }
             } finally {
                 if (isMounted) setLoading(false);
@@ -49,11 +49,10 @@ export default function CardImage({ imagePath, name }) {
         <div className="project-card__image skeleton" />
     ) : (
         <img
-            className={imageExists ? 'project-card__image' : ' project-card__image project-card__image--placholder'}
+            className={imageExists ? 'project-card__image' : ' project-card__image--placholder'}
             src={url} alt={`Screenshot of ${name} project`}
             loading="lazy"
             decoding="async"
         />
     );
 }
-
