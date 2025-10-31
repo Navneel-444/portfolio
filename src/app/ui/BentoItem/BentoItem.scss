@@ -23,6 +23,21 @@
         height: min-content;
     }
 
+    &__no-content {
+        color: $grey-accent;
+        font-size: 0.875rem;
+        font-weight: 200;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        background-color: rgba($grey-accent, 5%);
+        padding: 1rem;
+        text-align: center;
+    }
+
     &__info {
         flex: 1;
         background-color: rgba($grey-accent, 5%);
@@ -96,6 +111,7 @@
         align-items: center;
         justify-content: center;
         height: 100%;
+        margin: 1rem;
     }
 
     &__image {
