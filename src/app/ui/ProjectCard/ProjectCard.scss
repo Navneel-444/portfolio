@@ -10,6 +10,7 @@
     &:hover {
         background-color: rgba($grey-blue, 35%);
         border: 2px solid $grey-blue;
+        cursor: pointer;
     }
 
     &__title {
