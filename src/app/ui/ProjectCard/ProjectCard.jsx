@@ -1,35 +1,13 @@
-'use client'
 import './ProjectCard.scss';
-import { analytics } from '@/app/firebase/firebase';
-import { logEvent } from 'firebase/analytics';
 import Link from 'next/link';
-import { useState } from 'react';
 import CardImage from './ProjectCardImage';
+import ProjectCardAnalytics from './ProjectCardAnalytics';
 
 export default function ProjectCard({ project }) {
     const { name, desc, id, imagePath } = project;
-    const [hasHovered, setHasHovered] = useState(false);
-    const handleProjectClick = () => {
-        if (analytics) {
-            logEvent(analytics, 'select_project',
-                {
-                    project_name: name
-                }
-            )
-        }
-    }
-    const handleHover = () => {
-        if (!hasHovered && analytics) {
-            setTimeout(() => {
-                logEvent(analytics, "hover_project_card", {
-                    project_name: name
-                });
-                setHasHovered(true);
-            }, 1000);
-        }
-    };
+
     return (
-        <section onMouseEnter={handleHover} onClick={handleProjectClick} className="project-card">
+        <ProjectCardAnalytics projectName={name}>
             <Link
                 key={id}
                 href={`/projects/${name}`}>
@@ -53,6 +31,6 @@ export default function ProjectCard({ project }) {
                     <p className="project-card__description">{desc}</p>
                 </section>
             </Link>
-        </section>
+        </ProjectCardAnalytics>
     )
 }
