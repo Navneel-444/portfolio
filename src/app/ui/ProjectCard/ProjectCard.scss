@@ -5,11 +5,12 @@
     margin-bottom: 1rem;
     padding: 0.25rem;
     border-radius: 0.75rem;
-    border: 2px solid $grey-background;
+    border: 3px solid $grey-background;
 
     &:hover {
-        background-color: rgba($grey-blue, 35%);
-        border: 2px solid $grey-blue;
+        background-color: rgba($grey-blue, 25%);
+        border: 3px solid $grey-blue;
+        cursor: pointer;
     }
 
     &__title {
@@ -30,6 +31,7 @@
         letter-spacing: 1px;
         font-weight: 200;
         margin: 0.25rem 0;
+        color: $grey-accent
     }
 
     &__mask {
@@ -41,13 +43,40 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        border: 1px solid rgba($grey-blue, 50%);
+        border-radius: 0.5rem 0.5rem 0 0;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            transition: background-color 0.3s ease;
+            z-index: 1;
+        }
+
+        .project-card:hover & {
+            &::after {
+                backdrop-filter: blur(2px);
+                background-color: rgba(0, 0, 0, 0.15);
+            }
+        }
     }
 
     &__image {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top;
         display: block;
+
+        &--placholder {
+            height: 1.5rem;
+            width: 2rem;
+        }
     }
 
     &__expand {
@@ -62,9 +91,10 @@
         border: none;
         padding: 0;
         margin: 0;
-        color: inherit;
+        color: $white;
         font: inherit;
         cursor: pointer;
+        z-index: 2;
         font-weight: 200;
 
         .project-card__mask:hover &,
@@ -78,4 +108,23 @@
         }
     }
 
+}
+
+.skeleton {
+    background-color: rgba($grey-background, 100%);
+    background-image:
+        linear-gradient(90deg,
+            rgba($grey-accent, 0),
+            rgba($grey-accent, 0.5),
+            rgba($grey-accent, 0));
+    background-size: 10px 100%;
+    background-repeat: no-repeat;
+    background-position: left -40px top 0;
+    animation: shine 1.5s ease infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: right -40px top 0;
+    }
 }

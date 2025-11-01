@@ -3,23 +3,24 @@
 
 
 .navigation {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 5%;
+    margin: 0.25rem 0;
+    transition: 0.75s ease;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background-color: transparent;
 
-    @include desktop {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem 5%;
+    @include mobile {
+        display: none;
     }
 
     &--scroll {
-        transition: 0.5s ease;
-        backdrop-filter: blur(10px);
-        position: sticky;
-        top: 0;
-        z-index: 99;
-        padding: 0.25rem 5%;
-        background-color: rgba($grey-accent, 10%);
+        background-color: rgba($grey-blue, 40%);
     }
 
     &__heading {

@@ -21,7 +21,6 @@ export default function ProjectDetails({ project, allProjects }) {
         const value = projectFields[def.key];
 
         if (def.key === 'screenshot') {
-            // Use the project name as the folder and lowercase it
             const folder = String(name || '').toLowerCase();
             return {
                 heading: def.heading,

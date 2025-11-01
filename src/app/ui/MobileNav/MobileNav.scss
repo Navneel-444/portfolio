@@ -20,6 +20,7 @@
         display: flex;
         cursor: pointer;
         align-items: center;
+        box-sizing: border-box;
         transition: width 1s cubic-bezier(0.77, 0, 0.175, 1), background-color 0.3s ease;
 
         &--open {
@@ -47,7 +48,7 @@
         right: 0;
         width: 65%;
         height: 100%;
-        background-color: rgba($grey-accent, 0.95);
+        background-color: rgba($grey-blue, 0.95);
         display: flex;
         flex-direction: column;
         transform: translateX(100%);

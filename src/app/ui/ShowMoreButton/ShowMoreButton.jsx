@@ -2,7 +2,7 @@ import './ShowMoreButton.scss';
 
 export default function ShowMoreButton() {
     return (
-        <button className="show-more">
+        <button className="show-more--disabled">
             <img
                 className='show-more__icon'
                 src='/icons/show-more.svg'

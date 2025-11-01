@@ -63,6 +63,7 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
                     <button className={live ? "project-header__link-btn" : " project-header__link-btn project-header__link-btn--disabled"}>
                         <p className="project-header__link-title">Live</p>
                         <img
+                            className='project-header__link-icon'
                             src="/icons/expand.svg"
                             alt="button to redirect to the git repo of the project"
                             width={16}
@@ -78,6 +79,7 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
                     <button className={repo ? "project-header__link-btn" : " project-header__link-btn project-header__link-btn--disabled"} >
                         <p className="project-header__link-title">Github Repo</p>
                         <img
+                            className='project-header__link-icon'
                             src="/icons/expand.svg"
                             alt="button to redirect to the git repo of the project"
                             width={16}

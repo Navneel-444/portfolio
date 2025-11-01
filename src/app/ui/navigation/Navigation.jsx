@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function Navigation() {
-  const [activeId, setActiveId] = useState('');
-
   const navInfo = [
     { id: 1, name: './home', href: '/#home' },
     { id: 2, name: '/projects', href: '/#projects' },
@@ -14,35 +12,9 @@ export default function Navigation() {
   ];
 
   useEffect(() => {
-    const sections = Array.from(document.querySelectorAll('[id]')).filter(el =>
-      ['SECTION', 'DIV', 'H2', 'HEADER'].includes(el.tagName)
-    );
-
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 120;
-      let currentSectionId = '';
-
-      for (const section of sections) {
-        if (section.offsetTop <= scrollPosition) {
-          currentSectionId = section.id;
-        }
-      }
-
-      if (currentSectionId !== activeId) {
-        setActiveId(currentSectionId);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
     const handleScroll = () => {
       const navbar = document.getElementById('nav');
-      if (window.scrollY > 5) {
+      if (window.scrollY > 50) {
         navbar?.classList.add('navigation--scroll');
       } else {
         navbar?.classList.remove('navigation--scroll');
@@ -50,10 +22,9 @@ export default function Navigation() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Set initial state
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -64,8 +35,7 @@ export default function Navigation() {
           <li key={link.id} className="navigation__list-item">
             <Link
               href={link.href}
-              className={`navigation__link ${activeId === link.href.substring(1) ? 'active' : ''
-                }`}
+              className="navigation__link"
             >
               {link.name}
             </Link>

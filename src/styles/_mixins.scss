@@ -24,6 +24,7 @@
 
     &:hover {
         background-color: rgba($grey-background, 75%);
-        color: $orange
+        color: $orange;
+        cursor: pointer;
     }
 }

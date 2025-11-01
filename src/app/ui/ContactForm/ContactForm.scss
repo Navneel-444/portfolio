@@ -72,6 +72,8 @@
         font-size: 1rem;
         font-weight: 400;
         grid-column: span 2;
+        display: flex;
+        justify-content: center;
 
         &:active {
             border-bottom-width: 2px;
