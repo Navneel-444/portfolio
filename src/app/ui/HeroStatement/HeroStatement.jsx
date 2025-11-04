@@ -28,7 +28,7 @@ export default function HeroStatement() {
                     className='hero-statement__subheading'
                     initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
                     animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+                    transition={{ duration: 1, delay: 0.75, ease: "easeOut" }}
                 >
                     Software Engineer | Full-stack Developer
                 </motion.h3>
@@ -37,7 +37,7 @@ export default function HeroStatement() {
                 className='hero-statement__description'
                 initial={{ y: 15, opacity: 0, filter: "blur(6px)" }}
                 animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                transition={{ duration: 1.2, delay: 1, ease: "easeOut" }}
+                transition={{ duration: 1.2, delay: 0.9, ease: "easeOut" }}
             >
                 Building tools that make work easier. I create software that automates tasks, so you can focus on what truly matters.
             </motion.p>
@@ -67,7 +67,7 @@ export default function HeroStatement() {
                             opacity: 1,
                             borderColor: "#415057",
                             transition: {
-                                duration: 1.5,
+                                duration: 1.25,
                                 ease: "easeOut",
                             },
                         },
