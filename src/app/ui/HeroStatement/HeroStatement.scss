@@ -68,7 +68,16 @@
         color: $white;
 
         &:hover {
-            box-shadow: 0 0 0.35rem $grey-blue;
+            box-shadow: 0 0 10px $grey-blue, 0 0 15px $grey-blue, 0 0 20px $grey-blue;
+        }
+
+        &:active {
+            transform: scale(0.95) translateY(2px);
+        }
+
+        &.initial {
+            background-color: #33353A;
+            filter: blur(6px);
         }
     }
 

@@ -3,7 +3,6 @@ import '@/styles/main.scss';
 import Navigation from '@/app/ui/navigation/Navigation.jsx';
 import MobileNav from './ui/MobileNav/MobileNav';
 import { JetBrains_Mono } from 'next/font/google'
-import { useState, useEffect } from 'react';
 
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
