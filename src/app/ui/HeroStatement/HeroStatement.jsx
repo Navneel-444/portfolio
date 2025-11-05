@@ -26,7 +26,7 @@ export default function HeroStatement() {
                 </motion.h1>
                 <motion.h3
                     className='hero-statement__subheading'
-                    initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+                    initial={{ y: 0, opacity: 0, filter: "blur(4px)" }}
                     animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
                     transition={{ duration: 1, delay: 0.75, ease: "easeOut" }}
                 >
@@ -35,7 +35,7 @@ export default function HeroStatement() {
             </div>
             <motion.p
                 className='hero-statement__description'
-                initial={{ y: 15, opacity: 0, filter: "blur(6px)" }}
+                initial={{ y: 0, opacity: 0, filter: "blur(6px)" }}
                 animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
                 transition={{ duration: 1.2, delay: 0.9, ease: "easeOut" }}
             >
