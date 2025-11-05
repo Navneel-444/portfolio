@@ -20,7 +20,7 @@ export default function HeroStatement() {
                     className='hero-statement__heading'
                     initial={{ y: 40, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                 >
                     Hi, I'm Navneel!
                 </motion.h1>
@@ -28,7 +28,7 @@ export default function HeroStatement() {
                     className='hero-statement__subheading'
                     initial={{ y: 0, opacity: 0, filter: "blur(4px)" }}
                     animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 1, delay: 0.75, ease: "easeOut" }}
+                    transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                 >
                     Software Engineer | Full-stack Developer
                 </motion.h3>
@@ -37,7 +37,7 @@ export default function HeroStatement() {
                 className='hero-statement__description'
                 initial={{ y: 0, opacity: 0, filter: "blur(6px)" }}
                 animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                transition={{ duration: 1.2, delay: 0.9, ease: "easeOut" }}
+                transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
             >
                 Building tools that make work easier. I create software that automates tasks, so you can focus on what truly matters.
             </motion.p>

@@ -13,8 +13,8 @@ export default function ProjectCardAnimation({ children }) {
             scale: 1,
             opacity: 1,
             transition: {
-                duration: 0.35,
-                delay: 0.25,
+                duration: 0.25,
+                delay: 0.1,
                 ease: "easeOut"
             }
         }
@@ -31,9 +31,9 @@ export default function ProjectCardAnimation({ children }) {
             y: 0,
             filter: "blur(0px)",
             transition: {
-                duration: 0.35,
-                delay: 0.5,
-                ease: "easeOut"  // Smooth circular easing
+                duration: 0.25,
+                delay: 0.2,
+                ease: "easeOut"
             }
         }
     };
@@ -43,14 +43,13 @@ export default function ProjectCardAnimation({ children }) {
 
     return (
         <motion.div
-            // className="project-card"
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-100px", amount: 0.35 }}
             style={{ pointerEvents: 'none' }}
             animate={{ pointerEvents: 'auto' }}
-            transition={{ delay: 0.25 }} // Match the animation delay
+            transition={{ delay: 0.25 }}
         >
             {React.cloneElement(linkElement, {},
                 linkChildren.map(child => {
