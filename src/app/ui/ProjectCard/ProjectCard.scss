@@ -10,13 +10,12 @@
     will-change: transform;
     position: relative;
 
-    &[data-motion-state="visible"] {
-        &:hover {
-            background-color: rgba($grey-blue, 25%);
-            border: 3px solid $grey-blue;
-            cursor: pointer;
-        }
+    &:hover {
+        border: 3px solid $grey-blue;
+        background-color: rgba($grey-blue, 25%);
+        cursor: pointer;
     }
+
 
     &__content {
         position: relative;

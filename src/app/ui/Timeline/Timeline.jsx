@@ -3,6 +3,7 @@
 import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Timeline({ experiences }) {
     const [totalHeight, setTotalHeight] = useState(0);
@@ -31,7 +32,20 @@ export default function Timeline({ experiences }) {
 
     return (
         <section className="timeline">
-            <svg className="timeline__center" width="20" height={`${totalHeight}`} xmlns="http://www.w3.org/2000/svg">
+            <motion.svg
+                className="timeline__center"
+                width="20"
+                height={`${totalHeight}`}
+                xmlns="http://www.w3.org/2000/svg"
+                initial={{ opacity: 0, height: 0 }}
+                whileInView={{ opacity: 1, height: totalHeight }}
+                viewport={{ once: true, margin: "75px" }}
+                transition={{
+                    duration: 2,
+                    ease: "easeOut",
+                    delay: 0.3
+                }}
+            >
                 <defs>
                     <marker
                         id="arrowhead"
@@ -61,9 +75,9 @@ export default function Timeline({ experiences }) {
                     className="timeline__center-line"
                     markerEnd="url(#arrowhead)"
                 />
-            </svg>
+            </motion.svg>
             {experiences.map((period, idx) => (
-                < TimePeriodCard
+                <TimePeriodCard
                     key={period.id}
                     info={period}
                     position={idx % 2 === 0 ? 'left' : 'right'}
