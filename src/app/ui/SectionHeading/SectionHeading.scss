@@ -10,6 +10,15 @@
         z-index: 10;
         font-weight: 400;
         font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        will-change: transform, opacity;
+    }
+
+    &__cursor {
+        margin-left: 2px;
+        font-weight: 100;
+        color: $orange;
     }
 
     &__decorator {
