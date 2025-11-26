@@ -1,9 +1,7 @@
-'use client';
-
 import './HeroStatement.scss';
 import { analytics } from '@/app/firebase/firebase';
 import { logEvent } from 'firebase/analytics';
-import { motion } from "framer-motion";
+import * as motion from "motion/react-client"
 
 export default function HeroStatement() {
 
@@ -54,7 +52,7 @@ export default function HeroStatement() {
                     className="hero-statement__resume-btn"
                     variants={{
                         hidden: {
-                            x: 150,
+                            x: 125,
                             backgroundColor: "#33353A",
                             filter: "blur(6px)",
                             opacity: 0,
@@ -67,7 +65,7 @@ export default function HeroStatement() {
                             opacity: 1,
                             borderColor: "#415057",
                             transition: {
-                                duration: 1.25,
+                                duration: 1,
                                 ease: "easeOut",
                             },
                         },

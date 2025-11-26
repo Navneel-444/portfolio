@@ -1,9 +1,8 @@
-'use client';
-
+'use client'
 import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import * as motion from "motion/react-client";
 
 export default function Timeline({ experiences }) {
     const [totalHeight, setTotalHeight] = useState(0);

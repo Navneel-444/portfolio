@@ -1,8 +1,33 @@
-'use client';
-
+'use client'
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import * as motion from "motion/react-client";
 import './SectionHeading.scss';
+
+function useInView(ref, { once = true, margin = '0px', threshold = 0 } = {}) {
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        const el = ref?.current;
+        if (!el || typeof IntersectionObserver === 'undefined') return;
+
+        const obs = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    if (once) obs.unobserve(el);
+                } else {
+                    if (!once) setInView(false);
+                }
+            },
+            { root: null, rootMargin: margin, threshold }
+        );
+
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, [ref, once, margin, threshold]);
+
+    return inView;
+}
 
 export default function SectionHeading({ heading, id }) {
     const titleRef = useRef(null);
@@ -13,8 +38,6 @@ export default function SectionHeading({ heading, id }) {
         hidden: { opacity: 0, x: 24 },
         visible: { opacity: 1, x: 0, transition: { duration: 0.45, delay: 0.2, ease: 'easeOut' } }
     };
-
-    // circle will always be visible; no variants required
 
     const pathVariants = {
         hidden: { pathLength: 0 },
