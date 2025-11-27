@@ -2,6 +2,7 @@ import '../../../styles/main.scss';
 import './ProjectDetails.scss'
 import BentoItem from '@/app/ui/BentoItem/BentoItem';
 import ProjectHeader from '@/app/ui/ProjectHeader/ProjectHeader';
+import ProjectDetailsHydrator from './ProjectDetailsHydrator';
 
 export default function ProjectDetails({ project, allProjects }) {
     const { name, ...projectFields } = project;
@@ -39,6 +40,7 @@ export default function ProjectDetails({ project, allProjects }) {
 
     return (
         <main>
+            <ProjectDetailsHydrator />
             <ProjectHeader
                 project={project}
                 allProjects={allProjects}

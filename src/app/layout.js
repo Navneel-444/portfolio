@@ -3,6 +3,7 @@ import '@/styles/main.scss';
 import Navigation from '@/app/ui/navigation/Navigation.jsx';
 import MobileNav from './ui/MobileNav/MobileNav';
 import { JetBrains_Mono } from 'next/font/google'
+import { NavigationLoaderProvider } from '@/app/context/NavigationLoaderContext';
 
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
       <body>
         <Navigation />
         <MobileNav />
-        {children}
+        <NavigationLoaderProvider>
+          {children}
+        </NavigationLoaderProvider>
       </body>
     </html>
   );

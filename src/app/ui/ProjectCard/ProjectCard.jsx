@@ -1,8 +1,13 @@
-import * as motion from "motion/react-client"
+'use client'
+
+import * as motion from 'motion/react-client'
 import './ProjectCard.scss';
 import Link from 'next/link';
 import CardImage from './ProjectCardImage';
 import ProjectCardAnalytics from './ProjectCardAnalytics';
+import { useRouter } from 'next/navigation';
+import { useNavigationLoader } from '@/app/context/NavigationLoaderContext';
+import { useState } from 'react';
 
 const cardVariants = {
     hidden: {
@@ -40,6 +45,18 @@ const textVariants = {
 
 export default function ProjectCard({ project }) {
     const { name, desc, id, imagePath } = project;
+    const router = useRouter();
+    const { showLoader } = useNavigationLoader();
+    const [pressed, setPressed] = useState(false);
+
+    const handleClick = async (e) => {
+        e.preventDefault();
+        showLoader();
+        setPressed(true);
+        // wait so loader is visible
+        await new Promise((res) => setTimeout(res, 420));
+        router.push(`/projects/${name}`);
+    }
 
     return (
         <ProjectCardAnalytics projectName={name}>
@@ -52,14 +69,10 @@ export default function ProjectCard({ project }) {
                 animate={{ pointerEvents: 'auto' }}
                 transition={{ delay: 0.25 }}
             >
-                <Link
-                    key={id}
-                    href={`/projects/${name}`}>
+                <Link key={id} href={`/projects/${name}`} onClick={handleClick}>
                     <div className="project-card__mask">
                         <span className="project-card__expand">
-                            <p className="project-card__expand-text">
-                                View Project
-                            </p>
+                            <p className="project-card__expand-text">View Project</p>
                             <img
                                 className='project-card__expand-icon'
                                 src='/icons/expand.svg'

@@ -1,8 +1,14 @@
+import dynamic from 'next/dynamic';
 import { db } from '@/lib/firebaseAdmin';
-import ProjectDetails from '@/app/components/ProjectDetails/ProjectDetails';
+import CyberpunkLoader from '@/app/ui/Loader/Loader';
+
+const ProjectContent = dynamic(() => import('./ProjectContent'), {
+    loading: () => <CyberpunkLoader />,
+    ssr: true,
+});
 
 export default async function ProjectPage({ params }) {
-    const { projectname } = await params ?? {};
+    const { projectname } = (params ?? {});
 
     if (!projectname) return <div>No project specified</div>;
 
@@ -11,6 +17,7 @@ export default async function ProjectPage({ params }) {
         decoded = decoded.replace(/\+/g, ' ');
         return decoded;
     }
+
     const snapshot = await db
         .collection('project')
         .where('name', '==', decodeSpace(projectname))
@@ -27,5 +34,6 @@ export default async function ProjectPage({ params }) {
         id: doc.id,
         ...doc.data(),
     }));
-    return <ProjectDetails project={project} allProjects={allProjects} />;
+
+    return <ProjectContent project={project} allProjects={allProjects} />;
 }
