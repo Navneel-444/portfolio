@@ -1,14 +1,15 @@
 'use client';
 import { useState } from 'react';
 import Image from 'next/image';
+import * as motion from 'motion/react-client';
 import './BentoItem.scss';
 
-export default function BentoItemPicture({ heading, imagePath }) {
+export default function BentoItemPicture({ heading, imagePath, variants }) {
     const [imageError, setImageError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     return (
-        <section className="bento-box__item bento-box__item--picture">
+    <motion.section variants={variants} className="bento-box__item bento-box__item--picture">
             <h2 className="bento-box__title">{heading}</h2>
             <div className="bento-box__info bento-box__info--picture">
                 {imagePath ? (
@@ -55,6 +56,6 @@ export default function BentoItemPicture({ heading, imagePath }) {
                     </div>
                 )}
             </div>
-        </section>
+        </motion.section>
     );
 }

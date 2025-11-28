@@ -62,7 +62,6 @@ export default function ContactInfo() {
                             key={idx}
                             className="contact-info__social-link"
                             variants={itemVariants}
-                            whileHover={{ y: -3, scale: 1.03 }}
                         >
                             <img src={`/icons/${link.icon}`}
                                 width={28}

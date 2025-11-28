@@ -18,11 +18,6 @@
         width: 100%;
     }
 
-    /* When the client animation layer hydrates we visually hide the static
-       server-rendered nodes WITHOUT leaving them in the layout (prevents
-       duplicated content from pushing the animated layer). Use an
-       SR-friendly "sr-only" pattern so the nodes remain in the DOM and
-       accessible to screen-readers and crawlers. */
     &--hydrated {
         .contact-info__static {
             position: absolute !important;
