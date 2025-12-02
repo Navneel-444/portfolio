@@ -1,5 +1,5 @@
-import CyberpunkLoader from "@/app/ui/Loader/Loader";
+import Loader from "@/app/ui/Loader/Loader";
 
 export default function loading() {
-    return <CyberpunkLoader />
+    return <Loader />
 }

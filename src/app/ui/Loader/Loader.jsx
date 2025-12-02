@@ -1,8 +1,7 @@
-
 import * as motion from 'motion/react-client'
 import './Loader.scss'
 
-export default function CyberpunkLoader() {
+export default function Loader() {
     return (
         <motion.div
             className="loader-wrapper"
