@@ -1,4 +1,4 @@
-'use client'
+
 import * as motion from 'motion/react-client'
 import './Loader.scss'
 
