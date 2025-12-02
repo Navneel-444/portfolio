@@ -2,10 +2,13 @@ import dynamic from 'next/dynamic';
 import { db } from '@/lib/firebaseAdmin';
 import CyberpunkLoader from '@/app/ui/Loader/Loader';
 
-const ProjectContent = dynamic(() => import('./ProjectContent'), {
-    loading: () => <CyberpunkLoader />,
-    ssr: true,
-});
+const ProjectDetails = dynamic(
+    () => import('@/app/components/ProjectDetails/ProjectDetails'),
+    {
+        loading: () => <CyberpunkLoader />,
+        ssr: true,
+    }
+);
 
 export default async function ProjectPage({ params }) {
     const { projectname } = (params ?? {});
@@ -35,5 +38,5 @@ export default async function ProjectPage({ params }) {
         ...doc.data(),
     }));
 
-    return <ProjectContent project={project} allProjects={allProjects} />;
+    return <ProjectDetails project={project} allProjects={allProjects} />;
 }
