@@ -11,7 +11,7 @@ const ProjectDetails = dynamic(
 );
 
 export default async function ProjectPage({ params }) {
-    const { projectname } = (params ?? {});
+    const { projectname } = (await params ?? {});
 
     if (!projectname) return <div>No project specified</div>;
 

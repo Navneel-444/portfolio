@@ -90,7 +90,7 @@ export default function HeroStatement() {
                         className="hero-statement__btn-text"
                         variants={{
                             hidden: { opacity: 0, x: 5 },
-                            visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: 2.1 } },
+                            visible: { opacity: 1, x: 0, transition: { duration: 0.5, delay: 2 } },
                         }}
                     >
                         Resume
