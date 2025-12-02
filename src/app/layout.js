@@ -1,4 +1,3 @@
-'use client'
 import '@/styles/main.scss';
 import Navigation from '@/app/ui/navigation/Navigation.jsx';
 import MobileNav from './ui/MobileNav/MobileNav';

@@ -1,14 +1,5 @@
-import dynamic from 'next/dynamic';
 import { db } from '@/lib/firebaseAdmin';
-import CyberpunkLoader from '@/app/ui/Loader/Loader';
-
-const ProjectDetails = dynamic(
-    () => import('@/app/components/ProjectDetails/ProjectDetails'),
-    {
-        loading: () => <CyberpunkLoader />,
-        ssr: true,
-    }
-);
+import ProjectDetails from '@/app/components/ProjectDetails/ProjectDetails';
 
 export default async function ProjectPage({ params }) {
     const { projectname } = (await params ?? {});
