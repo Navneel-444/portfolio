@@ -1,7 +1,8 @@
 import './BentoItem.scss';
+import * as motion from 'motion/react-client';
 import BentoItemPicture from './BentoItemPicture';
 
-export default function BentoItem({ heading, info, variant, imagePath }) {
+export default function BentoItem({ heading, info, variant, imagePath, variants }) {
     const variantClasses = {
         regular: '',
         tall: 'bento-box__item--tall',
@@ -10,13 +11,14 @@ export default function BentoItem({ heading, info, variant, imagePath }) {
     };
 
     if (variant === 'picture') {
-        return <BentoItemPicture heading={heading} imagePath={imagePath} />;
+        // forward animation variants into the picture component
+        return <BentoItemPicture heading={heading} imagePath={imagePath} variants={variants} />;
     }
 
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);
 
     return (
-        <section className={`bento-box__item ${variantClasses[variant] || ''}`}>
+        <motion.section variants={variants} className={`bento-box__item ${variantClasses[variant] || ''}`}>
             <h2 className="bento-box__title">{heading || 'No content available'}</h2>
             {hasContent ? (
                 Array.isArray(info) ? (
@@ -31,6 +33,6 @@ export default function BentoItem({ heading, info, variant, imagePath }) {
             ) : (
                 <p className=" bento-box__info bento-box__no-content">No content available</p>
             )}
-        </section>
+        </motion.section>
     )
 }

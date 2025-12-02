@@ -1,0 +1,25 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.experience-section {
+    position: relative;
+    width: 100%;
+    padding: 2rem 0;
+    overflow: hidden;
+
+    &__content {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .timeline__center-line {
+        will-change: transform;
+    }
+
+    .time-period {
+        will-change: transform, opacity;
+    }
+}

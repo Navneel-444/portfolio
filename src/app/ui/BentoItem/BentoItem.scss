@@ -16,9 +16,9 @@
     }
 
     &__title {
-        font-size: 0.75rem;
+        font-size: 0.875rem;
         color: $orange;
-        font-weight: 300;
+        font-weight: 200;
         padding: 0.25rem 0;
         height: min-content;
     }
@@ -42,7 +42,7 @@
         flex: 1;
         background-color: rgba($grey-accent, 5%);
         padding: 0.75rem;
-        border: 1px solid rgba($orange, 30%);
+        border: 1px solid rgba($grey-accent, 25%);
         border-radius: 0.5rem;
         font-size: 0.75rem;
         list-style: none;
