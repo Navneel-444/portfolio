@@ -3,7 +3,6 @@ import '../../../styles/main.scss';
 import './ProjectDetails.scss';
 import BentoItem from '@/app/ui/BentoItem/BentoItem';
 import ProjectHeader from '@/app/ui/ProjectHeader/ProjectHeader';
-import ProjectDetailsHydrator from './ProjectDetailsHydrator';
 
 import * as motion from 'motion/react-client';
 
@@ -45,7 +44,7 @@ export default function ProjectDetails({ project, allProjects }) {
         hidden: { opacity: 0 },
         show: {
             opacity: 1,
-            transition: { staggerChildren: 0.08, delayChildren: 1 },
+            transition: { staggerChildren: 0.08, delayChildren: 0.5 },
         },
     };
 
@@ -60,15 +59,12 @@ export default function ProjectDetails({ project, allProjects }) {
 
     return (
         <main>
-            <ProjectDetailsHydrator />
-
             <ProjectHeader
                 project={project}
                 allProjects={allProjects}
                 repo={project.repo}
             />
 
-            {/* Bento Grid w/ animation */}
             <motion.section
                 className="bento-box"
                 variants={container}

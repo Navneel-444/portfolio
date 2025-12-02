@@ -6,7 +6,6 @@ import Link from 'next/link';
 import CardImage from './ProjectCardImage';
 import ProjectCardAnalytics from './ProjectCardAnalytics';
 import { useRouter } from 'next/navigation';
-import { useNavigationLoader } from '@/app/context/NavigationLoaderContext';
 import { useState } from 'react';
 
 const cardVariants = {
@@ -46,14 +45,11 @@ const textVariants = {
 export default function ProjectCard({ project }) {
     const { name, desc, id, imagePath } = project;
     const router = useRouter();
-    const { showLoader } = useNavigationLoader();
     const [pressed, setPressed] = useState(false);
 
     const handleClick = async (e) => {
         e.preventDefault();
-        showLoader();
         setPressed(true);
-        // wait so loader is visible
         await new Promise((res) => setTimeout(res, 420));
         router.push(`/projects/${name}`);
     }
