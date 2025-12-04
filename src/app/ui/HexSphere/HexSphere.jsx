@@ -16,9 +16,14 @@ export default function HexSphere() {
 
         console.log("mount size:", mount.clientWidth, mount.clientHeight);
 
-        // Clamp to 80% of viewport width to prevent overflow
-        const width = Math.min(mount.clientWidth || 300, window.innerWidth);
-        const height = mount.clientHeight || 300;
+        // Calculate canvas size to fit the sphere perfectly
+        // Sphere radius = 1, camera distance = 3, FOV = 45°
+        // Visible height at sphere = 2 * tan(22.5°) * 3 ≈ 2.485
+        // Sphere takes ~80% of that, so we size canvas to show sphere with small padding
+        const maxWidth = Math.min(mount.clientWidth || 300, window.innerWidth);
+        const sphereSize = Math.min(maxWidth, mount.clientHeight || 300);
+        const width = sphereSize;
+        const height = sphereSize; // Make it square to match sphere aspect
 
         // --- SCENE ---
         scene = new THREE.Scene();
@@ -27,7 +32,7 @@ export default function HexSphere() {
 
         // --- CAMERA ---
         camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-        camera.position.set(0, 0, 3);
+        camera.position.set(0, 0, 2.6); // Moved closer to fill canvas better
         camera.lookAt(0, 0, 0);
 
         // --- RENDERER ---
@@ -96,7 +101,9 @@ export default function HexSphere() {
         let velocityX = 0; // vertical drag -> rotate x
         let velocityY = 0; // horizontal drag -> rotate y
 
-        const ROTATION_SPEED = 0.005; // sensitivity of rotation to pointer delta
+        // Detect if device is mobile/touch for increased sensitivity
+        const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        const ROTATION_SPEED = isMobile ? 0.010 : 0.005; // Higher sensitivity on mobile
         const DAMPING = 0.93;
         // Automatic idle rotation (when not interacting) so the sphere always moves
         const AUTO_ROTATION_Y = 0.0025; // horizontal auto-rotation (around Y)
@@ -105,6 +112,8 @@ export default function HexSphere() {
         // Pointer event handlers (works for touch and mouse via Pointer Events)
         const onPointerDown = (e) => {
             if (!renderer || !renderer.domElement) return;
+            // Prevent default touch behaviors (pull-to-refresh, scroll)
+            e.preventDefault();
             // only handle primary pointer
             isPointerDown = true;
             activePointerId = e.pointerId;
@@ -116,6 +125,8 @@ export default function HexSphere() {
 
         const onPointerMove = (e) => {
             if (!isPointerDown || e.pointerId !== activePointerId) return;
+            // Prevent default to stop scrolling/pull-to-refresh during drag
+            e.preventDefault();
             const dx = e.clientX - lastX;
             const dy = e.clientY - lastY;
             lastX = e.clientX;
