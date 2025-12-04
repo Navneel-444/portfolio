@@ -3,13 +3,11 @@ import './HeroSection.scss';
 import dynamic from "next/dynamic";
 import HeroStatement from "@/app/ui/HeroStatement/HeroStatement";
 import useSectionViewTracker from '@/hooks/useSectionViewTracker';
-import loading from '@/app/loading';
-import Loading from '@/app/loading';
 
 export default function HeroSection() {
     const HexSphere = dynamic(
         () => import("@/app/ui/HexSphere/HexSphere"),
-        { ssr: false, loading: () => <Loading /> }
+        { ssr: false }
     );
 
     useSectionViewTracker('home');

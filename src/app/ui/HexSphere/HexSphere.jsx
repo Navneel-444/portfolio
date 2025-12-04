@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { motion } from "motion/react";
 import * as THREE from "three";
 import "./HexSphere.scss";
 
@@ -15,7 +16,8 @@ export default function HexSphere() {
 
         console.log("mount size:", mount.clientWidth, mount.clientHeight);
 
-        const width = mount.clientWidth || 300;
+        // Clamp to 80% of viewport width to prevent overflow
+        const width = Math.min(mount.clientWidth || 300, window.innerWidth);
         const height = mount.clientHeight || 300;
 
         // --- SCENE ---
@@ -46,8 +48,11 @@ export default function HexSphere() {
         // Handle responsive resize: update renderer and camera when container/window changes
         const onWindowResize = () => {
             if (!mount || !renderer || !camera) return;
-            // prefer mount's size but fall back to window size
-            const newWidth = (mount.clientWidth && mount.clientWidth > 0) ? mount.clientWidth : window.innerWidth;
+            // Clamp to viewport width to prevent overflow
+            const newWidth = Math.min(
+                (mount.clientWidth && mount.clientWidth > 0) ? mount.clientWidth : window.innerWidth,
+                window.innerWidth
+            );
             const newHeight = (mount.clientHeight && mount.clientHeight > 0) ? mount.clientHeight : window.innerHeight;
 
             // update renderer pixel ratio in case DPR changed (e.g. moving window between monitors)
@@ -191,9 +196,12 @@ export default function HexSphere() {
     }, []);
 
     return (
-        <div
+        <motion.div
             ref={mountRef}
             className="hex-sphere"
+            initial={{ opacity: 0, filter: "blur(12px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.9, ease: "easeOut", delay: 0.08 }}
         />
     );
 }
