@@ -2,173 +2,198 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import "./HexSphere.scss";
 
-export default function HexSphere({ textureSrc } = {}) {
+export default function HexSphere() {
     const mountRef = useRef(null);
 
     useEffect(() => {
-        if (!mountRef.current) return;
+        const mount = mountRef.current;
+        if (!mount) return;
 
-        let frameId = null;
+        let renderer, scene, camera, sphere, raf, yawGroup, pitchGroup;
 
-        // -------------------------------
-        // 1) SAFE INIT WRAPPER
-        // -------------------------------
-        const safeInit = () => {
-            if (!mountRef.current) return;
+        console.log("mount size:", mount.clientWidth, mount.clientHeight);
 
-            let width = mountRef.current.clientWidth;
-            let height = mountRef.current.clientHeight;
+        const width = mount.clientWidth || 300;
+        const height = mount.clientHeight || 300;
 
-            // If width/height = 0, try again next frame
-            if (width === 0 || height === 0) {
-                frameId = requestAnimationFrame(safeInit);
-                return;
-            }
+        // --- SCENE ---
+        scene = new THREE.Scene();
+        scene.background = null;
 
-            init(width, height);
+
+        // --- CAMERA ---
+        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+        camera.position.set(0, 0, 3);
+        camera.lookAt(0, 0, 0);
+
+        // --- RENDERER ---
+        // use alpha:true so canvas can be transparent
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        // Use devicePixelRatio but cap it to avoid excessive GPU load
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(width, height);
+        // make the canvas fill the mount element via CSS so it resizes visually
+        renderer.domElement.style.width = '100%';
+        renderer.domElement.style.height = '100%';
+        // Explicitly set clear alpha to 0 for full transparency and make
+        // sure the canvas element itself has a transparent background style.
+        renderer.setClearColor(0x000000, 0);
+        renderer.domElement.style.background = 'transparent';
+        mount.appendChild(renderer.domElement);
+
+        // Handle responsive resize: update renderer and camera when container/window changes
+        const onWindowResize = () => {
+            if (!mount || !renderer || !camera) return;
+            // prefer mount's size but fall back to window size
+            const newWidth = (mount.clientWidth && mount.clientWidth > 0) ? mount.clientWidth : window.innerWidth;
+            const newHeight = (mount.clientHeight && mount.clientHeight > 0) ? mount.clientHeight : window.innerHeight;
+
+            // update renderer pixel ratio in case DPR changed (e.g. moving window between monitors)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(newWidth, newHeight, false);
+
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
         };
 
-        safeInit(); // start the safe initialization
+        // call once to ensure correct initial sizing if mount size differs from initial measurement
+        onWindowResize();
+        window.addEventListener('resize', onWindowResize);
 
-        // -------------------------------
-        // FULL THREE.JS INITIALIZATION
-        // -------------------------------
-        function init(width, height) {
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-            camera.position.set(0, 0, 3);
+        // --- SPHERE (BRIGHT GREEN, 100% visible) ---
+        const geometry = new THREE.SphereGeometry(1, 6, 5);
+        const material = new THREE.MeshBasicMaterial({ color: 0x415057, wireframe: true });
 
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(width, height);
-            mountRef.current.appendChild(renderer.domElement);
+        sphere = new THREE.Mesh(geometry, material);
 
-            // SPHERE (low poly)
-            const geometry = new THREE.SphereGeometry(1, 7, 7);
+        // Use nested groups: outer yawGroup handles Y rotation (yaw),
+        // inner pitchGroup handles X rotation (pitch). This decouples
+        // horizontal and vertical rotations so reaching the top doesn't
+        // lock or invert the horizontal movement.
+        yawGroup = new THREE.Object3D();
+        pitchGroup = new THREE.Object3D();
 
-            let material;
-            if (textureSrc) {
-                const loader = new THREE.TextureLoader();
-                const tex = loader.load(textureSrc);
-                tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-                material = new THREE.MeshBasicMaterial({ map: tex });
-            } else {
-                material = new THREE.MeshBasicMaterial({ color: 0x2b2f36, wireframe: true });
+        pitchGroup.add(sphere);
+        yawGroup.add(pitchGroup);
+        scene.add(yawGroup);
+
+        console.log("sphere added:", sphere);
+
+        // --- RENDER LOOP ---
+        // Pointer/touch interaction state
+        let isPointerDown = false;
+        let activePointerId = null;
+        let lastX = 0;
+        let lastY = 0;
+        // velocities applied each frame (momentum)
+        let velocityX = 0; // vertical drag -> rotate x
+        let velocityY = 0; // horizontal drag -> rotate y
+
+        const ROTATION_SPEED = 0.005; // sensitivity of rotation to pointer delta
+        const DAMPING = 0.93;
+        // Automatic idle rotation (when not interacting) so the sphere always moves
+        const AUTO_ROTATION_Y = 0.0025; // horizontal auto-rotation (around Y)
+        const AUTO_ROTATION_X = 0.00015; // subtle vertical auto-tilt (around X)
+
+        // Pointer event handlers (works for touch and mouse via Pointer Events)
+        const onPointerDown = (e) => {
+            if (!renderer || !renderer.domElement) return;
+            // only handle primary pointer
+            isPointerDown = true;
+            activePointerId = e.pointerId;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            // capture pointer so we continue to receive move/up
+            try { renderer.domElement.setPointerCapture(activePointerId); } catch (err) { }
+        };
+
+        const onPointerMove = (e) => {
+            if (!isPointerDown || e.pointerId !== activePointerId) return;
+            const dx = e.clientX - lastX;
+            const dy = e.clientY - lastY;
+            lastX = e.clientX;
+            lastY = e.clientY;
+
+            // Update group rotations for immediate response
+            yawGroup.rotation.y += dx * ROTATION_SPEED;
+            pitchGroup.rotation.x += dy * ROTATION_SPEED;
+
+            // store velocity for momentum when pointer is released
+            velocityY = dx * ROTATION_SPEED; // horizontal drag -> y rotation
+            velocityX = dy * ROTATION_SPEED; // vertical drag -> x rotation
+        };
+
+        const onPointerUp = (e) => {
+            if (!isPointerDown || e.pointerId !== activePointerId) return;
+            isPointerDown = false;
+            try { renderer.domElement.releasePointerCapture(activePointerId); } catch (err) { }
+            activePointerId = null;
+        };
+
+        renderer.domElement.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+
+        const animate = () => {
+            raf = requestAnimationFrame(animate);
+
+            // Always apply a subtle auto-rotation so the sphere moves when idle.
+            sphere.rotation.y += AUTO_ROTATION_Y;
+            sphere.rotation.x += AUTO_ROTATION_X;
+
+            // Apply momentum when not dragging
+            if (!isPointerDown) {
+                // apply damping to velocities
+                velocityX *= DAMPING;
+                velocityY *= DAMPING;
+
+                // if velocities are very small, zero them to avoid micro-rotations
+                if (Math.abs(velocityX) < 1e-5) velocityX = 0;
+                if (Math.abs(velocityY) < 1e-5) velocityY = 0;
+
+                pitchGroup.rotation.x += velocityX;
+                yawGroup.rotation.y += velocityY;
             }
 
-            const sphere = new THREE.Mesh(geometry, material);
-            scene.add(sphere);
+            // Note: we intentionally no longer clamp the pitch here because
+            // using nested yaw/pitch groups prevents the horizontal rotation
+            // from inverting when the pitch crosses ±90°. If you prefer a
+            // soft limit, we can reintroduce a clamp on pitchGroup.rotation.x.
 
-            // ORBIT CONTROLS
-            const controls = new OrbitControls(camera, renderer.domElement);
-            controls.enablePan = false;
-            controls.enableZoom = false;
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.08;
-            controls.rotateSpeed = 0.4;
+            renderer.render(scene, camera);
+        };
 
-            let userInteracting = false;
-            let velocity = 0;
-            let lastAngle = controls.getAzimuthalAngle();
-
-            const onStart = () => {
-                userInteracting = true;
-                velocity = 0;
-                lastAngle = controls.getAzimuthalAngle();
-                requestRenderIfNotRequested();
-            };
-
-            const onEnd = () => {
-                userInteracting = false;
-                requestRenderIfNotRequested();
-            };
-
-            controls.addEventListener("start", onStart);
-            controls.addEventListener("end", onEnd);
-
-            controls.addEventListener("change", () => {
-                if (userInteracting) {
-                    const angle = controls.getAzimuthalAngle();
-                    velocity = angle - lastAngle;
-                    lastAngle = angle;
-                }
-                requestRenderIfNotRequested();
-            });
-
-            let rafId = null;
-
-            const animate = () => {
-                rafId = null;
-
-                if (!userInteracting) {
-                    velocity *= 0.92;
-                }
-
-                controls.update();
-                renderer.render(scene, camera);
-
-                if (userInteracting || Math.abs(velocity) > 0.00015) {
-                    requestRenderIfNotRequested();
-                }
-            };
-
-            function requestRenderIfNotRequested() {
-                if (!rafId) rafId = requestAnimationFrame(animate);
-            }
-
-            velocity = 0.0036;
-            requestRenderIfNotRequested();
-
-            const onResize = () => {
-                if (!mountRef.current) return;
-                const w = mountRef.current.clientWidth;
-                const h = mountRef.current.clientHeight;
-                camera.aspect = w / h;
-                camera.updateProjectionMatrix();
-                renderer.setSize(w, h);
-                requestRenderIfNotRequested();
-            };
-
-            window.addEventListener("resize", onResize);
-
-            const onVisibility = () => {
-                if (document.hidden) {
-                    if (rafId) cancelAnimationFrame(rafId);
-                    rafId = null;
-                } else {
-                    requestRenderIfNotRequested();
-                }
-            };
-            document.addEventListener("visibilitychange", onVisibility);
-
-            // Cleanup
-            return () => {
-                window.removeEventListener("resize", onResize);
-                document.removeEventListener("visibilitychange", onVisibility);
-                controls.dispose();
-                geometry.dispose();
-                if (material.map) material.map.dispose();
-                material.dispose();
-                renderer.forceContextLoss();
-                renderer.dispose();
-                if (rafId) cancelAnimationFrame(rafId);
-                if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
-                    mountRef.current.removeChild(renderer.domElement);
-                }
-            };
-        }
+        animate();
 
         return () => {
-            if (frameId) cancelAnimationFrame(frameId);
+            // remove pointer listeners
+            try { renderer.domElement.removeEventListener('pointerdown', onPointerDown); } catch (e) { }
+            try { window.removeEventListener('pointermove', onPointerMove); } catch (e) { }
+            try { window.removeEventListener('pointerup', onPointerUp); } catch (e) { }
+            try { window.removeEventListener('pointercancel', onPointerUp); } catch (e) { }
+
+            cancelAnimationFrame(raf);
+            // dispose threejs resources
+            if (renderer) {
+                try {
+                    renderer.dispose();
+                } catch (e) { }
+            }
+            try { geometry.dispose(); } catch (e) { }
+            try { material.dispose(); } catch (e) { }
+            if (renderer && renderer.domElement && mount.contains(renderer.domElement)) {
+                mount.removeChild(renderer.domElement);
+            }
         };
-    }, [textureSrc]);
+    }, []);
 
     return (
         <div
             ref={mountRef}
-            style={{ width: "100%", height: "100%", touchAction: "none" }}
+            className="hex-sphere"
         />
     );
 }
