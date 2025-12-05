@@ -12,133 +12,84 @@ export default function HexSphere() {
         const mount = mountRef.current;
         if (!mount) return;
 
+        // ========== INITIALIZATION ==========
         let renderer, scene, camera, sphere, raf, yawGroup, pitchGroup;
 
-        console.log("mount size:", mount.clientWidth, mount.clientHeight);
-
-        // Calculate canvas size to fit the sphere perfectly
-        // Sphere radius = 1, camera distance = 3, FOV = 45°
-        // Visible height at sphere = 2 * tan(22.5°) * 3 ≈ 2.485
-        // Sphere takes ~80% of that, so we size canvas to show sphere with small padding
+        // Calculate square canvas dimensions (clamped to viewport)
         const maxWidth = Math.min(mount.clientWidth || 300, window.innerWidth);
         const sphereSize = Math.min(maxWidth, mount.clientHeight || 300);
         const width = sphereSize;
-        const height = sphereSize; // Make it square to match sphere aspect
+        const height = sphereSize;
 
-        // --- SCENE ---
+        // ========== THREE.JS SETUP ==========
         scene = new THREE.Scene();
         scene.background = null;
 
-
-        // --- CAMERA ---
         camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-        camera.position.set(0, 0, 2.6); // Moved closer to fill canvas better
+        camera.position.set(0, 0, 2.65);
         camera.lookAt(0, 0, 0);
 
-        // --- RENDERER ---
-        // use alpha:true so canvas can be transparent
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        // Use devicePixelRatio but cap it to avoid excessive GPU load
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         renderer.setSize(width, height);
-        // make the canvas fill the mount element via CSS so it resizes visually
+        renderer.setClearColor(0x000000, 0);
         renderer.domElement.style.width = '100%';
         renderer.domElement.style.height = '100%';
-        // Explicitly set clear alpha to 0 for full transparency and make
-        // sure the canvas element itself has a transparent background style.
-        renderer.setClearColor(0x000000, 0);
         renderer.domElement.style.background = 'transparent';
         mount.appendChild(renderer.domElement);
 
-        // Handle responsive resize: update renderer and camera when container/window changes
-        const onWindowResize = () => {
-            if (!mount || !renderer || !camera) return;
-            // Clamp to viewport width to prevent overflow
-            const newWidth = Math.min(
-                (mount.clientWidth && mount.clientWidth > 0) ? mount.clientWidth : window.innerWidth,
-                window.innerWidth
-            );
-            const newHeight = (mount.clientHeight && mount.clientHeight > 0) ? mount.clientHeight : window.innerHeight;
-
-            // update renderer pixel ratio in case DPR changed (e.g. moving window between monitors)
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-            renderer.setSize(newWidth, newHeight, false);
-
-            camera.aspect = newWidth / newHeight;
-            camera.updateProjectionMatrix();
-        };
-
-        // call once to ensure correct initial sizing if mount size differs from initial measurement
-        onWindowResize();
-        window.addEventListener('resize', onWindowResize);
-
-        // --- SPHERE (BRIGHT GREEN, 100% visible) ---
-        const geometry = new THREE.SphereGeometry(1, 6, 5);
+        // ========== SPHERE & ROTATION GROUPS ==========
+        const geometry = new THREE.SphereGeometry(0.9, 6, 6);
         const material = new THREE.MeshBasicMaterial({ color: 0x415057, wireframe: true });
-
         sphere = new THREE.Mesh(geometry, material);
 
-        // Use nested groups: outer yawGroup handles Y rotation (yaw),
-        // inner pitchGroup handles X rotation (pitch). This decouples
-        // horizontal and vertical rotations so reaching the top doesn't
-        // lock or invert the horizontal movement.
+        // Nested groups for independent yaw (horizontal) and pitch (vertical) rotation
         yawGroup = new THREE.Object3D();
         pitchGroup = new THREE.Object3D();
-
         pitchGroup.add(sphere);
         yawGroup.add(pitchGroup);
         scene.add(yawGroup);
 
-        console.log("sphere added:", sphere);
+        // ========== INTERACTION CONSTANTS ==========
+        const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        const ROTATION_SPEED = isMobile ? 0.010 : 0.005;
+        const DAMPING = 0.93;
+        const AUTO_ROTATION_Y = 0.0025;
+        const AUTO_ROTATION_X = 0.00015;
 
-        // --- RENDER LOOP ---
-        // Pointer/touch interaction state
+        // ========== INTERACTION STATE ==========
         let isPointerDown = false;
         let activePointerId = null;
         let lastX = 0;
         let lastY = 0;
-        // velocities applied each frame (momentum)
-        let velocityX = 0; // vertical drag -> rotate x
-        let velocityY = 0; // horizontal drag -> rotate y
+        let velocityX = 0;
+        let velocityY = 0;
 
-        // Detect if device is mobile/touch for increased sensitivity
-        const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        const ROTATION_SPEED = isMobile ? 0.010 : 0.005; // Higher sensitivity on mobile
-        const DAMPING = 0.93;
-        // Automatic idle rotation (when not interacting) so the sphere always moves
-        const AUTO_ROTATION_Y = 0.0025; // horizontal auto-rotation (around Y)
-        const AUTO_ROTATION_X = 0.00015; // subtle vertical auto-tilt (around X)
-
-        // Pointer event handlers (works for touch and mouse via Pointer Events)
+        // ========== EVENT HANDLERS ==========
         const onPointerDown = (e) => {
-            if (!renderer || !renderer.domElement) return;
-            // Prevent default touch behaviors (pull-to-refresh, scroll)
+            if (!renderer?.domElement) return;
             e.preventDefault();
-            // only handle primary pointer
             isPointerDown = true;
             activePointerId = e.pointerId;
             lastX = e.clientX;
             lastY = e.clientY;
-            // capture pointer so we continue to receive move/up
             try { renderer.domElement.setPointerCapture(activePointerId); } catch (err) { }
         };
 
         const onPointerMove = (e) => {
             if (!isPointerDown || e.pointerId !== activePointerId) return;
-            // Prevent default to stop scrolling/pull-to-refresh during drag
             e.preventDefault();
+
             const dx = e.clientX - lastX;
             const dy = e.clientY - lastY;
             lastX = e.clientX;
             lastY = e.clientY;
 
-            // Update group rotations for immediate response
             yawGroup.rotation.y += dx * ROTATION_SPEED;
             pitchGroup.rotation.x += dy * ROTATION_SPEED;
 
-            // store velocity for momentum when pointer is released
-            velocityY = dx * ROTATION_SPEED; // horizontal drag -> y rotation
-            velocityX = dy * ROTATION_SPEED; // vertical drag -> x rotation
+            velocityY = dx * ROTATION_SPEED;
+            velocityX = dy * ROTATION_SPEED;
         };
 
         const onPointerUp = (e) => {
@@ -148,25 +99,34 @@ export default function HexSphere() {
             activePointerId = null;
         };
 
-        renderer.domElement.addEventListener('pointerdown', onPointerDown);
-        window.addEventListener('pointermove', onPointerMove);
-        window.addEventListener('pointerup', onPointerUp);
-        window.addEventListener('pointercancel', onPointerUp);
+        const onWindowResize = () => {
+            if (!mount || !renderer || !camera) return;
 
+            const newWidth = Math.min(
+                (mount.clientWidth && mount.clientWidth > 0) ? mount.clientWidth : window.innerWidth,
+                window.innerWidth
+            );
+            const newHeight = (mount.clientHeight && mount.clientHeight > 0) ? mount.clientHeight : window.innerHeight;
+
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.setSize(newWidth, newHeight, false);
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+        };
+
+        // ========== ANIMATION LOOP ==========
         const animate = () => {
             raf = requestAnimationFrame(animate);
 
-            // Always apply a subtle auto-rotation so the sphere moves when idle.
+            // Auto-rotation when idle
             sphere.rotation.y += AUTO_ROTATION_Y;
             sphere.rotation.x += AUTO_ROTATION_X;
 
-            // Apply momentum when not dragging
+            // Apply momentum with damping when not actively dragging
             if (!isPointerDown) {
-                // apply damping to velocities
                 velocityX *= DAMPING;
                 velocityY *= DAMPING;
 
-                // if velocities are very small, zero them to avoid micro-rotations
                 if (Math.abs(velocityX) < 1e-5) velocityX = 0;
                 if (Math.abs(velocityY) < 1e-5) velocityY = 0;
 
@@ -174,33 +134,34 @@ export default function HexSphere() {
                 yawGroup.rotation.y += velocityY;
             }
 
-            // Note: we intentionally no longer clamp the pitch here because
-            // using nested yaw/pitch groups prevents the horizontal rotation
-            // from inverting when the pitch crosses ±90°. If you prefer a
-            // soft limit, we can reintroduce a clamp on pitchGroup.rotation.x.
-
             renderer.render(scene, camera);
         };
 
+        // ========== ATTACH EVENT LISTENERS ==========
+        renderer.domElement.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+        window.addEventListener('resize', onWindowResize);
+        onWindowResize();
         animate();
 
+        // ========== CLEANUP ==========
         return () => {
-            // remove pointer listeners
             try { renderer.domElement.removeEventListener('pointerdown', onPointerDown); } catch (e) { }
             try { window.removeEventListener('pointermove', onPointerMove); } catch (e) { }
             try { window.removeEventListener('pointerup', onPointerUp); } catch (e) { }
             try { window.removeEventListener('pointercancel', onPointerUp); } catch (e) { }
+            try { window.removeEventListener('resize', onWindowResize); } catch (e) { }
 
             cancelAnimationFrame(raf);
-            // dispose threejs resources
+
             if (renderer) {
-                try {
-                    renderer.dispose();
-                } catch (e) { }
+                try { renderer.dispose(); } catch (e) { }
             }
             try { geometry.dispose(); } catch (e) { }
             try { material.dispose(); } catch (e) { }
-            if (renderer && renderer.domElement && mount.contains(renderer.domElement)) {
+            if (renderer?.domElement && mount.contains(renderer.domElement)) {
                 mount.removeChild(renderer.domElement);
             }
         };
