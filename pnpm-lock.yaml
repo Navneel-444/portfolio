@@ -32,6 +32,9 @@ importers:
       sass:
         specifier: ^1.89.0
         version: 1.89.1
+      three:
+        specifier: ^0.181.2
+        version: 0.181.2
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -3117,6 +3120,9 @@ packages:
   teeny-request@9.0.0:
     resolution: {integrity: sha512-resvxdc6Mgb7YEThw6G6bExlXKkv6+YbuzGg9xuXxSgxJF7Ozs+o8Y9+2R3sArdWdW8nOokoQb1yrpFB0pQK2g==}
     engines: {node: '>=14'}
+
+  three@0.181.2:
+    resolution: {integrity: sha512-k/CjiZ80bYss6Qs7/ex1TBlPD11whT9oKfT8oTGiHa34W4JRd1NiH/Tr1DbHWQ2/vMUypxksLnF2CfmlmM5XFQ==}
 
   tinyglobby@0.2.14:
     resolution: {integrity: sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==}
@@ -7028,6 +7034,8 @@ snapshots:
       - encoding
       - supports-color
     optional: true
+
+  three@0.181.2: {}
 
   tinyglobby@0.2.14:
     dependencies:
