@@ -23,7 +23,6 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
         };
     }, []);
 
-    // =========== Option A Animation ===========
     const fadeSlide = {
         hidden: { opacity: 0, y: 20 },
         show: {
@@ -43,68 +42,95 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
             initial="hidden"
             animate="show"
         >
-            <section
+            <nav
                 className={`project-header__dropdown ${isDropdownOpen ? 'project-header__dropdown--show' : ''}`}
                 ref={dropdownRef}
+                aria-label="Project navigation"
             >
                 <div className="project-header__current">
                     <h1 className="project-header__current-title">{name}</h1>
                     <button
                         className={`project-header__dropdown-btn ${isDropdownOpen ? 'project-header__dropdown-btn--show' : ''}`}
                         onClick={toggleDropdown}
+                        aria-expanded={isDropdownOpen}
+                        aria-label="Toggle project dropdown menu"
+                        aria-haspopup="true"
                     >
                         <img
                             src="/icons/down-arrow.svg"
-                            alt="dropdown menu for selecting other projects"
+                            alt="Dropdown arrow icon"
                             width={12}
                             height={7.5}
                         />
                     </button>
                 </div>
 
-                <ul
-                    className={`project-header__dropdown-content ${isDropdownOpen ? 'project-header__dropdown-content--show' : ''}`}
-                >
-                    {allProjects
-                        .map((p, idx) => ({ ...p, index: idx }))
-                        .filter(p => p.name !== name)
-                        .map(p => (
-                            <Link key={p.index} href={`/projects/${p.name}`}>
-                                <li className="project-header__dropdown-item">
-                                    {p.name}
+                {isDropdownOpen && (
+                    <ul
+                        className="project-header__dropdown-content"
+                        role="menu"
+                    >
+                        {allProjects
+                            .map((p, idx) => ({ ...p, index: idx }))
+                            .filter(p => p.name !== name)
+                            .map(p => (
+                                <li key={p.index} role="none">
+                                    <Link
+                                        href={`/projects/${p.name}`}
+                                        className="project-header__dropdown-link"
+                                        role="menu item"
+                                    >
+                                        {p.name}
+                                    </Link>
                                 </li>
-                            </Link>
-                        ))}
-                </ul>
-            </section>
+                            ))}
+                    </ul>
+                )}
+            </nav>
 
-            <section className='project-header__link'>
-                <a href={live} target="_blank" rel="noopener noreferrer">
-                    <button className={live ? "project-header__link-btn" : " project-header__link-btn project-header__link-btn--disabled"}>
-                        <p className="project-header__link-title">Live</p>
+            <nav className='project-header__link' aria-label="Project links">
+                <a
+                    href={live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-disabled={!live}
+                >
+                    <button
+                        className={live ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
+                        disabled={!live}
+                    >
+                        <span className="project-header__link-title">Live</span>
                         <img
                             className='project-header__link-icon'
                             src="/icons/expand.svg"
-                            alt="button to redirect to the live site"
+                            alt="External link icon"
                             width={16}
                             height={14}
                         />
                     </button>
                 </a>
 
-                <a href={repo} target="_blank" rel="noopener noreferrer">
-                    <button className={repo ? "project-header__link-btn" : " project-header__link-btn project-header__link-btn--disabled"}>
-                        <p className="project-header__link-title">Github Repo</p>
+                <a
+                    href={repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-disabled={!repo}
+                >
+                    <button
+                        className={repo ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
+                        disabled={!repo}
+                    >
+                        <span className="project-header__link-title">Github Repo</span>
                         <img
                             className='project-header__link-icon'
                             src="/icons/expand.svg"
-                            alt="button to redirect to the git repo"
+                            alt="External link icon"
                             width={16}
                             height={14}
                         />
                     </button>
                 </a>
-            </section>
+            </nav>
         </motion.header>
     );
 }
