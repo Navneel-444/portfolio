@@ -1,4 +1,3 @@
-'use client'
 import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
 import * as motion from "motion/react-client";

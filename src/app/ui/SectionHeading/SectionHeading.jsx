@@ -52,7 +52,7 @@ export default function SectionHeading({ heading, id }) {
     }, [heading]);
 
     return (
-        <div className="section-heading" id={id}>
+        <header className="section-heading" id={id}>
             <motion.h3
                 ref={titleRef}
                 className="section-heading__title"
@@ -83,6 +83,6 @@ export default function SectionHeading({ heading, id }) {
                     variants={pathVariants}
                 />
             </motion.svg>
-        </div>
+        </header>
     )
 }
