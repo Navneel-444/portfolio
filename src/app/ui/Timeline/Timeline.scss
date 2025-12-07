@@ -17,6 +17,8 @@
     &__center {
         fill: $orange;
         position: absolute;
+        height: 100%;
+        top: 0;
 
         @include mobile {
             left: 0
