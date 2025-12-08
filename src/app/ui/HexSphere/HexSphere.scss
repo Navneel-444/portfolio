@@ -8,10 +8,14 @@
     left: 32%;
     bottom: 3%;
     touch-action: none; // Prevent browser touch gestures (pull-to-refresh, scroll)
+    max-width: 100%;
+    overflow: hidden;
 
     @include mobile {
-        width: 100%;
-        height: 50%;
-        left: auto;
+        width: 70%;
+        height: 35%;
+        left: 55%;
+        transform: translateX(-50%);
+        bottom: 12%;
     }
 }
