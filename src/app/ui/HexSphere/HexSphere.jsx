@@ -13,19 +13,17 @@ export default function HexSphere() {
 
         // ========== INITIALIZATION ==========
         let renderer, scene, camera, sphere, raf, yawGroup, pitchGroup;
-
-        // Calculate square canvas dimensions (clamped to viewport)
         const maxWidth = Math.min(mount.clientWidth || 300, window.innerWidth);
         const sphereSize = Math.min(maxWidth, mount.clientHeight || 300);
-        const width = sphereSize;
-        const height = sphereSize;
+        const width = sphereSize * 0.45;
+        const height = sphereSize * 1.45;
 
         // ========== THREE.JS SETUP ==========
         scene = new THREE.Scene();
         scene.background = null;
 
         camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-        camera.position.set(0, 0, 2.65);
+        camera.position.set(0, 0, 2.95);
         camera.lookAt(0, 0, 0);
 
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -41,6 +39,31 @@ export default function HexSphere() {
         const geometry = new THREE.SphereGeometry(0.9, 6, 6);
         const material = new THREE.MeshBasicMaterial({ color: 0x415057, wireframe: true });
         sphere = new THREE.Mesh(geometry, material);
+
+        // ========== SHADOW PLANE ==========
+        const shadowCanvas = document.createElement('canvas');
+        shadowCanvas.width = 256;
+        shadowCanvas.height = 256;
+        const ctx = shadowCanvas.getContext('2d');
+        const gradient = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+        gradient.addColorStop(0, 'rgba(0, 0, 0, 0.5)');
+        gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.2)');
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 256, 256);
+        
+        const shadowTexture = new THREE.CanvasTexture(shadowCanvas);
+        const shadowGeometry = new THREE.CircleGeometry(0.6, 32);
+        const shadowMaterial = new THREE.MeshBasicMaterial({
+            map: shadowTexture,
+            transparent: true,
+            opacity: 0.8,
+            side: THREE.DoubleSide
+        });
+        const shadowPlane = new THREE.Mesh(shadowGeometry, shadowMaterial);
+        shadowPlane.rotation.x = -Math.PI / 2; // Rotate to be horizontal
+        shadowPlane.position.y = -0.95; // Position below the sphere
+        scene.add(shadowPlane);
 
         // Nested groups for independent yaw (horizontal) and pitch (vertical) rotation
         yawGroup = new THREE.Object3D();
@@ -160,6 +183,9 @@ export default function HexSphere() {
             }
             try { geometry.dispose(); } catch (e) { }
             try { material.dispose(); } catch (e) { }
+            try { shadowGeometry.dispose(); } catch (e) { }
+            try { shadowMaterial.dispose(); } catch (e) { }
+            try { shadowTexture.dispose(); } catch (e) { }
             if (renderer?.domElement && mount.contains(renderer.domElement)) {
                 mount.removeChild(renderer.domElement);
             }
