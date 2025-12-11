@@ -50,6 +50,7 @@
         position: relative;
         opacity: 0;
         animation: fadeInUp 1.1s ease-out 0.3s forwards;
+
     }
 
     &__content-wrapper {
@@ -58,6 +59,8 @@
         flex-direction: column;
         position: relative;
         overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 1px 6px rgba(0, 0, 0, 0.1);
+
     }
 
     &__expand-btn {
@@ -220,6 +223,7 @@
         font-size: 0.75rem;
         list-style: none;
         overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
 
         li {
             padding-left: 0.75rem;
