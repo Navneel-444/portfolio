@@ -13,6 +13,7 @@ export default function HexSphere() {
 
         // ========== INITIALIZATION ==========
         let renderer, scene, camera, sphere, raf, yawGroup, pitchGroup;
+        
         const maxWidth = Math.min(mount.clientWidth || 300, window.innerWidth);
         const sphereSize = Math.min(maxWidth, mount.clientHeight || 300);
         const width = sphereSize * 0.45;
