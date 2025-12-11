@@ -19,7 +19,7 @@ export default function BentoItem({ heading, info, variant, imageUrl, index }) {
     return (
         <section
             className={`bento-box__item ${variantClasses[variant] || ''}`}
-            style={{ animationDelay: `${0.5 + index * 0.08}s` }}
+            style={{ animationDelay: `${0.75 + index * 0.08}s` }}
         >
             <h2 className="bento-box__title">{heading || 'No content available'}</h2>
             <BentoItemModal heading={heading} info={info}>
