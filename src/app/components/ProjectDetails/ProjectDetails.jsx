@@ -2,8 +2,9 @@ import '../../../styles/main.scss';
 import './ProjectDetails.scss';
 import BentoItem from '@/app/ui/BentoItem/BentoItem';
 import ProjectHeader from '@/app/ui/ProjectHeader/ProjectHeader';
+import { bucket } from '@/lib/firebaseAdmin';
 
-export default function ProjectDetails({ project, allProjects }) {
+export default async function ProjectDetails({ project, allProjects }) {
     const { name, ...projectFields } = project;
 
     const definitions = [
@@ -17,16 +18,30 @@ export default function ProjectDetails({ project, allProjects }) {
         { key: 'future improvements', heading: 'Future Improvements', variant: 'regular' },
     ];
 
-    const bentoItems = definitions.map((def) => {
+    const bentoItems = await Promise.all(definitions.map(async (def) => {
         const value = projectFields[def.key];
 
         if (def.key === 'screenshot') {
             const folder = String(name || '').toLowerCase();
+            const imagePath = `${folder}/screenshot.webp`;
+            
+            let imageUrl = null;
+            try {
+                const file = bucket.file(imagePath);
+                const [url] = await file.getSignedUrl({
+                    action: 'read',
+                    expires: Date.now() + 24 * 60 * 60 * 1000,
+                }).catch(() => [null]);
+                imageUrl = url;
+            } catch (error) {
+                console.error(`Error loading image for bento item:`, error);
+            }
+
             return {
                 heading: def.heading,
                 info: value,
                 variant: def.variant,
-                imagePath: `${folder}/screenshot.webp`
+                imageUrl
             };
         }
 
@@ -35,7 +50,7 @@ export default function ProjectDetails({ project, allProjects }) {
             info: value,
             variant: def.variant
         };
-    });
+    }));
 
     return (
         <main>
@@ -53,7 +68,7 @@ export default function ProjectDetails({ project, allProjects }) {
                         heading={itemData.heading}
                         info={itemData.info}
                         variant={itemData.variant}
-                        imagePath={itemData.imagePath}
+                        imageUrl={itemData.imageUrl}
                     />
                 ))}
             </section>

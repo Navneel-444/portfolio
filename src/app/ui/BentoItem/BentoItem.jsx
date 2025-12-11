@@ -2,7 +2,7 @@ import './BentoItem.scss';
 import BentoItemPicture from './BentoItemPicture';
 import BentoItemModal from './BentoItemModal';
 
-export default function BentoItem({ heading, info, variant, imagePath, index }) {
+export default function BentoItem({ heading, info, variant, imageUrl, index }) {
     const variantClasses = {
         regular: '',
         tall: 'bento-box__item--tall',
@@ -11,7 +11,7 @@ export default function BentoItem({ heading, info, variant, imagePath, index }) 
     };
 
     if (variant === 'picture') {
-        return <BentoItemPicture heading={heading} imagePath={imagePath} index={index} />;
+        return <BentoItemPicture heading={heading} imageUrl={imageUrl} index={index} />;
     }
 
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);

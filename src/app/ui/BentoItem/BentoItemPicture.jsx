@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import './BentoItem.scss';
 
-export default function BentoItemPicture({ heading, imagePath, index }) {
+export default function BentoItemPicture({ heading, imageUrl, index }) {
     const [imageError, setImageError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -14,14 +14,14 @@ export default function BentoItemPicture({ heading, imagePath, index }) {
         >
             <h2 className="bento-box__title">{heading}</h2>
             <div className="bento-box__info bento-box__info--picture">
-                {imagePath ? (
+                {imageUrl ? (
                     <>
                         {isLoading && !imageError && (
                             <div className="bento-box__skeleton"></div>
                         )}
                         {!imageError ? (
                             <Image
-                                src={`/api/image?path=${encodeURIComponent(imagePath)}`}
+                                src={imageUrl}
                                 alt="project screenshot"
                                 className={`bento-box__image ${isLoading ? 'bento-box__image--loading' : ''}`}
                                 width={400}
