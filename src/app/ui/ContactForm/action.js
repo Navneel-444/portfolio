@@ -13,7 +13,7 @@ export async function sendEmail(formData) {
 
     try {
         await resend.emails.send({
-            from: 'contact@mydomain.com',
+            from: 'contact@navneelnandran.dev',
             to: 'navneel.nandran@gmail.com',
             subject: `New Contact Form Message from ${name}`,
             html: `<p><strong>${name}</strong> wrote:</p><p>${message}</p><p>Email: ${email}</p>`,

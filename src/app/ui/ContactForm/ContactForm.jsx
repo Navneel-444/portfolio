@@ -1,28 +1,20 @@
 'use client';
 import './ContactForm.scss';
 import { useEffect, useRef } from 'react';
-import * as motion from "motion/react-client";
 import { analytics } from '@/app/firebase/firebase';
 import { logEvent } from 'firebase/analytics';
 import { sendEmail } from '../ContactForm/action';
 import { useFormStatus } from 'react-dom';
 import Form from 'next/form';
+import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 function SubmitButton() {
     const { pending } = useFormStatus();
     return (
         <button type="submit" disabled={pending} className="form__button">
-            {pending ? (
-                <motion.span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2, ease: 'easeOut' }}
-                >
-                    Sending...
-                </motion.span>
-            ) : (
-                'Submit'
-            )}
+            <span className={pending ? 'form__button-text form__button-text--visible' : 'form__button-text'}>
+                {pending ? 'Sending...' : 'Submit'}
+            </span>
         </button>
     );
 }
@@ -30,6 +22,9 @@ function SubmitButton() {
 export default function ContactForm() {
     const filledFields = useRef(new Set());
     const submitted = useRef(false);
+    const { ref: formRef, isVisible } = useIntersectionObserver({
+        threshold: 0.3
+    });
 
     const handleInput = (e) => {
         filledFields.current.add(e.target.name);
@@ -60,15 +55,7 @@ export default function ContactForm() {
     }, []);
 
     return (
-        <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={{
-                hidden: { opacity: 0, scale: 0.95 },
-                visible: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: 'easeOut' } }
-            }}
-        >
+        <div ref={formRef} className={`form-wrapper ${isVisible ? 'form-wrapper--visible' : ''}`}>
             <Form
                 className="form"
                 action={(formData) => {
@@ -151,6 +138,6 @@ export default function ContactForm() {
 
                 <SubmitButton />
             </Form>
-        </motion.div>
+        </div>
     );
 }

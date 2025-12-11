@@ -1,13 +1,12 @@
 import './ProjectSection.scss';
 import SectionHeading from '@/app/ui/SectionHeading/SectionHeading';
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage, db } from '@/app/firebase/firebase';
-import { collection, getDocs } from 'firebase/firestore';
-import ProjectCard from '@/app/ui/ProjectCard/ProjectCard';
+import ProjectCardWrapper from '@/app/ui/ProjectCard/ProjectCardWrapper';
 import ShowMoreButton from '@/app/ui/ShowMoreButton/ShowMoreButton';
+import ProjectSectionWrapper from './ProjectSectionWrapper';
+import { db, bucket } from '@/lib/firebaseAdmin';
 
 export default async function ProjectSection() {
-    const snapshot = await getDocs(collection(db, "project"));
+    const snapshot = await db.collection("project").get();
     const projects = snapshot.docs.map(doc => ({
         id: doc.id,
         desc: doc.data().desc,
@@ -18,10 +17,15 @@ export default async function ProjectSection() {
     const projectsWithURLs = await Promise.all(
         projects.map(async (p) => {
             try {
-                const imageUrl = p.imagePath
-                    ? await getDownloadURL(ref(storage, p.imagePath))
-                        .catch(() => null)
-                    : null;
+                let imageUrl = null;
+                if (p.imagePath) {
+                    const file = bucket.file(p.imagePath);
+                    const [url] = await file.getSignedUrl({
+                        action: 'read',
+                        expires: Date.now() + 24 * 60 * 60 * 1000,
+                    }).catch(() => [null]);
+                    imageUrl = url;
+                }
 
                 return {
                     ...p,
@@ -38,18 +42,19 @@ export default async function ProjectSection() {
             }
         })
     );
+
     return (
-        <>
+        <ProjectSectionWrapper>
             <SectionHeading heading="Projects" id='projects' />
             <section className="project__container">
                 {projectsWithURLs.map((project) => (
-                    < ProjectCard
+                    <ProjectCardWrapper
                         key={project.id}
                         project={project}
                     />
                 ))}
                 <ShowMoreButton />
             </section>
-        </>
+        </ProjectSectionWrapper>
     );
 }

@@ -1,6 +1,30 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+@keyframes scaleInCard {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInText {
+    from {
+        opacity: 0;
+        filter: blur(6px);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
 .project-card {
     margin-bottom: 1rem;
     padding: 0.25rem;
@@ -9,10 +33,17 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform;
     position: relative;
+    opacity: 0;
+    transform: scale(0.95);
+
+    &--visible {
+        animation: scaleInCard 0.8s ease-out 0.15s forwards;
+    }
 
     &:hover {
         border: 3px solid $grey-blue;
         background-color: rgba($grey-blue, 25%);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15);
         cursor: pointer;
     }
 
@@ -42,6 +73,14 @@
 
     &__info {
         padding: 0.25rem;
+    }
+
+    &__text {
+        opacity: 0;
+
+        &--visible {
+            animation: fadeInText 0.7s ease-out 0.35s forwards;
+        }
     }
 
     &__description {

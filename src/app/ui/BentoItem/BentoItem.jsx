@@ -1,8 +1,8 @@
 import './BentoItem.scss';
-import * as motion from 'motion/react-client';
 import BentoItemPicture from './BentoItemPicture';
+import BentoItemModal from './BentoItemModal';
 
-export default function BentoItem({ heading, info, variant, imagePath, variants }) {
+export default function BentoItem({ heading, info, variant, imageUrl, index }) {
     const variantClasses = {
         regular: '',
         tall: 'bento-box__item--tall',
@@ -11,28 +11,32 @@ export default function BentoItem({ heading, info, variant, imagePath, variants 
     };
 
     if (variant === 'picture') {
-        // forward animation variants into the picture component
-        return <BentoItemPicture heading={heading} imagePath={imagePath} variants={variants} />;
+        return <BentoItemPicture heading={heading} imageUrl={imageUrl} index={index} />;
     }
 
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);
 
     return (
-        <motion.section variants={variants} className={`bento-box__item ${variantClasses[variant] || ''}`}>
+        <section
+            className={`bento-box__item ${variantClasses[variant] || ''}`}
+            style={{ animationDelay: `${0.75 + index * 0.08}s` }}
+        >
             <h2 className="bento-box__title">{heading || 'No content available'}</h2>
-            {hasContent ? (
-                Array.isArray(info) ? (
-                    <ul className="bento-box__info">
-                        {info.map((item, index) => (
-                            <li key={index}>{item}</li>
-                        ))}
-                    </ul>
+            <BentoItemModal heading={heading} info={info}>
+                {hasContent ? (
+                    Array.isArray(info) ? (
+                        <ul className="bento-box__info">
+                            {info.map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p className="bento-box__info">{info}</p>
+                    )
                 ) : (
-                    <p className="bento-box__info">{info}</p>
-                )
-            ) : (
-                <p className=" bento-box__info bento-box__no-content">No content available</p>
-            )}
-        </motion.section>
-    )
+                    <p className="bento-box__info bento-box__no-content">No content available</p>
+                )}
+            </BentoItemModal>
+        </section>
+    );
 }

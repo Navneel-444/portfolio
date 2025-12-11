@@ -1,12 +1,42 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .time-period {
     width: 50%;
+    opacity: 0;
 
-    @include mobile {
-        width: 100%;
-        margin-top: 2.5rem;
+    &--visible {
+        &.time-period--left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        &.time-period--right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
     }
 
     &--left {
@@ -23,6 +53,11 @@
         @include mobile {
             align-self: auto;
         }
+    }
+
+    @include mobile {
+        width: 100%;
+        margin-top: 2.5rem;
     }
 
     &__container {
@@ -51,6 +86,7 @@
         width: 80%;
         display: flex;
         flex-direction: column;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1);
 
     }
 
@@ -79,7 +115,7 @@
         margin-bottom: 0.25em;
 
         @include mobile {
-            font-size: 4.8vw;
+            font-size: 4vw;
         }
     }
 
@@ -89,7 +125,7 @@
         font-weight: 200;
 
         @include mobile {
-            font-size: 3.25vw;
+            font-size: 3vw;
         }
     }
 
