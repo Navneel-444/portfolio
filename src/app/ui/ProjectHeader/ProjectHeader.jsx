@@ -33,6 +33,11 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
         };
     }, []);
 
+    const externalLinks = [
+        { url: live, label: 'Live', type: 'live' },
+        { url: repo, label: 'Github Repo', type: 'repo' }
+    ];
+
     return (
         <header className="project-header">
             <nav
@@ -82,49 +87,30 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
             </nav>
 
             <nav className='project-header__link' aria-label="Project links">
-                <a
-                    href={live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-disabled={!live}
-                    onClick={() => live && handleExternalLinkClick('live')}
-                >
-                    <button
-                        className={live ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
-                        disabled={!live}
+                {externalLinks.map(({ url, label, type }) => (
+                    <a
+                        key={type}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-disabled={!url}
+                        onClick={() => url && handleExternalLinkClick(type)}
                     >
-                        <span className="project-header__link-title">Live</span>
-                        <img
-                            className='project-header__link-icon'
-                            src="/icons/expand.svg"
-                            alt="External link icon"
-                            width={16}
-                            height={14}
-                        />
-                    </button>
-                </a>
-
-                <a
-                    href={repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-disabled={!repo}
-                    onClick={() => repo && handleExternalLinkClick('repo')}
-                >
-                    <button
-                        className={repo ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
-                        disabled={!repo}
-                    >
-                        <span className="project-header__link-title">Github Repo</span>
-                        <img
-                            className='project-header__link-icon'
-                            src="/icons/expand.svg"
-                            alt="External link icon"
-                            width={16}
-                            height={14}
-                        />
-                    </button>
-                </a>
+                        <button 
+                            className={url ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
+                            disabled={!url}
+                        >
+                            <span className="project-header__link-title">{label}</span>
+                            <img
+                                className='project-header__link-icon'
+                                src="/icons/expand.svg"
+                                alt="External link icon"
+                                width={16}
+                                height={14}
+                            />
+                        </button>
+                    </a>
+                ))}
             </nav>
         </header>
     );
