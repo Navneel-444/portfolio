@@ -1,6 +1,18 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .project-header {
     border-top: 1px solid $grey-blue;
     padding: 1.25rem 0;
@@ -8,6 +20,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    animation: fadeSlideUp 0.55s ease-out;
 
     @include mobile {
         flex-direction: column;
@@ -30,7 +43,7 @@
         }
 
         &-btn {
-            background-color: rgba($grey-blue, 0.6);
+            background-color: $grey-blue;
             border: none;
             border-radius: 50%;
             width: 1.5rem;
@@ -73,7 +86,7 @@
             top: calc(100% + 0.25rem);
             left: 0;
             z-index: 1000;
-            background: rgba($grey-blue, 0.45);
+            background: $grey-blue;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba($white, 0.1);

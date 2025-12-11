@@ -1,24 +1,14 @@
 import './Timeline.scss';
 import TimePeriodCard from '../TimePeriodCard/TimePeriodCard';
-import * as motion from "motion/react-client";
 
-export default function Timeline({ experiences }) {
+export default function Timeline({ experiences, isVisible }) {
     return (
         <section className="timeline">
-            <motion.svg
-                className="timeline__center"
-                width="20"
+            <svg
+                className={`timeline__center ${isVisible ? 'timeline__center--visible' : ''}`}
+                width="20" b
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
-                initial={{ opacity: 0, scaleY: 0 }}
-                whileInView={{ opacity: 1, scaleY: 1 }}
-                viewport={{ once: true, margin: "75px" }}
-                transition={{
-                    duration: 2.5,
-                    ease: "easeInOut",
-                    delay: 0.3
-                }}
-                style={{ transformOrigin: 'top' }}
             >
                 <defs>
                     <marker
@@ -50,14 +40,16 @@ export default function Timeline({ experiences }) {
                     markerEnd="url(#arrowhead)"
                     vectorEffect="non-scaling-stroke"
                 />
-            </motion.svg>
+            </svg>
             {experiences.map((period, idx) => (
                 <TimePeriodCard
                     key={period.id}
                     info={period}
                     position={idx % 2 === 0 ? 'left' : 'right'}
+                    index={idx}
+                    isVisible={isVisible}
                 />
             ))}
         </section>
     )
-}                     
+}

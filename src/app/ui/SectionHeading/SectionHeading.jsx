@@ -1,6 +1,5 @@
 'use client'
 import React, { useRef, useEffect, useState } from 'react';
-import * as motion from "motion/react-client";
 import './SectionHeading.scss';
 
 function useInView(ref, { once = true, margin = '0px', threshold = 0 } = {}) {
@@ -34,16 +33,6 @@ export default function SectionHeading({ heading, id }) {
     const [svgWidth, setSvgWidth] = useState(0);
     const isInView = useInView(titleRef, { once: true, margin: '-20px' });
 
-    const headingVariants = {
-        hidden: { opacity: 0, x: 24 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.45, delay: 0.2, ease: 'easeOut' } }
-    };
-
-    const pathVariants = {
-        hidden: { pathLength: 0 },
-        visible: { pathLength: 1, transition: { duration: 0.75, delay: 0.05 } }
-    };
-
     useEffect(() => {
         if (titleRef.current) {
             const width = titleRef.current.offsetWidth;
@@ -53,22 +42,17 @@ export default function SectionHeading({ heading, id }) {
 
     return (
         <header className="section-heading" id={id}>
-            <motion.h3
+            <h3
                 ref={titleRef}
-                className="section-heading__title"
-                variants={headingVariants}
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
+                className={`section-heading__title ${isInView ? 'section-heading__title--visible' : ''}`}
             >
                 {heading}
-            </motion.h3>
-            <motion.svg
-                className="section-heading__decorator"
+            </h3>
+            <svg
+                className={`section-heading__decorator ${isInView ? 'section-heading__decorator--visible' : ''}`}
                 width={svgWidth}
                 height="26"
                 xmlns="http://www.w3.org/2000/svg"
-                initial="hidden"
-                animate={isInView ? 'visible' : 'hidden'}
             >
                 <circle
                     className="section-heading__decorator-dot"
@@ -76,13 +60,12 @@ export default function SectionHeading({ heading, id }) {
                     cy="3"
                     r="3"
                 />
-                <motion.path
+                <path
                     className="section-heading__decorator-line"
                     d={`M 5 5 L 25 25 L ${svgWidth} 25`}
                     fill='none'
-                    variants={pathVariants}
                 />
-            </motion.svg>
+            </svg>
         </header>
     )
 }

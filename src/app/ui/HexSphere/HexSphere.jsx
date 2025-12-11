@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "motion/react";
 import * as THREE from "three";
 import "./HexSphere.scss";
 
@@ -168,12 +167,9 @@ export default function HexSphere() {
     }, []);
 
     return (
-        <motion.div
+        <div
             ref={mountRef}
             className="hex-sphere"
-            initial={{ opacity: 0, filter: "blur(12px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.9, ease: "easeOut", delay: 0.08 }}
         />
     );
 }

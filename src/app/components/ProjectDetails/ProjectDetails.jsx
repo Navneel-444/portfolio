@@ -1,10 +1,7 @@
-"use client";
 import '../../../styles/main.scss';
 import './ProjectDetails.scss';
 import BentoItem from '@/app/ui/BentoItem/BentoItem';
 import ProjectHeader from '@/app/ui/ProjectHeader/ProjectHeader';
-
-import * as motion from 'motion/react-client';
 
 export default function ProjectDetails({ project, allProjects }) {
     const { name, ...projectFields } = project;
@@ -40,23 +37,6 @@ export default function ProjectDetails({ project, allProjects }) {
         };
     });
 
-    const container = {
-        hidden: { opacity: 0 },
-        show: {
-            opacity: 1,
-            transition: { staggerChildren: 0.08, delayChildren: 0.5 },
-        },
-    };
-
-    const item = {
-        hidden: { opacity: 0, y: 10 },
-        show: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.4, ease: "easeOut" },
-        },
-    };
-
     return (
         <main>
             <ProjectHeader
@@ -65,23 +45,18 @@ export default function ProjectDetails({ project, allProjects }) {
                 repo={project.repo}
             />
 
-            <motion.section
-                className="bento-box"
-                variants={container}
-                initial="hidden"
-                animate="show"
-            >
+            <section className="bento-box">
                 {bentoItems.map((itemData, idx) => (
                     <BentoItem
                         key={idx}
-                        variants={item}
+                        index={idx}
                         heading={itemData.heading}
                         info={itemData.info}
                         variant={itemData.variant}
                         imagePath={itemData.imagePath}
                     />
                 ))}
-            </motion.section>
+            </section>
         </main>
     );
 }

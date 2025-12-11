@@ -3,20 +3,18 @@ import './ProjectCard.scss';
 import { useState } from 'react';
 import Image from 'next/image';
 
-
-export default function CardImage({ imagePath, name }) {
+export default function CardImage({ imageUrl, name }) {
     const [imageError, setImageError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-
 
     return (
         <>
             {isLoading && !imageError && (
                 <div className="project-card__image skeleton" />
             )}
-            {imagePath && !imageError ? (
+            {imageUrl && !imageError ? (
                 <Image
-                    src={`/api/image?path=${encodeURIComponent(imagePath)}`}
+                    src={imageUrl}
                     alt={`Screenshot of ${name} project`}
                     className={`project-card__image ${isLoading ? 'project-card__image--loading' : ''}`}
                     width={400}

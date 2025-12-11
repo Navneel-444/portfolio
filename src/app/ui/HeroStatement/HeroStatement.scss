@@ -1,6 +1,55 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInBlur {
+    from {
+        opacity: 0;
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes slideInButton {
+    from {
+        opacity: 0;
+        transform: translateX(125px);
+        filter: blur(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes fadeInIcon {
+    from {
+        opacity: 0;
+        transform: translateX(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
 
 .hero-statement {
     width: auto;
@@ -30,6 +79,7 @@
         color: $orange;
         font-size: clamp(2rem, 6vw, 4rem);
         font-weight: 400;
+        animation: slideUp 1.4s ease-out forwards;
 
         @include mobile {
             font-size: 8.5vw;
@@ -39,6 +89,8 @@
     &__subheading {
         font-size: 0.875rem;
         font-weight: 100;
+        animation: fadeInBlur 1.2s ease-out 0.8s forwards;
+        opacity: 0;
 
         @include mobile {
             font-size: 3vw;
@@ -49,6 +101,8 @@
         margin-bottom: 1.5rem;
         font-size: 0.875rem;
         color: $grey-accent;
+        animation: fadeInBlur 1.2s ease-out 1.2s forwards;
+        opacity: 0;
 
         @include mobile {
             font-size: 0.875rem;
@@ -63,12 +117,21 @@
         border-radius: 0.45rem;
         width: 8rem;
         height: 2rem;
-        background-color: $grey-background;
+        background-color: transparent;
         color: $white;
+        animation: slideInButton 1.6s ease-out 1.6s forwards;
+        opacity: 0;
+        cursor: pointer;
+        transition: box-shadow 0.3s ease, transform 0.1s ease;
 
         &:hover {
-            box-shadow: 0 0 10px $grey-blue, 0 0 15px $grey-blue, 0 0 20px $grey-blue;
+            box-shadow: 0 0 8px $grey-blue, 0 0 13px $grey-blue, 0 0 17px $grey-blue;
         }
+    }
+
+    &__btn-icon {
+        animation: fadeInIcon 1s ease-out 2.6s forwards;
+        opacity: 0;
     }
 
     &__btn-text {

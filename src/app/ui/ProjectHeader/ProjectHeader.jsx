@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import './ProjectHeader.scss';
-import * as motion from "motion/react-client";
 
 export default function ProjectHeader({ project, allProjects, repo, live }) {
     const { name } = project;
@@ -23,25 +22,8 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
         };
     }, []);
 
-    const fadeSlide = {
-        hidden: { opacity: 0, y: 20 },
-        show: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.55,
-                ease: "easeOut"
-            }
-        }
-    };
-
     return (
-        <motion.header
-            className="project-header"
-            variants={fadeSlide}
-            initial="hidden"
-            animate="show"
-        >
+        <header className="project-header">
             <nav
                 className={`project-header__dropdown ${isDropdownOpen ? 'project-header__dropdown--show' : ''}`}
                 ref={dropdownRef}
@@ -131,6 +113,6 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
                     </button>
                 </a>
             </nav>
-        </motion.header>
+        </header>
     );
 }

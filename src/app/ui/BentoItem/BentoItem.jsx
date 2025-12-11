@@ -1,9 +1,9 @@
+'use client';
 import './BentoItem.scss';
-import * as motion from 'motion/react-client';
 import BentoItemPicture from './BentoItemPicture';
 import { useState } from 'react';
 
-export default function BentoItem({ heading, info, variant, imagePath, variants }) {
+export default function BentoItem({ heading, info, variant, imagePath, variants, index }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const variantClasses = {
@@ -14,8 +14,7 @@ export default function BentoItem({ heading, info, variant, imagePath, variants 
     };
 
     if (variant === 'picture') {
-        // forward animation variants into the picture component
-        return <BentoItemPicture heading={heading} imagePath={imagePath} variants={variants} />;
+        return <BentoItemPicture heading={heading} imagePath={imagePath} index={index} />;
     }
 
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);
@@ -32,21 +31,19 @@ export default function BentoItem({ heading, info, variant, imagePath, variants 
 
     return (
         <>
-            <motion.section
-                variants={variants}
+            <section
                 className={`bento-box__item ${variantClasses[variant] || ''}`}
+                style={{ animationDelay: `${0.5 + index * 0.08}s` }}
             >
                 <h2 className="bento-box__title">{heading || 'No content available'}</h2>
                 <div className="bento-box__content-wrapper">
-                    <motion.button
+                    <button
                         className="bento-box__expand-btn"
                         onClick={handleExpand}
                         aria-label="Expand content"
-                        whileHover={{ scale: 1.3 }}
-                        whileTap={{ scale: 0.95 }}
                     >
                         <img src="/icons/expand-tile.svg" alt="" width="16" height="16" />
-                    </motion.button>
+                    </button>
                     {hasContent ? (
                         Array.isArray(info) ? (
                             <ul className="bento-box__info">
@@ -61,21 +58,15 @@ export default function BentoItem({ heading, info, variant, imagePath, variants 
                         <p className="bento-box__info bento-box__no-content">No content available</p>
                     )}
                 </div>
-            </motion.section>
+            </section>
 
             {isExpanded && (
-                <motion.div
+                <div
                     className="bento-box__modal-overlay"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
                     onClick={handleClose}
                 >
-                    <motion.div
+                    <div
                         className="bento-box__modal-content"
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.8, opacity: 0 }}
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="bento-box__modal-header">
@@ -103,8 +94,8 @@ export default function BentoItem({ heading, info, variant, imagePath, variants 
                                 )
                             ) : null}
                         </div>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
             )}
         </>
     )

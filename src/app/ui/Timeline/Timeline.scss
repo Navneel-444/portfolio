@@ -1,6 +1,17 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+@keyframes scaleY {
+    from {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
 .timeline {
     display: flex;
     flex-direction: column;
@@ -19,6 +30,13 @@
         position: absolute;
         height: 100%;
         top: 0;
+        opacity: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+
+        &--visible {
+            animation: scaleY 2.5s ease-in-out 0.3s forwards;
+        }
 
         @include mobile {
             left: 0

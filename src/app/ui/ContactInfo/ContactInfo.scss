@@ -1,6 +1,30 @@
 @use '../../../styles/variables' as *;
 @use '../../../styles/mixins' as *;
 
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .contact-info {
     width: 50%;
     max-width: 28rem;
@@ -34,10 +58,26 @@
 
     &__title {
         color: $orange;
+        opacity: 0;
+        transform: translateY(10px);
     }
 
     &__hook {
         font-size: 0.875rem;
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    &--visible {
+
+        .contact-info__title,
+        .contact-info__hook {
+            animation: slideDown 0.75s ease-out 0.25s forwards;
+        }
+
+        .contact-info__social-link {
+            animation: scaleUp 0.5s ease-out forwards;
+        }
     }
 
     &__social {
@@ -58,6 +98,12 @@
             width: max-content;
             padding: 0.75rem;
             border-radius: 0.5rem;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: background-color 0.2s ease;
+            opacity: 0;
+            // transform: scale(0.95);
+            transition: background-color 0.2s ease;
 
             &:hover {
                 background-color: rgba($grey-accent, 8%);
