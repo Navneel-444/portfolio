@@ -2,6 +2,7 @@ import './ProjectSection.scss';
 import SectionHeading from '@/app/ui/SectionHeading/SectionHeading';
 import ProjectCardWrapper from '@/app/ui/ProjectCard/ProjectCardWrapper';
 import ShowMoreButton from '@/app/ui/ShowMoreButton/ShowMoreButton';
+import ProjectSectionWrapper from './ProjectSectionWrapper';
 import { db, bucket } from '@/lib/firebaseAdmin';
 
 export default async function ProjectSection() {
@@ -43,7 +44,7 @@ export default async function ProjectSection() {
     );
 
     return (
-        <>
+        <ProjectSectionWrapper>
             <SectionHeading heading="Projects" id='projects' />
             <section className="project__container">
                 {projectsWithURLs.map((project) => (
@@ -54,6 +55,6 @@ export default async function ProjectSection() {
                 ))}
                 <ShowMoreButton />
             </section>
-        </>
+        </ProjectSectionWrapper>
     );
 }

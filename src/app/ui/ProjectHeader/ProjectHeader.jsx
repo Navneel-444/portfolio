@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import './ProjectHeader.scss';
+import { analytics } from '@/app/firebase/firebase';
+import { logEvent } from 'firebase/analytics';
 
 export default function ProjectHeader({ project, allProjects, repo, live }) {
     const { name } = project;
@@ -9,6 +11,15 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
     const dropdownRef = useRef(null);
 
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+    const handleExternalLinkClick = (linkType) => {
+        if (analytics) {
+            logEvent(analytics, 'click_project_external_link', {
+                project_name: name,
+                link_type: linkType
+            });
+        }
+    };
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -76,6 +87,7 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-disabled={!live}
+                    onClick={() => live && handleExternalLinkClick('live')}
                 >
                     <button
                         className={live ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
@@ -97,6 +109,7 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-disabled={!repo}
+                    onClick={() => repo && handleExternalLinkClick('repo')}
                 >
                     <button
                         className={repo ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
