@@ -6,7 +6,7 @@ export default function Timeline({ experiences, isVisible }) {
         <section className="timeline">
             <svg
                 className={`timeline__center ${isVisible ? 'timeline__center--visible' : ''}`}
-                width="20" b
+                width="20" 
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
             >
