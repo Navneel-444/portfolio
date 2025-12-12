@@ -34,7 +34,6 @@ export default function BentoItemModal({ heading, info, children }) {
                 </button>
                 {children}
             </div>
-
             {mounted && isExpanded && createPortal(
                 <div
                     className="bento-box__modal-overlay"
