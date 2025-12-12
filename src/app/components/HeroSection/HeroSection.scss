@@ -2,7 +2,7 @@
 @use '../../../styles/mixins' as *;
 
 .hero-section {
-    height: 90vh;
+    height: 90dvh;
     max-height: 60rem;
     border: 2px solid $grey-blue;
     border-radius: 0.5rem;
@@ -13,7 +13,7 @@
     @include mobile {
         display: flex;
         justify-content: space-evenly;
-        height: 95dvh;
+        height: 95svh;
         flex-direction: column;
         justify-content: space-evenly;
         max-height: 50rem;

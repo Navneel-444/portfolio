@@ -122,8 +122,20 @@ export default function HexSphere() {
             activePointerId = null;
         };
 
+        // Store initial dimensions to prevent resize on mobile scroll
+        const initialWidth = width;
+        const initialHeight = height;
+
         const onWindowResize = () => {
             if (!mount || !renderer || !camera) return;
+
+            // On mobile, don't resize based on viewport changes (prevents resize on scroll)
+            if (isMobile) {
+                renderer.setSize(initialWidth, initialHeight, false);
+                camera.aspect = initialWidth / initialHeight;
+                camera.updateProjectionMatrix();
+                return;
+            }
 
             const newWidth = Math.min(
                 (mount.clientWidth && mount.clientWidth > 0) ? mount.clientWidth : window.innerWidth,
