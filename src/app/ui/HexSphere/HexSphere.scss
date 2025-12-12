@@ -26,9 +26,10 @@
 
     @include mobile {
         width: 70%;
-        height: 35%;
+        aspect-ratio: 1;
+        height: auto;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 12%;
+        bottom: 8%;
     }
 }

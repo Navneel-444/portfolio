@@ -14,16 +14,16 @@ export default function HexSphere() {
         // ========== INITIALIZATION ==========
         let renderer, scene, camera, sphere, raf, yawGroup, pitchGroup;
         
-        const maxWidth = Math.min(mount.clientWidth || 300, window.innerWidth);
-        const sphereSize = Math.min(maxWidth, mount.clientHeight || 300);
-        const width = sphereSize * 0.45;
-        const height = sphereSize * 1.45;
+        // Use the container's actual dimensions for proper aspect ratio
+        const width = mount.clientWidth || 300;
+        const height = mount.clientHeight || 300;
 
         // ========== THREE.JS SETUP ==========
         scene = new THREE.Scene();
         scene.background = null;
 
-        camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+        // Use aspect ratio 1 to keep sphere circular, regardless of container shape
+        camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
         camera.position.set(0, 0, 2.95);
         camera.lookAt(0, 0, 0);
 
@@ -132,20 +132,19 @@ export default function HexSphere() {
             // On mobile, don't resize based on viewport changes (prevents resize on scroll)
             if (isMobile) {
                 renderer.setSize(initialWidth, initialHeight, false);
-                camera.aspect = initialWidth / initialHeight;
+                // Keep aspect ratio as 1 to maintain circular sphere
+                camera.aspect = 1;
                 camera.updateProjectionMatrix();
                 return;
             }
 
-            const newWidth = Math.min(
-                (mount.clientWidth && mount.clientWidth > 0) ? mount.clientWidth : window.innerWidth,
-                window.innerWidth
-            );
-            const newHeight = (mount.clientHeight && mount.clientHeight > 0) ? mount.clientHeight : window.innerHeight;
+            const newWidth = mount.clientWidth || window.innerWidth;
+            const newHeight = mount.clientHeight || window.innerHeight;
 
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
             renderer.setSize(newWidth, newHeight, false);
-            camera.aspect = newWidth / newHeight;
+            // Keep aspect ratio as 1 to maintain circular sphere
+            camera.aspect = 1;
             camera.updateProjectionMatrix();
         };
 
