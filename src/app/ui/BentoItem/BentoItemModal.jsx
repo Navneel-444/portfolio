@@ -22,7 +22,7 @@ export default function BentoItemModal({ heading, info, children }) {
         const checkOverflow = () => {
             const wrapper = wrapperRef.current;
             if (!wrapper) return;
-            
+
             const infoElement = wrapper.querySelector('.bento-box__info');
             if (!infoElement) return;
 
