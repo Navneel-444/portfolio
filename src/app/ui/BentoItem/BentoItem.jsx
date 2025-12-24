@@ -7,6 +7,7 @@ export default function BentoItem({ heading, info, variant, imageUrl, index }) {
         regular: '',
         tall: 'bento-box__item--tall',
         wide: 'bento-box__item--wide',
+        triple_wide: 'bento-box__item--triple-wide',
         double_wide: 'bento-box__item--double-wide',
     };
 
@@ -15,8 +16,68 @@ export default function BentoItem({ heading, info, variant, imageUrl, index }) {
     }
 
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);
-
     const isArrayOfObjects = Array.isArray(info) && info.length > 0 && typeof info[0] === 'object' && info[0] !== null;
+    const isArchitecture = heading === 'Architecture';
+    const isTechStack = heading === 'Tech Stack';
+
+    const renderObjectItem = ([key, value], i) => (
+        <section key={i}>
+            {isTechStack ? (
+                <>
+                    <strong>{key}</strong> <span style={{ fontWeight: 100 }}>{value}</span>
+                </>
+            ) : (
+                <>
+                    <section>
+                        <h4 className='bento-box__subheading'>{key}</h4>
+                        <p className='bento-box__description'>{value}</p>
+                    </section>
+                    <br />
+                </>
+            )
+            }
+        </section >
+    );
+
+    const renderObjectArray = () => (
+        <ul className="bento-box__info">
+            {info.map((item, index) => (
+                <h4 key={index}>
+                    {Object.entries(item).map(renderObjectItem)}
+                </h4>
+            ))}
+        </ul>
+    );
+
+    const renderArchitectureParagraphs = () => (
+        <div className="bento-box__info">
+            {info.map((item, index) => (
+                <p key={index} className="bento-box__paragraph">{item}</p>
+            ))}
+        </div>
+    );
+
+    const renderSimpleArray = () => (
+        <ul className="bento-box__info">
+            {info.map((item, index) => (
+                <li key={index}>{item}</li>
+            ))}
+        </ul>
+    );
+
+    const renderString = () => <p className="bento-box__info">{info}</p>;
+
+    const renderNoContent = () => (
+        <p className="bento-box__info bento-box__no-content">No content available</p>
+    );
+
+    const renderContent = () => {
+        if (!hasContent) return renderNoContent();
+        if (isArrayOfObjects) return renderObjectArray();
+        if (Array.isArray(info) && isArchitecture) return renderArchitectureParagraphs();
+        if (Array.isArray(info)) return renderSimpleArray();
+        return renderString();
+    };
 
     return (
         <section
@@ -25,34 +86,8 @@ export default function BentoItem({ heading, info, variant, imageUrl, index }) {
         >
             <h2 className="bento-box__title">{heading || 'No content available'}</h2>
             <BentoItemModal heading={heading} info={info}>
-                {hasContent ? (
-                    isArrayOfObjects ? (
-                        <ul className="bento-box__info">
-                            {info.map((item, index) => (
-                                <h4 key={index}>
-                                    {Object.entries(item).map(([key, value], i) => (
-                                        <div key={i}>
-                                            <strong>{key}</strong> <br />
-                                            <p className="bento-box__subheading">{value}</p>
-                                            <br />
-                                        </div>
-                                    ))}
-                                </h4>
-                            ))}
-                        </ul>
-                    ) : Array.isArray(info) ? (
-                        <ul className="bento-box__info">
-                            {info.map((item, index) => (
-                                <li key={index}>{item}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p className="bento-box__info">{info}</p>
-                    )
-                ) : (
-                    <p className="bento-box__info bento-box__no-content">No content available</p>
-                )}
+                {renderContent()}
             </BentoItemModal>
-        </section >
+        </section>
     );
 }

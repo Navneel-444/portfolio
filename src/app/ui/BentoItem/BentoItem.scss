@@ -67,7 +67,8 @@
         position: absolute;
         bottom: 0.375rem;
         right: 0.375rem;
-        background: rgba($grey-accent, 0.15);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.15);
+        background-color: rgba($grey-accent, 0.1);
         backdrop-filter: blur(4px);
         border-radius: 0.375rem;
         z-index: 100;
@@ -101,7 +102,14 @@
     }
 
     &__subheading {
-        font-weight: 200;
+        font-size: 0.75rem;
+        display: inline;
+    }
+
+    &__description {
+        font-weight: 100;
+        display: inline;
+
     }
 
     &__modal {
@@ -249,21 +257,13 @@
             pointer-events: none;
             border-radius: 0 0 0.375rem 0.375rem;
         }
+    }
 
-        li {
-            padding-left: 0.75rem;
-            text-indent: -1rem;
-            margin-bottom: 0.5rem;
+    &__paragraph {
+        text-indent: 2rem;
 
-            &:last-child {
-                margin-bottom: 0;
-            }
-
-            &::before {
-                content: "•";
-                color: $orange;
-                padding-right: 0.5rem;
-            }
+        &:last-child {
+            margin-bottom: 0;
         }
 
         &--expanded {

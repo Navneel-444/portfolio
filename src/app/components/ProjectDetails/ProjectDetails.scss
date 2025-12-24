@@ -23,9 +23,14 @@
             }
         }
 
-        &--double-wide {
+        &--triple-wide {
             grid-column: span 3;
         }
+
+        &--double-wide {
+            grid-column: span 2;
+        }
+
 
         &--tall {
             grid-row: span 2;
@@ -33,6 +38,7 @@
 
         &--picture {
             grid-column: span 2;
+            grid-row: span 2;
         }
     }
 }
