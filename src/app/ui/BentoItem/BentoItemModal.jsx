@@ -9,6 +9,8 @@ export default function BentoItemModal({ heading, info, children }) {
     const [showExpandButton, setShowExpandButton] = useState(false);
     const wrapperRef = useRef(null);
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);
+    const isArrayOfObjects = Array.isArray(info) && info.length > 0 && typeof info[0] === 'object' && info[0] !== null;
+    const isTechStack = heading === 'Tech Stack';
 
     useEffect(() => {
         setMounted(true);
@@ -82,7 +84,28 @@ export default function BentoItemModal({ heading, info, children }) {
                         </div>
                         <div className="bento-box__modal-body">
                             {hasContent ? (
-                                Array.isArray(info) ? (
+                                isArrayOfObjects ? (
+                                    <div className="bento-box__info bento-box__info--expanded">
+                                        {info.map((item, index) => (
+                                            <div key={index}>
+                                                {Object.entries(item).map(([key, value], i) => (
+                                                    <div key={i}>
+                                                        {isTechStack ? (
+                                                            <>
+                                                                <strong>{key}:</strong> <span style={{ fontWeight: 100 }}>{value}</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <h4 className='bento-box__subheading'>{key}</h4>
+                                                                <p className='bento-box__description'>{value}</p>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : Array.isArray(info) ? (
                                     <ul className="bento-box__info bento-box__info--expanded">
                                         {info.map((item, index) => (
                                             <li key={index}>{item}</li>
