@@ -1,16 +1,43 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './BentoItem.scss';
 
 export default function BentoItemModal({ heading, info, children }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [showExpandButton, setShowExpandButton] = useState(false);
+    const wrapperRef = useRef(null);
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);
+    const isArrayOfObjects = Array.isArray(info) && info.length > 0 && typeof info[0] === 'object' && info[0] !== null;
+    const isTechStack = heading === 'Tech Stack';
 
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    useEffect(() => {
+        if (!mounted || !wrapperRef.current) return;
+
+        const checkOverflow = () => {
+            const wrapper = wrapperRef.current;
+            if (!wrapper) return;
+
+            const infoElement = wrapper.querySelector('.bento-box__info');
+            if (!infoElement) return;
+
+            const contentHeight = infoElement.scrollHeight;
+            const visibleHeight = infoElement.clientHeight;
+            setShowExpandButton(contentHeight > visibleHeight);
+        };
+
+        const timer = setTimeout(checkOverflow, 100);
+        window.addEventListener('resize', checkOverflow);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', checkOverflow);
+        };
+    }, [mounted, info]);
 
     const handleExpand = () => {
         setIsExpanded(true);
@@ -24,14 +51,16 @@ export default function BentoItemModal({ heading, info, children }) {
 
     return (
         <>
-            <div className="bento-box__content-wrapper">
-                <button
-                    className="bento-box__expand-btn"
-                    onClick={handleExpand}
-                    aria-label="Expand content"
-                >
-                    <img src="/icons/expand-tile.svg" alt="" width="16" height="16" />
-                </button>
+            <div className="bento-box__content-wrapper" ref={wrapperRef}>
+                {showExpandButton && (
+                    <button
+                        className="bento-box__expand-btn"
+                        onClick={handleExpand}
+                        aria-label="Expand content"
+                    >
+                        <img src="/icons/expand-tile.svg" alt="" width="16" height="16" />
+                    </button>
+                )}
                 {children}
             </div>
             {mounted && isExpanded && createPortal(
@@ -57,7 +86,29 @@ export default function BentoItemModal({ heading, info, children }) {
                         </div>
                         <div className="bento-box__modal-body">
                             {hasContent ? (
-                                Array.isArray(info) ? (
+                                isArrayOfObjects ? (
+                                    <div className="bento-box__info bento-box__info--expanded">
+                                        {info.map((item, index) => (
+                                            <div key={index} className="bento-box__entry bento-box__entry--expanded">
+                                                {Object.entries(item).map(([key, value], i) => (
+                                                    <div key={i}>
+                                                        {isTechStack ? (
+                                                            <>
+                                                                <strong>{key}:</strong> <span style={{ fontWeight: 100 }}>{value}</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <h4 className='bento-box__subheading bento-box__subheading--expanded'>{key}</h4>
+                                                                <p className='bento-box__description bento-box__description--expanded'>{value}</p>
+
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : Array.isArray(info) ? (
                                     <ul className="bento-box__info bento-box__info--expanded">
                                         {info.map((item, index) => (
                                             <li key={index}>{item}</li>

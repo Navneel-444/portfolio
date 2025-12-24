@@ -96,7 +96,7 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
                         aria-disabled={!url}
                         onClick={() => url && handleExternalLinkClick(type)}
                     >
-                        <button 
+                        <button
                             className={url ? "project-header__link-btn" : "project-header__link-btn project-header__link-btn--disabled"}
                             disabled={!url}
                         >

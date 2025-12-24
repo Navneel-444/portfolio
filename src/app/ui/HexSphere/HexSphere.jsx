@@ -13,7 +13,7 @@ export default function HexSphere() {
 
         // ========== INITIALIZATION ==========
         let renderer, scene, camera, sphere, raf, yawGroup, pitchGroup;
-        
+
         // Use the container's actual dimensions for proper aspect ratio
         const width = mount.clientWidth || 300;
         const height = mount.clientHeight || 300;
@@ -52,7 +52,7 @@ export default function HexSphere() {
         gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, 256, 256);
-        
+
         const shadowTexture = new THREE.CanvasTexture(shadowCanvas);
         const shadowGeometry = new THREE.CircleGeometry(0.6, 32);
         const shadowMaterial = new THREE.MeshBasicMaterial({

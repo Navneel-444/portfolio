@@ -10,12 +10,12 @@ export default async function ProjectDetails({ project, allProjects }) {
     const definitions = [
         { key: 'screenshot', heading: 'Screenshot', variant: 'picture' },
         { key: 'overview', heading: 'Overview', variant: 'regular' },
+        { key: 'tech stack', heading: 'Tech Stack', variant: 'regular' },
         { key: 'problem statement', heading: 'Problem Statement', variant: 'regular' },
-        { key: 'architecture / system design', heading: 'Architecture', variant: 'double_wide' },
-        { key: 'tech stack', heading: 'TechStack', variant: 'tall' },
-        { key: 'key features', heading: 'Key Features', variant: 'regular' },
-        { key: 'what i learned ', heading: 'What I learned', variant: 'regular' },
-        { key: 'future improvements', heading: 'Future Improvements', variant: 'regular' },
+        { key: 'key features', heading: 'Key Features', variant: 'tall' },
+        { key: 'architecture / system design', heading: 'Architecture', variant: 'triple_wide' },
+        { key: 'what i learned', heading: 'What I learned', variant: 'double_wide' },
+        { key: 'future improvements', heading: 'Future Improvements', variant: 'double_wide' },
     ];
 
     const bentoItems = await Promise.all(definitions.map(async (def) => {
@@ -24,7 +24,7 @@ export default async function ProjectDetails({ project, allProjects }) {
         if (def.key === 'screenshot') {
             const folder = String(name || '').toLowerCase();
             const imagePath = `${folder}/screenshot.webp`;
-            
+
             let imageUrl = null;
             try {
                 const file = bucket.file(imagePath);
@@ -58,6 +58,7 @@ export default async function ProjectDetails({ project, allProjects }) {
                 project={project}
                 allProjects={allProjects}
                 repo={project.repo}
+                live={project.live}
             />
 
             <section className="bento-box">
