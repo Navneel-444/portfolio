@@ -28,11 +28,11 @@ export default function BentoItem({ heading, info, variant, imageUrl, index }) {
                 </>
             ) : (
                 <>
-                    <section>
+                    <section className='bento-box__entry'>
                         <h4 className='bento-box__subheading'>{key}</h4>
+                        <span>-</span>
                         <p className='bento-box__description'>{value}</p>
                     </section>
-                    <br />
                 </>
             )
             }

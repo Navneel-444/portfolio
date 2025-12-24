@@ -19,7 +19,6 @@ export default function BentoItemModal({ heading, info, children }) {
 
         const checkOverflow = () => {
             const wrapper = wrapperRef.current;
-            // Find the bento-box__info element inside the wrapper
             const infoElement = wrapper.querySelector('.bento-box__info');
             if (!infoElement) return;
 
@@ -28,7 +27,6 @@ export default function BentoItemModal({ heading, info, children }) {
             setShowExpandButton(contentHeight > visibleHeight);
         };
 
-        // Small delay to ensure content is fully rendered
         const timer = setTimeout(checkOverflow, 100);
         window.addEventListener('resize', checkOverflow);
         return () => {
