@@ -1,16 +1,41 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import './BentoItem.scss';
 
 export default function BentoItemModal({ heading, info, children }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [showExpandButton, setShowExpandButton] = useState(false);
+    const wrapperRef = useRef(null);
     const hasContent = info && (Array.isArray(info) ? info.length > 0 : true);
 
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    useEffect(() => {
+        if (!wrapperRef.current) return;
+
+        const checkOverflow = () => {
+            const wrapper = wrapperRef.current;
+            // Find the bento-box__info element inside the wrapper
+            const infoElement = wrapper.querySelector('.bento-box__info');
+            if (!infoElement) return;
+
+            const contentHeight = infoElement.scrollHeight;
+            const visibleHeight = infoElement.clientHeight;
+            setShowExpandButton(contentHeight > visibleHeight);
+        };
+
+        // Small delay to ensure content is fully rendered
+        const timer = setTimeout(checkOverflow, 100);
+        window.addEventListener('resize', checkOverflow);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', checkOverflow);
+        };
+    }, [children]);
 
     const handleExpand = () => {
         setIsExpanded(true);
@@ -24,14 +49,16 @@ export default function BentoItemModal({ heading, info, children }) {
 
     return (
         <>
-            <div className="bento-box__content-wrapper">
-                <button
-                    className="bento-box__expand-btn"
-                    onClick={handleExpand}
-                    aria-label="Expand content"
-                >
-                    <img src="/icons/expand-tile.svg" alt="" width="16" height="16" />
-                </button>
+            <div className="bento-box__content-wrapper" ref={wrapperRef}>
+                {showExpandButton && (
+                    <button
+                        className="bento-box__expand-btn"
+                        onClick={handleExpand}
+                        aria-label="Expand content"
+                    >
+                        <img src="/icons/expand-tile.svg" alt="" width="16" height="16" />
+                    </button>
+                )}
                 {children}
             </div>
             {mounted && isExpanded && createPortal(
