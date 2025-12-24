@@ -104,16 +104,28 @@
     &__subheading {
         font-size: 0.75rem;
         display: inline;
+
+        &--expanded {
+            font-size: 1.15rem;
+        }
     }
 
     &__description {
         font-weight: 100;
         font-size: 0.7rem;
         display: inline;
+
+        &--expanded {
+            font-size: 1rem;
+        }
     }
 
     &__entry {
         margin-bottom: 0.75rem;
+
+        &--expanded {
+            margin-bottom: 1.5rem;
+        }
     }
 
     &__modal {
@@ -275,14 +287,7 @@
             animation: fadeInUp 0.4s ease-out 0.5s forwards;
 
         }
-    }
 
-    &__paragraph {
-        text-indent: 2rem;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
 
         &--expanded {
             font-size: 1rem;
@@ -306,6 +311,14 @@
             }
         }
 
+    }
+
+    &__paragraph {
+        text-indent: 2rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 
     &__image {

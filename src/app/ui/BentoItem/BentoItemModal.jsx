@@ -87,7 +87,7 @@ export default function BentoItemModal({ heading, info, children }) {
                                 isArrayOfObjects ? (
                                     <div className="bento-box__info bento-box__info--expanded">
                                         {info.map((item, index) => (
-                                            <div key={index}>
+                                            <div key={index} className="bento-box__entry bento-box__entry--expanded">
                                                 {Object.entries(item).map(([key, value], i) => (
                                                     <div key={i}>
                                                         {isTechStack ? (
@@ -96,8 +96,9 @@ export default function BentoItemModal({ heading, info, children }) {
                                                             </>
                                                         ) : (
                                                             <>
-                                                                <h4 className='bento-box__subheading'>{key}</h4>
-                                                                <p className='bento-box__description'>{value}</p>
+                                                                <h4 className='bento-box__subheading bento-box__subheading--expanded'>{key}</h4>
+                                                                <p className='bento-box__description bento-box__description--expanded'>{value}</p>
+
                                                             </>
                                                         )}
                                                     </div>
