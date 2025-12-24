@@ -17,10 +17,12 @@ export default function BentoItemModal({ heading, info, children }) {
     }, []);
 
     useEffect(() => {
-        if (!wrapperRef.current) return;
+        if (!mounted || !wrapperRef.current) return;
 
         const checkOverflow = () => {
             const wrapper = wrapperRef.current;
+            if (!wrapper) return;
+            
             const infoElement = wrapper.querySelector('.bento-box__info');
             if (!infoElement) return;
 
@@ -35,7 +37,7 @@ export default function BentoItemModal({ heading, info, children }) {
             clearTimeout(timer);
             window.removeEventListener('resize', checkOverflow);
         };
-    }, [children]);
+    }, [mounted, info]);
 
     const handleExpand = () => {
         setIsExpanded(true);

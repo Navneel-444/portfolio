@@ -58,6 +58,7 @@ export default async function ProjectDetails({ project, allProjects }) {
                 project={project}
                 allProjects={allProjects}
                 repo={project.repo}
+                live={project.live}
             />
 
             <section className="bento-box">
