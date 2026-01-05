@@ -19,9 +19,24 @@ export async function GET(request) {
 
         const [buffer] = await file.download();
 
+        // Determine content type based on file extension
+        const extension = path.split('.').pop().toLowerCase();
+        const contentTypeMap = {
+            'webp': 'image/webp',
+            'png': 'image/png',
+            'jpg': 'image/jpeg',
+            'jpeg': 'image/jpeg',
+            'gif': 'image/gif',
+            'svg': 'image/svg+xml',
+            'bmp': 'image/bmp',
+            'ico': 'image/x-icon',
+            'avif': 'image/avif',
+        };
+        const contentType = contentTypeMap[extension] || 'application/octet-stream';
+
         return new NextResponse(buffer, {
             headers: {
-                'Content-Type': 'image/webp',
+                'Content-Type': contentType,
                 'Cache-Control': 'public, max-age=3600',
             },
         });
