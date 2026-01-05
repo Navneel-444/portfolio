@@ -19,12 +19,30 @@ export default async function ProjectSection() {
             try {
                 let imageUrl = null;
                 if (p.imagePath) {
-                    const file = bucket.file(p.imagePath);
-                    const [url] = await file.getSignedUrl({
-                        action: 'read',
-                        expires: Date.now() + 24 * 60 * 60 * 1000,
-                    }).catch(() => [null]);
-                    imageUrl = url;
+                    // First try the exact path from database
+                    let file = bucket.file(p.imagePath);
+                    let [exists] = await file.exists();
+                    
+                    // If the exact path doesn't exist, try multiple formats
+                    if (!exists && p.imagePath.includes('/')) {
+                        const formats = ['webp', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'bmp', 'ico', 'avif'];
+                        const basePath = p.imagePath.substring(0, p.imagePath.lastIndexOf('.'));
+                        
+                        for (const format of formats) {
+                            const testPath = `${basePath}.${format}`;
+                            file = bucket.file(testPath);
+                            [exists] = await file.exists();
+                            if (exists) break;
+                        }
+                    }
+                    
+                    if (exists) {
+                        const [url] = await file.getSignedUrl({
+                            action: 'read',
+                            expires: Date.now() + 24 * 60 * 60 * 1000,
+                        }).catch(() => [null]);
+                        imageUrl = url;
+                    }
                 }
 
                 return {
