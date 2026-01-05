@@ -3,6 +3,7 @@ import './ProjectDetails.scss';
 import BentoItem from '@/app/ui/BentoItem/BentoItem';
 import ProjectHeader from '@/app/ui/ProjectHeader/ProjectHeader';
 import { bucket } from '@/lib/firebaseAdmin';
+import ContactSection from '../ContactSection/ContactSection';
 
 export default async function ProjectDetails({ project, allProjects }) {
     const { name, ...projectFields } = project;
@@ -73,6 +74,7 @@ export default async function ProjectDetails({ project, allProjects }) {
                     />
                 ))}
             </section>
+            <ContactSection />
         </main>
     );
 }

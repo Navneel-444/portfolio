@@ -40,7 +40,10 @@ export async function GET() {
             })
         );
 
-        return NextResponse.json(projectsWithURLs);
+        return NextResponse.json(projectsWithURLs, {
+            status: 200,
+            next: { revalidate: 3600 },
+        });
     } catch (error) {
         console.error('Error fetching projects:', error);
         return NextResponse.json(
