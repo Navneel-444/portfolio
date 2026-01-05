@@ -24,18 +24,31 @@ export default async function ProjectDetails({ project, allProjects }) {
 
         if (def.key === 'screenshot') {
             const folder = String(name || '').toLowerCase();
-            const imagePath = `${folder}/screenshot.webp`;
 
+            // Try multiple image formats
+            const formats = ['webp', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'bmp', 'ico', 'avif'];
             let imageUrl = null;
-            try {
-                const file = bucket.file(imagePath);
-                const [url] = await file.getSignedUrl({
-                    action: 'read',
-                    expires: Date.now() + 24 * 60 * 60 * 1000,
-                }).catch(() => [null]);
-                imageUrl = url;
-            } catch (error) {
-                console.error(`Error loading image for bento item:`, error);
+
+            for (const format of formats) {
+                const imagePath = `${folder}/screenshot.${format}`;
+                try {
+                    const file = bucket.file(imagePath);
+                    const [exists] = await file.exists();
+
+                    if (exists) {
+                        const [url] = await file.getSignedUrl({
+                            action: 'read',
+                            expires: Date.now() + 24 * 60 * 60 * 1000,
+                        }).catch(() => [null]);
+
+                        if (url) {
+                            imageUrl = url;
+                            break;
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error loading ${format} image for bento item:`, error);
+                }
             }
 
             return {
