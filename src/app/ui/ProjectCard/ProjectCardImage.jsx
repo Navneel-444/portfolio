@@ -1,11 +1,17 @@
 'use client';
 import './ProjectCard.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 export default function CardImage({ imageUrl, name }) {
     const [imageError, setImageError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        if (!imageUrl) {
+            setIsLoading(false);
+        }
+    }, [imageUrl]);
 
     return (
         <>
