@@ -2,7 +2,6 @@ import '@/styles/main.scss';
 import Navigation from '@/app/ui/navigation/Navigation.jsx';
 import MobileNav from './ui/MobileNav/MobileNav';
 import PageTimeTracker from './ui/PageTimeTracker/PageTimeTracker';
-import HashScrollHandler from './ui/HashScrollHandler/HashScrollHandler';
 import { JetBrains_Mono } from 'next/font/google'
 
 const jetbrains = JetBrains_Mono({
@@ -16,7 +15,6 @@ export default function RootLayout({ children }) {
     <html lang="en" className={jetbrains.className}>
       <body>
         <PageTimeTracker>
-          <HashScrollHandler />
           <Navigation />
           <MobileNav />
           {children}
