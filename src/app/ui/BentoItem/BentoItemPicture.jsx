@@ -1,11 +1,17 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import './BentoItem.scss';
 
 export default function BentoItemPicture({ heading, imageUrl, index }) {
     const [imageError, setImageError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        if (!imageUrl) {
+            setIsLoading(false);
+        }
+    }, [imageUrl]);
 
     return (
         <section

@@ -19,7 +19,6 @@ export async function GET(request) {
 
         const [buffer] = await file.download();
 
-        // Determine content type based on file extension
         const extension = path.split('.').pop().toLowerCase();
         const contentTypeMap = {
             'webp': 'image/webp',
