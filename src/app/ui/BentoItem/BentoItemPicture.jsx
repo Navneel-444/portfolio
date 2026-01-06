@@ -60,7 +60,6 @@ export default function BentoItemPicture({ heading, imageUrl, index }) {
                             height={48}
                             className="bento-box__placeholder-icon"
                         />
-                        <p className="bento-box__placeholder-text">No screenshot available</p>
                     </div>
                 )}
             </div>
