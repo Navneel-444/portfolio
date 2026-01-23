@@ -1,6 +1,25 @@
 import { db } from '@/lib/firebaseAdmin';
 import ProjectDetails from '@/app/components/ProjectDetails/ProjectDetails';
 
+export async function generateMetadata({ params }) {
+    const { projectname } = (await params ?? {});
+    
+    if (!projectname) return { title: 'Project Not Found' };
+
+    function decodeSpace(encoded) {
+        let decoded = decodeURIComponent(encoded);
+        decoded = decoded.replace(/\+/g, ' ');
+        return decoded;
+    }
+
+    const decodedName = decodeSpace(projectname);
+    
+    return {
+        title: decodedName,
+        description: `Project details for ${decodedName}`
+    }
+}
+
 export default async function ProjectPage({ params }) {
     const { projectname } = (await params ?? {});
 
