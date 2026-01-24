@@ -1,6 +1,6 @@
 import { initializeApp, cert, getApps, getApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-const { getStorage } = require('firebase-admin/storage');
+import { getStorage } from 'firebase-admin/storage';
 
 let serviceAccount;
 
@@ -18,7 +18,8 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64) {
 } else {
     // Local development
     try {
-        serviceAccount = require('../../serviceAccountKey.json');
+        const { default: key } = await import('../../serviceAccountKey.json', { assert: { type: 'json' } });
+        serviceAccount = key;
     } catch (error) {
         throw new Error('No service account found. In local development, ensure serviceAccountKey.json exists. In production, set FIREBASE_SERVICE_ACCOUNT_KEY_BASE64.');
     }

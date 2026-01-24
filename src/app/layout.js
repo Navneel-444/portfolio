@@ -9,6 +9,14 @@ const jetbrains = JetBrains_Mono({
   fallback: ['Consolas', 'monospace', 'Source Code Pro', 'Menlo']
 })
 
+export const metadata = {
+  title: {
+    default: 'Navneel Nandran - Software Engineer',
+    template: '%s | Navneel Nandran'
+  },
+  description: 'Software Engineer Portfolio'
+}
+
 export default function RootLayout({ children }) {
 
   return (

@@ -5,6 +5,11 @@ import ExperienceSection from './components/ExperienceSection/ExperienceSection'
 import ContactSection from './components/ContactSection/ContactSection';
 import HashScrollHandler from './ui/HashScrollHandler/HashScrollHandler';
 
+export const metadata = {
+  title: 'Portfolio',
+  description: 'Portfolio showcasing projects and experience in software development'
+}
+
 export default function Home() {
   return (
     <>
