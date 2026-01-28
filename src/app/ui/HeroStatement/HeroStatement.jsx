@@ -1,13 +1,10 @@
 import './HeroStatement.scss';
-import { analytics } from '@/app/firebase/firebase';
-import { logEvent } from 'firebase/analytics';
+import { logAnalyticsEvent } from '@/app/firebase/firebase';
 
 export default function HeroStatement() {
 
     const handleResumeDownload = () => {
-        if (analytics) {
-            logEvent(analytics, "resume_downloads");
-        }
+        logAnalyticsEvent("resume_downloads");
     };
 
     return (
@@ -38,8 +35,7 @@ export default function HeroStatement() {
                         alt="button icon"
                     />
                     <p className="hero-statement__btn-text">
-                        Resume
-                    </p>
+                        Resume</p>
                 </button>
             </a>
         </article>

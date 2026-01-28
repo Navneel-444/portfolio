@@ -1,13 +1,10 @@
 'use client';
 import './ShowMoreButton.scss';
-import { analytics } from '@/app/firebase/firebase';
-import { logEvent } from 'firebase/analytics';
+import { logAnalyticsEvent } from '@/app/firebase/firebase';
 
 export default function ShowMoreButton() {
     const handleClick = () => {
-        if (analytics) {
-            logEvent(analytics, 'click_show_more_projects');
-        }
+        logAnalyticsEvent('click_show_more_projects');
     };
 
     return (

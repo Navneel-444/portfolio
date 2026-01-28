@@ -2,8 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import './ProjectHeader.scss';
-import { analytics } from '@/app/firebase/firebase';
-import { logEvent } from 'firebase/analytics';
+import { logAnalyticsEvent } from '@/app/firebase/firebase';
 
 export default function ProjectHeader({ project, allProjects, repo, live }) {
     const { name } = project;
@@ -13,12 +12,10 @@ export default function ProjectHeader({ project, allProjects, repo, live }) {
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
     const handleExternalLinkClick = (linkType) => {
-        if (analytics) {
-            logEvent(analytics, 'click_project_external_link', {
-                project_name: name,
-                link_type: linkType
-            });
-        }
+        logAnalyticsEvent('click_project_external_link', {
+            project_name: name,
+            link_type: linkType
+        });
     };
 
     useEffect(() => {

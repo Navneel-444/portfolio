@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { analytics } from '@/app/firebase/firebase';
-import { logEvent } from 'firebase/analytics';
+import { logAnalyticsEvent } from '@/app/firebase/firebase';
 import ProjectCard from './ProjectCard';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
@@ -17,21 +16,19 @@ export default function ProjectCardWrapper({ project }) {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        
-        if (analytics) {
-            logEvent(analytics, 'select_project', {
-                project_name: project.name
-            });
-        }
-        
+
+        logAnalyticsEvent('select_project', {
+            project_name: project.name
+        });
+
         await new Promise((res) => setTimeout(res, 420));
         router.push(`/projects/${project.name}`);
     };
 
     const handleHover = () => {
-        if (!hasHovered && analytics) {
+        if (!hasHovered) {
             setTimeout(() => {
-                logEvent(analytics, 'hover_project_card', {
+                logAnalyticsEvent('hover_project_card', {
                     project_name: project.name
                 });
                 setHasHovered(true);
@@ -41,9 +38,9 @@ export default function ProjectCardWrapper({ project }) {
 
     return (
         <div ref={ref} onMouseEnter={handleHover}>
-            <ProjectCard 
-                project={project} 
-                isVisible={isVisible} 
+            <ProjectCard
+                project={project}
+                isVisible={isVisible}
                 onCardClick={handleClick}
             />
         </div>
