@@ -13,9 +13,9 @@ export default function HeroStatement() {
     return (
         <article className='hero-statement'>
             <div className="hero-statement__title">
-                <h1 className='hero-statement__heading'>
+                <h2 className='hero-statement__heading'>
                     Hi, I'm Navneel!
-                </h1>
+                </h2>
                 <h3 className='hero-statement__subheading'>
                     Software Engineer | Full-stack Developer
                 </h3>
