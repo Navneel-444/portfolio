@@ -17,12 +17,16 @@
     height: 60%;
     aspect-ratio: 1;
     position: absolute;
-    left: 32%;
+    left: 45%;
     bottom: 3%;
     touch-action: none;
     max-width: 100%;
     overflow: hidden;
     animation: fadeInBlur 0.8s ease-out 0.4s backwards;
+
+    @media (orientation: portrait) {
+        left: 25%
+    }
 
     @include mobile {
         width: 70%;
@@ -32,4 +36,5 @@
         transform: translateX(-50%);
         bottom: 8%;
     }
+
 }

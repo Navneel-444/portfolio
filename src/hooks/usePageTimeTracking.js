@@ -13,18 +13,15 @@ export default function usePageTimeTracking() {
             lastActiveTime = Date.now();
         };
 
-        // Track user activity
         const events = ['mousedown', 'keydown', 'scroll', 'touchstart'];
         events.forEach(event => {
             document.addEventListener(event, updateActiveTime);
         });
 
-        // Check if user is still active every 5 seconds
         const activityInterval = setInterval(() => {
             const now = Date.now();
             const timeSinceLastActivity = now - lastActiveTime;
 
-            // If user was active in the last 5 seconds, count it as active time
             if (timeSinceLastActivity < 5000) {
                 totalActiveTime += 5000;
             }
@@ -34,8 +31,8 @@ export default function usePageTimeTracking() {
             const totalTime = Math.floor((Date.now() - startTime) / 1000); // in seconds
             const activeTime = Math.floor(totalActiveTime / 1000); // in seconds
 
-            logAnalyticsEvent('time_on_page', {
-                total_time_seconds: totalTime,
+            logEvent(analytics, 'time_on_page', {
+                time_seconds: totalTime,
                 active_time_seconds: activeTime,
                 engagement_rate: totalTime > 0 ? Math.round((activeTime / totalTime) * 100) : 0
             });

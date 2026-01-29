@@ -61,10 +61,15 @@
     padding: 1rem 0.75rem;
     top: 0%;
 
+    @media (orientation: portrait) {
+        right: 35%
+    }
+
     @include mobile {
         top: 0;
         right: unset;
     }
+
 
     &__title {
         margin-bottom: 1.75rem;
