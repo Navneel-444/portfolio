@@ -1,8 +1,7 @@
 'use client';
 import './ContactForm.scss';
 import { useEffect, useRef } from 'react';
-import { analytics } from '@/app/firebase/firebase';
-import { logEvent } from 'firebase/analytics';
+import { logAnalyticsEvent } from '@/app/firebase/firebase';
 import { sendEmail } from '../ContactForm/action';
 import { useFormStatus } from 'react-dom';
 import Form from 'next/form';
@@ -33,18 +32,16 @@ export default function ContactForm() {
     const handleClientSubmit = () => {
         submitted.current = true;
 
-        if (analytics) {
-            logEvent(analytics, 'submit_contact_form', {
-                method: 'email_form',
-                fields_filled: filledFields.current.size,
-            });
-        }
+        logAnalyticsEvent('submit_contact_form', {
+            method: 'email_form',
+            fields_filled: filledFields.current.size,
+        });
     };
 
     useEffect(() => {
         const handleUnload = () => {
-            if (!submitted.current && filledFields.current.size > 0 && analytics) {
-                logEvent(analytics, 'abandon_contact_form', {
+            if (!submitted.current && filledFields.current.size > 0) {
+                logAnalyticsEvent('abandon_contact_form', {
                     fields_typed: filledFields.current.size,
                 });
             }
