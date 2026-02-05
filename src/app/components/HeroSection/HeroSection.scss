@@ -1,0 +1,37 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.hero-section {
+    height: 90dvh;
+    max-height: 60rem;
+    border: 2px solid $grey-blue;
+    border-radius: 0.5rem;
+    margin-bottom: 5rem;
+    padding: 2rem;
+    position: relative;
+
+    @include mobile {
+        display: flex;
+        justify-content: space-evenly;
+        height: 95svh;
+        flex-direction: column;
+        justify-content: space-evenly;
+        max-height: 50rem;
+        width: 100%;
+        padding: 0;
+        margin: 1.25rem 0 3rem 0;
+    }
+
+    &__location {
+        background-color: $grey-blue;
+        padding: 0.25rem 1rem;
+        border-radius: 0.5rem 0;
+        font-weight: 200;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+
+}

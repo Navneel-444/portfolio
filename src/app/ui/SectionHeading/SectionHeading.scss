@@ -1,0 +1,68 @@
+@use '../../../styles/variables' as *;
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes drawLine {
+    from {
+        stroke-dashoffset: 1000;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.section-heading {
+    position: relative;
+    margin: 1.25rem 0;
+
+    &__title {
+        position: absolute;
+        margin-left: 28px;
+        z-index: 10;
+        font-weight: 400;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        will-change: transform, opacity;
+        opacity: 0;
+
+        &--visible {
+            animation: slideInRight 0.8s ease-out 0.6s forwards;
+        }
+    }
+
+    &__cursor {
+        margin-left: 2px;
+        font-weight: 100;
+        color: $orange;
+    }
+
+    &__decorator {
+        margin-top: 5px;
+
+        &--visible .section-heading__decorator-line {
+            animation: drawLine 2.5s ease-out 0.25s forwards;
+        }
+    }
+
+    &__decorator-dot {
+        fill: $orange;
+    }
+
+    &__decorator-line {
+        stroke: $orange;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+    }
+}

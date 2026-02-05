@@ -1,0 +1,42 @@
+@use './variables' as *;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 16px;
+    line-height: 1.5;
+    color: $white;
+    background-color: $grey-background;
+    overflow-x: hidden;
+}
+
+main {
+    width: 90%;
+    max-width: 90rem;
+    margin: 0 auto;
+}
+
+section[id],
+h2[id],
+div[id] {
+    scroll-margin-top: 50px;
+}
+
+a {
+    all: unset
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+}

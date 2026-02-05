@@ -1,0 +1,150 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInBlur {
+    from {
+        opacity: 0;
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes slideInButton {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+        filter: blur(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes fadeInIcon {
+    from {
+        opacity: 0;
+        transform: translateX(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.hero-statement {
+    width: auto;
+    max-width: 26.5rem;
+    height: max-content;
+    margin: 7vh 0 0 0;
+    position: absolute;
+    right: 49%;
+    padding: 1rem 0.75rem;
+    top: 0%;
+
+    @media (orientation: portrait) {
+        right: 35%
+    }
+
+    @include mobile {
+        top: 0;
+        right: unset;
+    }
+
+
+    &__title {
+        margin-bottom: 1.75rem;
+        white-space: nowrap;
+
+        @include mobile {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    &__heading {
+        color: $orange;
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: 400;
+        animation: slideUp 0.6s ease-out forwards;
+
+        @include mobile {
+            font-size: 8.5vw;
+        }
+    }
+
+    &__subheading {
+        font-size: 0.875rem;
+        font-weight: 100;
+        animation: fadeInBlur 0.5s ease-out 0.5s forwards;
+        opacity: 0;
+
+        @include mobile {
+            font-size: 3vw;
+        }
+    }
+
+    &__description {
+        margin-bottom: 1.5rem;
+        font-size: 0.875rem;
+        color: $grey-accent;
+        animation: fadeInBlur 0.5s ease-out 1s forwards;
+        opacity: 0;
+
+        @include mobile {
+            font-size: 0.875rem;
+        }
+    }
+
+    &__resume-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        border: 1px solid $grey-blue;
+        border-radius: 0.45rem;
+        width: 8rem;
+        height: 2rem;
+        background-color: transparent;
+        color: $white;
+        animation: slideInButton 0.6s ease-out 1.5s forwards;
+        opacity: 0;
+        cursor: pointer;
+        transition: box-shadow 0.3s ease, transform 0.1s ease;
+
+        &:hover {
+            box-shadow: 0 0 8px $grey-blue, 0 0 13px $grey-blue, 0 0 17px $grey-blue;
+        }
+    }
+
+    &__btn-icon {
+        animation: fadeInIcon 0.4s ease-out 2.1s forwards;
+        opacity: 0;
+    }
+
+    &__btn-text {
+        font-family: "JetBrains Mono", sans-serif;
+        font-weight: 300;
+    }
+
+    &__download {
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,56 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+
+.bento-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1.5rem;
+    row-gap: 1.25rem;
+    grid-auto-rows: 15.5rem;
+    margin-bottom: 1rem;
+
+    @include mobile {
+        display: block;
+    }
+
+    &__item {
+        &--wide {
+            grid-column: span 2;
+
+            @include mobile {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        &--triple-wide {
+            grid-column: span 3;
+        }
+
+        &--double-wide {
+            grid-column: span 2;
+        }
+
+
+        &--tall {
+            grid-row: span 2;
+        }
+
+        &--picture {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+    }
+}
+
+.bento-card {
+    transition:
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+.bento-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}

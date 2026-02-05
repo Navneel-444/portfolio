@@ -1,0 +1,64 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 5%;
+    transition: all 0.75s ease;
+    backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    background-color: transparent;
+
+    @include mobile {
+        display: none;
+    }
+
+    &--scroll {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    &__heading {
+        color: $orange;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    &__list {
+        display: flex;
+    }
+
+    &__list-item {
+        list-style-type: none;
+    }
+
+    &__link {
+        text-decoration: none;
+        margin: 0 0.25rem;
+        color: $white;
+
+        &:visited {
+            color: $white;
+        }
+
+        @include nav-item-style;
+
+        &.active {
+            color: $orange;
+            border-radius: 0;
+        }
+
+    }
+
+    &__theme {
+        visibility: hidden;
+        display: flex;
+        background-color: transparent;
+        border: none;
+        @include nav-item-style;
+    }
+}
